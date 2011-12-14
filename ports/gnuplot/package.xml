@@ -7,8 +7,9 @@
     <build>
     <command>
         cd gnuplot
-        autoconf
-        ./configure --host arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../obj
+        ./prepare
+        ./configure --host arm-unknown-nto-qnx6.5.0eabi --without-readline --without-cairo --prefix=`pwd`/../obj
+        make
     </command>
     </build>
 </port>
