@@ -2,6 +2,13 @@
 	<download>
 	<command>cvs -d:pserver:anonymous:@gnuplot.cvs.sourceforge.net:/cvsroot/gnuplot login</command>
 	<command>cvs -z3 -d:pserver:anonymous@gnuplot.cvs.sourceforge.net:/cvsroot/gnuplot co -P gnuplot</command>
-	<result>gnuplot</result>
+    <result>gnuplot</result>
 	</download>
+    <build>
+    <command>
+        cd gnuplot
+        autoconf
+        ./configure --host arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../obj
+    </command>
+    </build>
 </port>
