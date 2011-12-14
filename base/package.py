@@ -29,16 +29,39 @@ def downloadpackage(package):
     doc.freeDoc()
     ctxt.xpathFreeContext()
 
-def buildpackage(package):
+def compilepackage(package):
     doc = libxml2.parseFile("../package.xml")
     ctxt = doc.xpathNewContext()
 
     # Check if the source is already available
-    print os.getcwd()
-    res = ctxt.xpathEval("/port/build/result/node()")
     res = ctxt.xpathEval("/port/build/command/node()")
     for i in res:
         os.system(str(i))
+    doc.freeDoc()
+    ctxt.xpathFreeContext()
+
+def packagepackage(package):
+    # Build a string for the command to execute
+    command = "blackberry-nativepackager"
+
+    doc = libxml2.parseFile("../package.xml")
+    ctxt = doc.xpathNewContext()
+
+    # Package name
+    res = ctxt.xpathEval("/port/package/main/node()")
+    command += " %s.bar ../blackberry-tablet.xml %s" % (package, str(res[0]))
+
+    res = ctxt.xpathEval("/port/package/file/node()")
+    count = 1
+    for i in res:
+        try:
+            res = str(ctxt.xpathEval("/port/package/file[%d]/@remote" % count)[0]).split('=')[1]
+            command += " -e \"%s\" %s" % (str(i),res)
+        except:
+            command += " -e \"%s\" %s" % (str(i),str(i))
+        count += 1
+    os.system(command)
+
     doc.freeDoc()
     ctxt.xpathFreeContext()
 
@@ -47,7 +70,10 @@ def build(package):
     mkworkdir()
     os.chdir("src")
     downloadpackage(package)
-    buildpackage(package)
+    compilepackage(package)
+    os.chdir("..")
+    os.chdir("obj")
+    packagepackage(package)
     os.chdir("..")
     os.chdir("..")
 

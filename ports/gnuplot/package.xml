@@ -1,15 +1,22 @@
 <port>
 	<download>
-	<command>cvs -d:pserver:anonymous:@gnuplot.cvs.sourceforge.net:/cvsroot/gnuplot login</command>
-	<command>cvs -z3 -d:pserver:anonymous@gnuplot.cvs.sourceforge.net:/cvsroot/gnuplot co -P gnuplot</command>
-    <result>gnuplot</result>
+        <command>cvs -d:pserver:anonymous:@gnuplot.cvs.sourceforge.net:/cvsroot/gnuplot login</command>
+        <command>cvs -z3 -d:pserver:anonymous@gnuplot.cvs.sourceforge.net:/cvsroot/gnuplot co -P gnuplot</command>
+        <result>gnuplot</result>
 	</download>
     <build>
-    <command>
-        cd gnuplot
-        ./prepare
-        ./configure --host arm-unknown-nto-qnx6.5.0eabi --without-readline --without-cairo --prefix=`pwd`/../obj
-        make
-    </command>
+        <command>
+            cd gnuplot
+            ./prepare
+            ./configure --host arm-unknown-nto-qnx6.5.0eabi --without-readline --without-cairo --prefix=`pwd`/../obj
+            make
+            cp src/gnuplot ../../obj
+        </command>
     </build>
+    <package>
+        <main>gnuplot</main>
+        <file remote="res/icon.png">../icon.png</file>
+        <file>../splashscreen.png</file>
+        <file remote="res/splashscreen.png">../splashscreen.png</file>
+    </package>
 </port>
