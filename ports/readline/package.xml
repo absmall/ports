@@ -1,0 +1,14 @@
+<port>
+	<download>
+		<command>wget ftp://ftp.gnu.org/gnu/readline/readline-6.2.tar.gz</command>
+		<command>tar -zxvf readline-6.2.tar.gz</command>
+        <result>readline-6.2</result>
+	</download>
+    <build>
+        <command>
+		cd readline-6.2
+		./configure --host arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../../obj
+		make install
+        </command>
+    </build>
+</port>
