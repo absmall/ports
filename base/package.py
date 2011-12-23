@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import os
 import sys
-import libxml2
 from lxml import etree
 
 def mkworkdir():
@@ -33,30 +32,22 @@ def compilepackage(tree):
     for i in build:
         os.system(i.text)
 
-def packagepackage(package):
+def packagepackage(tree, package):
     # Build a string for the command to execute
     command = "blackberry-nativepackager"
 
-    doc = libxml2.parseFile("../package.xml")
-    ctxt = doc.xpathNewContext()
-
     # Package name
-    #res = ctxt.xpathEval("/port/package/main/node()")
     command += " %s.bar ../blackberry-tablet.xml" % package
 
-    res = ctxt.xpathEval("/port/package/file/node()")
-    count = 1
-    for i in res:
-        try:
-            res = str(ctxt.xpathEval("/port/package/file[%d]/@remote" % count)[0]).split('=')[1]
-            command += " -e \"%s\" %s" % (str(i),res)
-        except:
-            command += " -e \"%s\" %s" % (str(i),str(i))
-        count += 1
+    packageNode = tree.getroot().find("package")
+    for i in packageNode:
+        if i.tag == "file":
+            remote = i.get("remote")
+            if remote:
+                command += " -e \"%s\" %s" % (i.text, remote)
+            else:
+                command += " -e \"%s\" %s" % (i.text, i.text)
     os.system(command)
-
-    doc.freeDoc()
-    ctxt.xpathFreeContext()
 
 def build(package):
 
@@ -71,7 +62,7 @@ def build(package):
     compilepackage(tree)
     os.chdir("..")
     os.chdir("obj")
-    packagepackage(package)
+    packagepackage(tree, package)
     os.chdir("..")
     os.chdir("..")
 
