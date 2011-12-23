@@ -1,0 +1,228 @@
+diff -Naur pari-2.5.0.orig/config/get_cc pari-2.5.0/config/get_cc
+--- pari-2.5.0.orig/config/get_cc	2011-05-30 05:28:34.000000000 -0400
++++ pari-2.5.0/config/get_cc	2011-12-22 17:50:45.000000000 -0500
+@@ -27,7 +27,12 @@
+ if test -z "$CC"; then
+   echo Looking for the compilers ...
+   # Native Compilers
+-  cc=`./locate cc '' $pathspace`
++  if test ! -z "$target_host"; then
++    cc=`./locate ${target_host}-cc '' $pathspace`
++  fi
++  if test -z "$cc"; then
++    cc=`./locate cc '' $pathspace`
++  fi
+   case "$osname" in
+     hpux) if test "$cc" = /usr/ccs/bin/cc -a -f /opt/ansic/bin/cc; then
+             cc=/opt/ansic/bin/cc; fi ;;  # This is a better compiler
+@@ -35,7 +40,12 @@
+   case "$cc" in ?:/*|/*) echo ..."cc is $cc";;
+       *) echo ..."I could not find cc.";; esac
+   # GNU Compilers
+-  gcc=`./locate gcc '' $pathspace`
++  if test ! -z "$target_host"; then
++    gcc=`./locate ${target_host}-gcc '' $pathspace`
++  fi
++  if test -z "$cc"; then
++    gcc=`./locate gcc '' $pathspace`
++  fi
+   if test -z "$gcc"; then
+     exe=$osname-$arch-gnu$$
+     $cc $extraflag -o $exe gnu.c
+@@ -62,6 +72,42 @@
+   if test -n "$__gnuc__"; then CC=$gcc; else CC=$cc; fi
+ fi
+ 
++if test -z "$CXX"; then
++  # Native C++ Compilers
++  if test ! -z "$target_host"; then
++    cxx=`./locate ${target_host}-c++ '' $pathspace`
++  fi
++  if test -z "$cxx"; then
++    cxx=`./locate c++ '' $pathspace`
++  fi
++  case "$cxx" in ?:/*|/*) echo ..."c++ is $cxx";;
++      *) echo ..."I could not find cxx.";; esac
++  # GNU Compilers
++  if test ! -z "$target_host"; then
++    gxx=`./locate ${target_host}-g++ '' $pathspace`
++  fi
++  if test -z "$cxx"; then
++    gxx=`./locate g++ '' $pathspace`
++  fi
++  if test -z "$gxx"; then
++    exe=$osname-$arch-gnu$$
++    $cxx $extraflag -o $exe gnu.c
++    if $RUNTEST $exe; then gxx=$cxx; fi; rm -f $exe
++  fi
++  case "$gxx" in
++?:/*|/*) echo ..."g++ is $gxx";;
++      *) echo ..."I could not find g++."; gxx=;;
++  esac
++  if test -n "$gxx"; then
++    # avoid internationalization trouble by setting LANG=C
++    __gnucxx__=`env LANG=C LC_ALL=C LC_MESSAGES=C $gxx -v 2>&1 | sed -n 's/.*version //p'`
++    if test -z "$__gnucxx__"; then __gnucxx__=unknown; fi
++    echo GNU compiler version $__gnucxx__
++  fi
++  # Choosing the compiler
++  if test -n "$__gnucxx__"; then CXX=$gxx; else CXX=$cxx; fi
++fi
++
+ if test "$fastread" != yes; then
+   cat << EOT
+ ==========================================================================
+@@ -77,9 +123,10 @@
+   CC=$ans
+ fi
+ 
+-exe=$osname-$arch-ansi$$
+-$CC $CFLAGS $extraflag -o $exe ansi.c 2>/dev/null && $RUNTEST $exe
+-if test $? != 0; then cat << EOT
++if test -z "$target_host"; then
++  exe=$osname-$arch-ansi$$
++  $CC $CFLAGS $extraflag -o $exe ansi.c 2>/dev/null && $RUNTEST $exe
++  if test $? != 0; then cat << EOT
+ ###
+ ### C compiler does not work. PARI/GP requires an ANSI C compiler! Aborting.
+ ###
+@@ -88,6 +135,7 @@
+   exit 1;
+ fi
+ rm -f $exe $exe$exe_suff
++fi
+ 
+ if test "$CC" != "$gcc"; then __gnuc__=; fi
+ if test -z "$__gnuc__"; then
+diff -Naur pari-2.5.0.orig/config/get_double_format pari-2.5.0/config/get_double_format
+--- pari-2.5.0.orig/config/get_double_format	2011-05-30 05:28:34.000000000 -0400
++++ pari-2.5.0/config/get_double_format	2011-12-22 17:10:13.000000000 -0500
+@@ -1,21 +1,25 @@
+ exe=$osname-$arch-endian$$
+-if ($CC $CFLAGS $extraflag endian.c -o $exe 2>/dev/null); then
+-  doubleformat=`$RUNTEST $exe`;
+-else
+-  echo "***************************************************************"
+-  echo "Cannot compile endian.c. Aborting. PLEASE REPORT!"
+-  exit 1
+-fi
+-rm -f $exe $exe$exe_suff
+-case "$doubleformat" in
+-  *IEEE*)
++if test -z $target_host; then
++  if ($CC $CFLAGS $extraflag endian.c -o $exe 2>/dev/null); then
++    doubleformat=`$RUNTEST $exe`;
++  else
+     echo "***************************************************************"
+-    echo "Your 'double' type does not follow the IEEE754 format. Aborting"
+-    echo "PLEASE REPORT! (dbltor/rtodbl need to be fixed)"; exit 1;;
+-  -) sizeof_long=8;;
+-  *) sizeof_long=4;;
+-esac
+-echo "Given the previous choices, sizeof(long) is $sizeof_long chars."
++    echo "Cannot compile endian.c. Aborting. PLEASE REPORT!"
++    exit 1
++  fi
++  rm -f $exe $exe$exe_suff
++  case "$doubleformat" in
++    *IEEE*)
++      echo "***************************************************************"
++      echo "Your 'double' type does not follow the IEEE754 format. Aborting"
++      echo "PLEASE REPORT! (dbltor/rtodbl need to be fixed)"; exit 1;;
++    -) sizeof_long=8;;
++    0) sizeof_long=4;;
++    1) sizeof_long=4;;
++    *) echo "Error running endian test"; exit 1;;
++  esac
++  echo "Given the previous choices, sizeof(long) is $sizeof_long chars."
++fi
+ 
+ if test "$fastread" != yes; then
+ cat << EOT
+diff -Naur pari-2.5.0.orig/config/get_Qt pari-2.5.0/config/get_Qt
+--- pari-2.5.0.orig/config/get_Qt	2011-05-30 05:28:34.000000000 -0400
++++ pari-2.5.0/config/get_Qt	2011-12-22 17:21:39.000000000 -0500
+@@ -1,11 +1,12 @@
+ if test -z "$with_qt"; then
+   with_qt=yes
+ fi
+-QTDIR=
+ case "$with_qt" in
+ yes)
+-   pth="/usr/local/lib /usr/local/share /usr/lib /usr/share"
+-   QTDIR=`locatedir qt4/bin $pth`
++   if test -z "$QTDIR"; then
++     pth="/usr/local/lib /usr/local/share /usr/lib /usr/share"
++     QTDIR=`locatedir qt4/bin $pth`
++   fi
+    QTLIB="-lQtCore -lQtGui"
+    which_graphic_lib=Qt4
+    if test -z "$QTDIR"; then
+diff -Naur pari-2.5.0.orig/config/Makefile.SH pari-2.5.0/config/Makefile.SH
+--- pari-2.5.0.orig/config/Makefile.SH	2011-05-30 05:28:34.000000000 -0400
++++ pari-2.5.0/config/Makefile.SH	2011-12-22 17:59:35.000000000 -0500
+@@ -61,11 +61,11 @@
+ none)
+   graph=plotnull;;
+ Qt)
+-  PLOTCFLAGS='-D__FANCY_WIN__ -I$(QTDIR)/include'
++  PLOTCFLAGS='-D__FANCY_WIN__ -I`${QMAKE} -query QT_INSTALL_HEADERS`'
+   PLOTLIBS="-L\$(QTDIR)/lib $QTLIB"
+   graph=plotQt;;
+ Qt4)
+-  PLOTCFLAGS='-D__FANCY_WIN__ -I$(QTDIR)/include'
++  PLOTCFLAGS='-D__FANCY_WIN__ -I`${QMAKE} -query QT_INSTALL_HEADERS`'
+   PLOTLIBS="-L\$(QTDIR)/lib $QTLIB"
+   graph=plotQt4;;
+ fltk)
+@@ -165,6 +165,7 @@
+ 
+ CC_FLAVOR  =
+ CC         = $CC \$(CC_FLAVOR)
++CXX        = $CXX
+ CPPFLAGS   = $CPPFLAGS
+ CFLAGS     = $CFLAGS
+ DLCFLAGS   = $DLCFLAGS
+@@ -255,9 +256,9 @@
+ # Graphic library.
+ QTDIR      = "$QTDIR"
+ MOC        = \$(QTDIR)/bin/moc
++QMAKE      = \$(QTDIR)/bin/qmake
+ PLOTCFLAGS = $PLOTCFLAGS
+ PLOTLIBS   = $PLOTLIBS
+-CPLUSPLUS  = g++
+ 
+ FLTKDIR    = "$FLTKDIR"
+ 
+@@ -691,17 +692,17 @@
+   plotQt)
+     cflags="$cflags \$(PLOTCFLAGS)"
+     depend="$RECT_H"
+-    compile="\$(MOC) -o plotQt.moc.cpp $src/graph/plotQt.c && \$(CPLUSPLUS)"
++    compile="\$(MOC) -o plotQt.moc.cpp $src/graph/plotQt.c && \$(CXX)"
+     ;;
+   plotQt4)
+     cflags="$cflags \$(PLOTCFLAGS)"
+     depend="$RECT_H"
+-    compile="\$(MOC) \$(PLOTCFLAGS) -o plotQt4.moc.cpp $src/graph/plotQt4.c && \$(CPLUSPLUS)"
++    compile="\$(MOC) \$(PLOTCFLAGS) -o plotQt4.moc.cpp $src/graph/plotQt4.c && \$(CXX)"
+     ;;
+   plotfltk)
+     cflags="$cflags \$(PLOTCFLAGS)"
+     depend="$RECT_H"
+-    compile="\$(CPLUSPLUS)"
++    compile="\$(CXX)"
+     ;;
+   plot*)
+     cflags="$cflags \$(PLOTCFLAGS)"
+diff -Naur pari-2.5.0.orig/src/graph/plotQt4.c pari-2.5.0/src/graph/plotQt4.c
+--- pari-2.5.0.orig/src/graph/plotQt4.c	2011-05-30 05:28:26.000000000 -0400
++++ pari-2.5.0/src/graph/plotQt4.c	2011-12-22 18:47:06.000000000 -0500
+@@ -50,6 +50,7 @@
+ #include <Qt/qlabel.h>
+ #include <Qt/qspinbox.h>
+ #include <Qt/qlayout.h>
++#include <math.h>
+ 
+ extern "C" {
+ #include "pari.h"

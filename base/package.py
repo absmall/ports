@@ -2,6 +2,7 @@
 import os
 import sys
 import libxml2
+from lxml import etree
 
 def mkworkdir():
     try:
@@ -14,20 +15,17 @@ def mkworkdir():
     except OSError as e:
         pass
 
-def downloadpackage(package):
-    doc = libxml2.parseFile("../package.xml")
-    ctxt = doc.xpathNewContext()
+def downloadpackage(tree):
 
     # Check if the source is already available
-    res = ctxt.xpathEval("/port/download/result/node()")
-    if os.path.exists(str(res[0])):
+    download = tree.getroot().find("download")
+
+    if os.path.exists(download.find("result").text):
         print "Source for '%s' already downloaded" % package
     else:
-        res = ctxt.xpathEval("/port/download/command/node()")
-        for i in res:
-            os.system(str(i))
-    doc.freeDoc()
-    ctxt.xpathFreeContext()
+        for i in download:
+            if i.tag == "command":
+                os.system(i.text)
 
 def compilepackage(package):
     doc = libxml2.parseFile("../package.xml")
@@ -49,7 +47,6 @@ def packagepackage(package):
 
     # Package name
     #res = ctxt.xpathEval("/port/package/main/node()")
-    #command += " %s.bar ../blackberry-tablet.xml %s" % (package, str(res[0]))
     command += " %s.bar ../blackberry-tablet.xml" % package
 
     res = ctxt.xpathEval("/port/package/file/node()")
@@ -67,10 +64,15 @@ def packagepackage(package):
     ctxt.xpathFreeContext()
 
 def build(package):
+
     os.chdir(package)
+
+    # Read in the descriptor
+    tree = etree.parse("package.xml")
+
     mkworkdir()
     os.chdir("src")
-    downloadpackage(package)
+    downloadpackage(tree)
     compilepackage(package)
     os.chdir("..")
     os.chdir("obj")
