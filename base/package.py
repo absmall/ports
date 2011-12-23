@@ -27,16 +27,11 @@ def downloadpackage(tree):
             if i.tag == "command":
                 os.system(i.text)
 
-def compilepackage(package):
-    doc = libxml2.parseFile("../package.xml")
-    ctxt = doc.xpathNewContext()
+def compilepackage(tree):
+    build = tree.getroot().find("build")
 
-    # Check if the source is already available
-    res = ctxt.xpathEval("/port/build/command/node()")
-    for i in res:
-        os.system(str(i))
-    doc.freeDoc()
-    ctxt.xpathFreeContext()
+    for i in build:
+        os.system(i.text)
 
 def packagepackage(package):
     # Build a string for the command to execute
@@ -73,7 +68,7 @@ def build(package):
     mkworkdir()
     os.chdir("src")
     downloadpackage(tree)
-    compilepackage(package)
+    compilepackage(tree)
     os.chdir("..")
     os.chdir("obj")
     packagepackage(package)
