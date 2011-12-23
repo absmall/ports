@@ -14,7 +14,7 @@
         </command>
     </build>
     <package>
-        <main>gnuplot</main>
+        <file>gnuplot</file>
         <file remote="res/icon.png">../icon.png</file>
         <file>../splashscreen.png</file>
         <file remote="res/splashscreen.png">../splashscreen.png</file>

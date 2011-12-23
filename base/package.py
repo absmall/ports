@@ -48,8 +48,9 @@ def packagepackage(package):
     ctxt = doc.xpathNewContext()
 
     # Package name
-    res = ctxt.xpathEval("/port/package/main/node()")
-    command += " %s.bar ../blackberry-tablet.xml %s" % (package, str(res[0]))
+    #res = ctxt.xpathEval("/port/package/main/node()")
+    #command += " %s.bar ../blackberry-tablet.xml %s" % (package, str(res[0]))
+    command += " %s.bar ../blackberry-tablet.xml" % package
 
     res = ctxt.xpathEval("/port/package/file/node()")
     count = 1
