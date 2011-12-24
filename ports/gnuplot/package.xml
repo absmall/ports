@@ -9,7 +9,7 @@
         <command>
             cd gnuplot
             ./prepare
-            ./configure --host arm-unknown-nto-qnx6.5.0eabi --without-readline --without-cairo --prefix=`pwd`/../obj
+            ./configure --host arm-unknown-nto-qnx6.5.0eabi --without-readline --without-cairo --without-lua --prefix=`pwd`/../obj
             make
             cp src/gnuplot ../../obj
         </command>
