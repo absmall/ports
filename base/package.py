@@ -3,14 +3,39 @@ import os
 import sys
 from lxml import etree
 
+print_commands_only = 0
+
+def logged_chdir(dir):
+    global print_commands_only
+
+    if print_commands_only:
+        print "cd %s" % dir
+    os.chdir(dir)
+
+def logged_mkdir(dir):
+    global print_commands_only
+
+    if print_commands_only:
+        print "mkdir %s" % dir
+    else:
+        os.mkdir(dir)
+
+def logged_command(cmd):
+    global print_commands_only
+
+    if print_commands_only:
+        print cmd
+    else:
+        os.system(cmd)
+
 def mkworkdir():
     try:
-        os.mkdir("src")
+        logged_mkdir("src")
     except OSError as e:
         pass
 
     try:
-        os.mkdir("obj")
+        logged_mkdir("obj")
     except OSError as e:
         pass
 
@@ -19,24 +44,24 @@ def downloadpackage(tree):
     # Check if the source is already available
     download = tree.getroot().find("download")
 
-    os.chdir("src")
+    logged_chdir("src")
     if os.path.exists(download.find("result").text):
         print "Source for '%s' already downloaded" % package
     else:
         for i in download:
             if i.tag == "command":
                 os.system(i.text)
-    os.chdir("..")
+    logged_chdir("..")
 
 def compilepackage(tree):
     buildNode = tree.getroot().find("build")
 
-    os.chdir("src")
+    logged_chdir("src")
     # Build the package
     for i in buildNode:
         if i.tag == "command":
-            os.system(i.text)
-    os.chdir("..")
+            logged_command(i.text)
+    logged_chdir("..")
 
 
 def packagepackage(tree, package):
@@ -47,7 +72,7 @@ def packagepackage(tree, package):
     command += " %s.bar ../blackberry-tablet.xml" % package
 
     packageNode = tree.getroot().find("package")
-    os.chdir("obj")
+    logged_chdir("obj")
     for i in packageNode:
         if i.tag == "file":
             remote = i.get("remote")
@@ -55,8 +80,8 @@ def packagepackage(tree, package):
                 command += " -e \"%s\" %s" % (i.text, remote)
             else:
                 command += " -e \"%s\" %s" % (i.text, i.text)
-    os.system(command)
-    os.chdir("..")
+    logged_command(command)
+    logged_chdir("..")
 
 def build(package):
     global basedir
@@ -67,7 +92,7 @@ def build(package):
         return
 
     # Go to ports directory
-    os.chdir("%s/%s" % (basedir, package))
+    logged_chdir("%s/%s" % (basedir, package))
 
     # Read in the descriptor
     tree = etree.parse("package.xml")
@@ -78,7 +103,7 @@ def build(package):
             build(i.text)
 
     # Go back to ports directory in case we left to build dependencies
-    os.chdir("%s/%s" % (basedir, package))
+    logged_chdir("%s/%s" % (basedir, package))
 
     mkworkdir()
     downloadpackage(tree)
@@ -89,8 +114,8 @@ def build(package):
 built = []
 
 # Go to ports directory
-os.chdir(os.path.dirname(sys.argv[0]))
-os.chdir("../ports")
+logged_chdir(os.path.dirname(sys.argv[0]))
+logged_chdir("../ports")
 
 basedir = os.getcwd()
 
