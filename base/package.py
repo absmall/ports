@@ -2,6 +2,7 @@
 import os
 import sys
 import argparse
+import shutil
 from lxml import etree
 
 print_commands_only = 0
@@ -25,11 +26,22 @@ def logged_command(cmd):
     global print_commands_only
 
     if print_commands_only:
-        print cmd
+        print cmd.strip()
     else:
         os.system(cmd)
 
-def mkworkdir():
+def logged_rmpath(dir):
+    global print_commands_only
+
+    if print_commands_only:
+        print "rm -rf %s" % dir
+    else:
+        shutil.rmtree(dir)
+
+def mkworkdir(clean):
+    if clean:
+        logged_rmpath("src")
+        logged_rmpath("obj")
     try:
         logged_mkdir("src")
     except OSError as e:
@@ -41,13 +53,15 @@ def mkworkdir():
         pass
 
 def downloadpackage(tree):
+    global print_commands_only
 
     # Check if the source is already available
     download = tree.getroot().find("download")
 
     logged_chdir("src")
     if os.path.exists(download.find("result").text):
-        print "Source for '%s' already downloaded" % package
+        if not print_commands_only:
+            print "Source for '%s' already downloaded" % package
     else:
         for i in download:
             if i.tag == "command":
@@ -84,7 +98,7 @@ def packagepackage(tree, package):
     logged_command(command)
     logged_chdir("..")
 
-def build(package):
+def build(package, clean):
     global basedir
     global built
 
@@ -101,12 +115,12 @@ def build(package):
     # Build all dependencies
     for i in tree.getroot():
         if i.tag == "depends":
-            build(i.text)
+            build(i.text, clean)
 
     # Go back to ports directory in case we left to build dependencies
     logged_chdir("%s/%s" % (basedir, package))
 
-    mkworkdir()
+    mkworkdir(clean)
     downloadpackage(tree)
     compilepackage(tree)
     packagepackage(tree, package)
@@ -117,10 +131,9 @@ built = []
 # Parse arguments
 parser = argparse.ArgumentParser(description='Build packages for playbook')
 parser.add_argument('-c', '--commands_only', action='store_const', const=1, help='Only print out the commands that would be executed, do not run them')
+parser.add_argument('--clean', action='store_const', const=1, help='Remove all built code before beginning')
 parser.add_argument('package', metavar='package', nargs='+', help='Package to build')
 args = vars(parser.parse_args())
-
-print args
 
 print_commands_only = args['commands_only']
 
@@ -137,4 +150,4 @@ else:
     packages = filter(lambda x: x[0]!='.', os.listdir("../ports"))
 
 for package in packages:
-    build(package)
+    build(package, args['clean'])
