@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import os
 import sys
+import argparse
 from lxml import etree
 
 print_commands_only = 0
@@ -113,6 +114,16 @@ def build(package):
 
 built = []
 
+# Parse arguments
+parser = argparse.ArgumentParser(description='Build packages for playbook')
+parser.add_argument('-c', '--commands_only', action='store_const', const=1, help='Only print out the commands that would be executed, do not run them')
+parser.add_argument('package', metavar='package', nargs='+', help='Package to build')
+args = vars(parser.parse_args())
+
+print args
+
+print_commands_only = args['commands_only']
+
 # Go to ports directory
 logged_chdir(os.path.dirname(sys.argv[0]))
 logged_chdir("../ports")
@@ -120,8 +131,8 @@ logged_chdir("../ports")
 basedir = os.getcwd()
 
 # See what is there
-if( len(sys.argv) > 1 ):
-    packages = [ sys.argv[1] ]
+if( len(args['package']) >= 1 ):
+    packages = args['package']
 else:
     packages = filter(lambda x: x[0]!='.', os.listdir("../ports"))
 
