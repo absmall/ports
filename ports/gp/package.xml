@@ -1,4 +1,5 @@
 <port>
+    <depends>readline</depends>
     <download>
         <command>wget http://pari.math.u-bordeaux.fr/pub/pari/unix/pari-2.5.0.tar.gz</command>
         <command>tar xf pari-2.5.0.tar.gz</command>
@@ -8,7 +9,7 @@
     <build>
         <command>
             cd pari-2.5.0
-            doubleformat=1 ./Configure --host=arm-unknown-nto-qnx6.5.0eabi --without-readline --prefix=`pwd`/../../obj
+            doubleformat=1 ./Configure --host=arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../../obj
             cd Oqnx6.5.0eabi-arm-unknown-nto
             make install
         </command>
