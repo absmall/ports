@@ -26,7 +26,10 @@ def logged_command(cmd):
     global print_commands_only
 
     if print_commands_only:
-        print cmd.strip()
+        for i in cmd.split('\n'):
+            i = i.strip()
+            if i != "":
+                print i
     else:
         os.system(cmd)
 
