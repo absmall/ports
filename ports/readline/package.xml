@@ -15,4 +15,18 @@
         <file>lib/libreadline.so.6</file>
         <file>lib/libhistory.so.6</file>
     </package>
+    <export>
+        <file>lib/libhistory.so.6</file>
+        <file>lib/libreadline.so.6</file>
+        <file>lib/libhistory.a</file>
+        <file>lib/libreadline.a</file>
+        <file>include/readline/rlstdc.h</file>
+        <file>include/readline/tilde.h</file>
+        <file>include/readline/rlconf.h</file>
+        <file>include/readline/keymaps.h</file>
+        <file>include/readline/history.h</file>
+        <file>include/readline/chardefs.h</file>
+        <file>include/readline/readline.h</file>
+        <file>include/readline/rltypedefs.h</file>
+    </export>
 </port>

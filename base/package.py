@@ -5,6 +5,7 @@ import argparse
 import shutil
 from lxml import etree
 
+statically_package = 0
 print_commands_only = 0
 
 def logged_chdir(dir):
@@ -18,9 +19,13 @@ def logged_mkdir(dir):
     global print_commands_only
 
     if print_commands_only:
-        print "mkdir %s" % dir
+        print "mkdir -p %s" % dir
     else:
-        os.mkdir(dir)
+        try:
+            os.mkdir(dir)
+        except OSError:
+            # If directory exists, that's okay
+            pass
 
 def logged_command(cmd):
     global print_commands_only
@@ -55,6 +60,14 @@ def mkworkdir(clean):
     except OSError as e:
         pass
 
+def logged_link(target, name):
+    global print_commands_only
+
+    if print_commands_only:
+        print "ln -s %s %s" % (target, name)
+    else:
+        os.system("ln -s %s %s" % (target, name))
+
 def downloadpackage(tree):
     global print_commands_only
 
@@ -68,7 +81,7 @@ def downloadpackage(tree):
     else:
         for i in download:
             if i.tag == "command":
-                os.system(i.text)
+                logged_command(i.text)
     logged_chdir("..")
 
 def compilepackage(tree):
@@ -101,6 +114,35 @@ def packagepackage(tree, package):
     logged_command(command)
     logged_chdir("..")
 
+def link(source, dest):
+    global basedir
+
+    # Go to ports directory
+    logged_chdir("%s/%s" % (basedir, source))
+
+    # Read in the descriptor
+    tree = etree.parse("package.xml")
+
+    # We need to follow the link paths to make sure
+    # all necessary libraries are available
+    for i in tree.getroot():
+        if i.tag == "depends":
+            link(i.text, dest)
+
+    exportNode = tree.getroot().find("export")
+
+    logged_chdir("obj")
+    # Make sure directories exist
+    for i in exportNode:
+        if i.tag == "file":
+            logged_mkdir("../../%s/obj/%s" % (dest, os.path.dirname(i.text)))
+    # Setup symlinks
+    for i in exportNode:
+        if i.tag == "file":
+            logged_link(os.path.relpath(i.text, "../../%s/obj/%s" % (dest, os.path.dirname(i.text))), "../../%s/obj/%s" % (dest, i.text))
+    logged_chdir("..")
+
+
 def build(package, clean):
     global basedir
     global built
@@ -123,7 +165,17 @@ def build(package, clean):
     # Go back to ports directory in case we left to build dependencies
     logged_chdir("%s/%s" % (basedir, package))
 
+    # Set up the workspace
     mkworkdir(clean)
+
+    # Link all dependencies
+    for i in tree.getroot():
+        if i.tag == "depends":
+            link(i.text, package)
+
+    # Back to ports directory in case we left to link dependencies
+    logged_chdir("%s/%s" % (basedir, package))
+
     downloadpackage(tree)
     compilepackage(tree)
     packagepackage(tree, package)
@@ -133,12 +185,14 @@ built = []
 
 # Parse arguments
 parser = argparse.ArgumentParser(description='Build packages for playbook')
+parser.add_argument('-s', '--static', action='store_const', const=1, help='Include all shared libraries in the package (this is like statically linking the libraries')
 parser.add_argument('-c', '--commands_only', action='store_const', const=1, help='Only print out the commands that would be executed, do not run them')
 parser.add_argument('--clean', action='store_const', const=1, help='Remove all built code before beginning')
 parser.add_argument('package', metavar='package', nargs='+', help='Package to build')
 args = vars(parser.parse_args())
 
 print_commands_only = args['commands_only']
+statically_package = args['static']
 
 # Go to ports directory
 logged_chdir(os.path.dirname(sys.argv[0]))
