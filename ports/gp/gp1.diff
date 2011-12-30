@@ -158,6 +158,57 @@ diff -Naur pari-2.5.0.orig/config/get_Qt pari-2.5.0/config/get_Qt
     QTLIB="-lQtCore -lQtGui"
     which_graphic_lib=Qt4
     if test -z "$QTDIR"; then
+diff -Naur pari-2.5.0.orig/config/get_readline pari-2.5.0/config/get_readline
+--- pari-2.5.0.orig/config/get_readline	2011-05-30 05:28:34.000000000 -0400
++++ pari-2.5.0/config/get_readline	2011-12-29 23:21:23.000000000 -0500
+@@ -135,25 +135,29 @@
+   fi
+ fi
+ 
+-if test -n "$readline"; then
+-  exe=$osname-$arch-rlv$$
+-  $CC $CFLAGS $extraflag $rl_extra_flags $RLINCLUDE -o $exe rl_version.c $RLLIBS 2> /dev/null
+-  if test -r $exe; then
+-    readline_version=`env LD_LIBRARY_PATH="$LD_LIBRARY_PATH$dir_sep$readline" $RUNTEST $exe`;
+-  else
+-    readline_version="?.?";
+-  fi
+-  rm -f $exe $exe$exe_suff;
+-  case "$readline_version" in
+-  *Editline*|*EditLine*) readline=
+-    echo "###"
+-    echo "### Editline wrapper detected, building without readline support"
++if test -z "$target_host"; then
++  if test -n "$readline"; then
++    exe=$osname-$arch-rlv$$
++    $CC $CFLAGS $extraflag $rl_extra_flags $RLINCLUDE -o $exe rl_version.c $RLLIBS 2> /dev/null
++    if test -r $exe; then
++      readline_version=`env LD_LIBRARY_PATH="$LD_LIBRARY_PATH$dir_sep$readline" $RUNTEST $exe`;
++    else
++      readline_version="?.?";
++    fi
++    rm -f $exe $exe$exe_suff;
++    case "$readline_version" in
++    *Editline*|*EditLine*) readline=
++      echo "###"
++      echo "### Editline wrapper detected, building without readline support"
+     echo "###";;
+-  \?.\?) readline=
+-    echo "###"
+-    echo "### Readline library detected, but does not seem to work"
+-    echo "###";;
+-  esac
++      \?.\?) readline=
++      echo "###"
++      echo "### Readline library detected, but does not seem to work"
++      echo "###";;
++    esac
++  fi
++else
++  readline_version="?.?";
+ fi
+ 
+ if test -n "$readline"; then
 diff -Naur pari-2.5.0.orig/config/Makefile.SH pari-2.5.0/config/Makefile.SH
 --- pari-2.5.0.orig/config/Makefile.SH	2011-05-30 05:28:34.000000000 -0400
 +++ pari-2.5.0/config/Makefile.SH	2011-12-22 17:59:35.000000000 -0500
