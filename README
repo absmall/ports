@@ -1,0 +1,26 @@
+What is this?
+This is a system to automatically compile open source software for BB10. It
+will download and build an application or library and all of its dependencies.
+
+To use:
+Run "base/package.py -h" for the most up-to-date building instructions. For a simple case, if you wanted to build gnuplot, you would run:
+base/package.py gnuplot
+
+This will product ports/gnuplot/obj/gnuplot.bar which can be loaded to playbook.
+
+
+Caveats:
+Building libraries is supported, but the libraries won't work be useful on
+playbook until I make some modifications to the loader.  Linking to a library
+is not in final form. Ideally, an application package should NOT include all
+the libraries it links to. But that isn't working yet, so currently, the
+package should build them all in. This isn't as hard as it sounds, because they
+will automatically be symlinked into the package's obj/lib directory, so it
+just requires a change to the <package> section of package.xml to include the
+appropriate files. Eventually, they should not be included in the package, but
+instead have the loader create symlinks on the device to exactly the same
+location where they are now on the host machine.
+
+Notes to packagers:
+rpath is important on playbook. It should always be set to app/native/lib. This
+will remain true before and after I implement the second phase of library loading.
