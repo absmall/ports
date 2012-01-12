@@ -1,0 +1,22 @@
+<port>
+    <!--<depends>readline</depends>-->
+    <download>
+        <command>wget http://probability.ca/cran/src/base/R-2/R-2.12.1.tar.gz</command>
+        <command>tar xf R-2.12.1.tar.gz</command>
+        <command>patch -p0 &lt; ../R1.diff</command>
+        <result>R-2.12.1</result>
+    </download>
+    <build>
+        <command>
+            cd R-2.12.1
+            ./configure --host=arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../../obj --without-readline --without-x
+            make
+        </command>
+    </build>
+    <package>
+        <file>bin/R</file>
+        <file remote="res/icon.png">../icon.png</file>
+        <file>../splashscreen.png</file>
+        <file remote="res/splashscreen.png">../splashscreen.png</file>
+    </package>
+</port>
