@@ -95,7 +95,7 @@ def compilepackage(tree):
     logged_chdir("..")
 
 
-def packagepackage(tree, package):
+def packagepackage(tree, package, devMode):
     # Build a string for the command to execute
     command = "blackberry-nativepackager"
 
@@ -104,6 +104,8 @@ def packagepackage(tree, package):
 
     packageNode = tree.getroot().find("package")
     logged_chdir("obj")
+    if( devMode ):
+        command += " -devMode"
     for i in packageNode:
         if i.tag == "file":
             remote = i.get("remote")
@@ -111,6 +113,8 @@ def packagepackage(tree, package):
                 command += " -e \"%s\" %s" % (i.text, remote)
             else:
                 command += " -e \"%s\" %s" % (i.text, i.text)
+        elif i.tag == "argument":
+            command += " -arg \"%s\"" % i.text
     logged_command(command)
     logged_chdir("..")
 
@@ -143,7 +147,7 @@ def link(source, dest):
     logged_chdir("..")
 
 
-def build(package, clean):
+def build(package, clean, devMode):
     global basedir
     global built
 
@@ -178,7 +182,7 @@ def build(package, clean):
 
     downloadpackage(tree)
     compilepackage(tree)
-    packagepackage(tree, package)
+    packagepackage(tree, package, devMode)
     built += package
 
 built = []
@@ -188,6 +192,7 @@ parser = argparse.ArgumentParser(description='Build packages for playbook')
 parser.add_argument('-s', '--static', action='store_const', const=1, help='Include all shared libraries in the package (this is like statically linking the libraries')
 parser.add_argument('-c', '--commands_only', action='store_const', const=1, help='Only print out the commands that would be executed, do not run them')
 parser.add_argument('--clean', action='store_const', const=1, help='Remove all built code before beginning')
+parser.add_argument('--dev', action='store_const', const=1, help='Build in development mode (can be loaded using a debug token, can be debugged, cannot be signed)')
 parser.add_argument('package', metavar='package', nargs='+', help='Package to build')
 args = vars(parser.parse_args())
 
@@ -207,4 +212,4 @@ else:
     packages = filter(lambda x: x[0]!='.', os.listdir("../ports"))
 
 for package in packages:
-    build(package, args['clean'])
+    build(package, args['clean'], args['dev'])
