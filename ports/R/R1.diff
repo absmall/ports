@@ -1,0 +1,201 @@
+diff -Naur R-2.12.1-orig//configure R-2.12.1/configure
+--- R-2.12.1-orig//configure	2010-12-08 18:05:51.000000000 -0500
++++ R-2.12.1/configure	2012-01-12 12:12:21.305398029 -0500
+@@ -6838,7 +6838,7 @@
+ $as_echo "defining F77 to be ${F77}" >&6; }
+ else
+   F77=
+-  F95_compilers="f95 fort xlf95 ifort ifc efc pgf95 lf95 gfortran ftn g95"
++  F95_compilers="f95 fort xlf95 ifort ifc efc pgf95 lf95 arm-unknown-nto-qnx6.5.0eabi-gfortran ftn g95"
+   F90_compilers="f90 xlf90 pgf90 pghpf epcf90"
+   case "${host_os}" in
+     hpux*)
+@@ -6850,7 +6850,7 @@
+   if test "${GCC}" = yes; then
+     case "${CC_VERSION}" in
+       3.*) GCC_Fortran_compiler=g77 ;;
+-      4.*) GCC_Fortran_compiler=gfortran ;;
++      4.*) GCC_Fortran_compiler=arm-unknown-nto-qnx6.5.0eabi-gfortran ;;
+     esac
+   fi
+   for ac_prog in  ${GCC_Fortran_compiler} ${F95_compilers} \
+@@ -6905,7 +6905,7 @@
+ ac_link='$F77 -o conftest$ac_exeext $FFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ ac_compiler_gnu=$ac_cv_f77_compiler_gnu
+ if test -n "$ac_tool_prefix"; then
+-  for ac_prog in g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77 xlf90 f90 pgf90 pghpf epcf90 gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn
++  for ac_prog in g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77 xlf90 f90 pgf90 pghpf epcf90 arm-unknown-nto-qnx6.5.0eabi-gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn
+   do
+     # Extract the first word of "$ac_tool_prefix$ac_prog", so it can be a program name with args.
+ set dummy $ac_tool_prefix$ac_prog; ac_word=$2
+@@ -6949,7 +6949,7 @@
+ fi
+ if test -z "$F77"; then
+   ac_ct_F77=$F77
+-  for ac_prog in g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77 xlf90 f90 pgf90 pghpf epcf90 gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn
++  for ac_prog in g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77 xlf90 f90 pgf90 pghpf epcf90 arm-unknown-nto-qnx6.5.0eabi-gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn
+ do
+   # Extract the first word of "$ac_prog", so it can be a program name with args.
+ set dummy $ac_prog; ac_word=$2
+@@ -10932,7 +10932,7 @@
+ ac_link='$F77 -o conftest$ac_exeext $FFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ ac_compiler_gnu=$ac_cv_f77_compiler_gnu
+ if test -n "$ac_tool_prefix"; then
+-  for ac_prog in g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77 xlf90 f90 pgf90 pghpf epcf90 gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn
++  for ac_prog in g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77 xlf90 f90 pgf90 pghpf epcf90 arm-unknown-nto-qnx6.5.0eabi-gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn
+   do
+     # Extract the first word of "$ac_tool_prefix$ac_prog", so it can be a program name with args.
+ set dummy $ac_tool_prefix$ac_prog; ac_word=$2
+@@ -10976,7 +10976,7 @@
+ fi
+ if test -z "$F77"; then
+   ac_ct_F77=$F77
+-  for ac_prog in g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77 xlf90 f90 pgf90 pghpf epcf90 gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn
++  for ac_prog in g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77 xlf90 f90 pgf90 pghpf epcf90 arm-unknown-nto-qnx6.5.0eabi-gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn
+ do
+   # Extract the first word of "$ac_prog", so it can be a program name with args.
+ set dummy $ac_prog; ac_word=$2
+@@ -25245,7 +25245,7 @@
+     esac
+     case  "${F77}" in
+       ## gfortran: At least for 4.3.x -O2 gives faulty code
+-      gfortran*)
++      arm-unknown-nto-qnx6.5.0eabi-gfortran*)
+  	if test "x$userFFLAGS" = x; then
+           if test $ac_cv_prog_f77_g = yes; then
+ 	    case "${host_cpu}" in
+@@ -32598,7 +32598,7 @@
+ #endif
+ int main() {
+     char *ver = BZ2_bzlibVersion();
+-    exit(strcmp(ver, "1.0.6") < 0);
++    exit(0); /* edd: override, Debian's 1.0.5 is patched  strcmp(ver, "1.0.6") < 0); */
+ }
+ 
+ _ACEOF
+@@ -34099,7 +34099,7 @@
+ ac_link='$FC -o conftest$ac_exeext $FCFLAGS $LDFLAGS $ac_fcflags_srcext conftest.$ac_ext $LIBS >&5'
+ ac_compiler_gnu=$ac_cv_fc_compiler_gnu
+ if test -n "$ac_tool_prefix"; then
+-  for ac_prog in gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn xlf90 f90 pgf90 pghpf epcf90 g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77
++  for ac_prog in arm-unknown-nto-qnx6.5.0eabi-gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn xlf90 f90 pgf90 pghpf epcf90 g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77
+   do
+     # Extract the first word of "$ac_tool_prefix$ac_prog", so it can be a program name with args.
+ set dummy $ac_tool_prefix$ac_prog; ac_word=$2
+@@ -34143,7 +34143,7 @@
+ fi
+ if test -z "$FC"; then
+   ac_ct_FC=$FC
+-  for ac_prog in gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn xlf90 f90 pgf90 pghpf epcf90 g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77
++  for ac_prog in arm-unknown-nto-qnx6.5.0eabi-gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn xlf90 f90 pgf90 pghpf epcf90 g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77
+ do
+   # Extract the first word of "$ac_prog", so it can be a program name with args.
+ set dummy $ac_prog; ac_word=$2
+@@ -34306,7 +34306,7 @@
+ ac_link='$FC -o conftest$ac_exeext $FCFLAGS $LDFLAGS $ac_fcflags_srcext conftest.$ac_ext $LIBS >&5'
+ ac_compiler_gnu=$ac_cv_fc_compiler_gnu
+ if test -n "$ac_tool_prefix"; then
+-  for ac_prog in gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn xlf90 f90 pgf90 pghpf epcf90 g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77
++  for ac_prog in arm-unknown-nto-qnx6.5.0eabi-gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn xlf90 f90 pgf90 pghpf epcf90 g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77
+   do
+     # Extract the first word of "$ac_tool_prefix$ac_prog", so it can be a program name with args.
+ set dummy $ac_tool_prefix$ac_prog; ac_word=$2
+@@ -34350,7 +34350,7 @@
+ fi
+ if test -z "$FC"; then
+   ac_ct_FC=$FC
+-  for ac_prog in gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn xlf90 f90 pgf90 pghpf epcf90 g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77
++  for ac_prog in arm-unknown-nto-qnx6.5.0eabi-gfortran g95 xlf95 f95 fort ifort ifc efc pgf95 lf95 ftn xlf90 f90 pgf90 pghpf epcf90 g77 xlf f77 frt pgf77 cf77 fort77 fl32 af77
+ do
+   # Extract the first word of "$ac_prog", so it can be a program name with args.
+ set dummy $ac_prog; ac_word=$2
+@@ -37250,7 +37250,7 @@
+     ;;
+   linux*)
+     case  "${FC}" in
+-      gfortran)
++      arm-unknown-nto-qnx6.5.0eabi-gfortran)
+  	if test "x$userFCFLAGS" = x; then
+           if test $ac_cv_prog_fc_g = yes; then
+ 	    case "${host_cpu}" in
+diff -Naur R-2.12.1-orig//src/extra/xdr/rpc/types.h R-2.12.1/src/extra/xdr/rpc/types.h
+--- R-2.12.1-orig//src/extra/xdr/rpc/types.h	2010-03-17 10:43:05.000000000 -0400
++++ R-2.12.1/src/extra/xdr/rpc/types.h	2012-01-12 12:12:21.305398029 -0500
+@@ -59,7 +59,7 @@
+ #	define NULL 0
+ #endif
+ 
+-#if !defined(WIN32) && !defined(macintosh) && !defined(__CYGWIN__)
++#if !defined(WIN32) && !defined(macintosh) && !defined(__CYGWIN__) && !defined(__QNX__)
+ extern char *malloc();
+ #endif
+ #if defined(WIN32) && defined(LEA_MALLOC)
+diff -Naur R-2.12.1-orig//src/extra/xdr/xdr_float.c R-2.12.1/src/extra/xdr/xdr_float.c
+--- R-2.12.1-orig//src/extra/xdr/xdr_float.c	2010-03-25 04:31:54.000000000 -0400
++++ R-2.12.1/src/extra/xdr/xdr_float.c	2012-01-12 12:12:21.313398032 -0500
+@@ -115,7 +115,7 @@
+ #endif
+ #endif
+ 
+-#if !defined(mc68000) && !defined(sparc) && !defined(mips) && !defined(mmax) && !defined(_X86_) && !defined(Macintosh)
++#if !defined(mc68000) && !defined(sparc) && !defined(mips) && !defined(mmax) && !defined(_X86_) && !defined(Macintosh) && !defined(__arm__)
+ 	struct ieee_single is;
+ 	struct vax_single vs, *vsp;
+ 	struct sgl_limits *lim;
+@@ -124,7 +124,7 @@
+ 	switch (xdrs->x_op) {
+ 
+ 	case XDR_ENCODE:
+-#if defined(mc68000) || defined(sparc) || defined(mips) || defined(mmax) || defined(_X86_) || defined(Macintosh)
++#if defined(mc68000) || defined(sparc) || defined(mips) || defined(mmax) || defined(_X86_) || defined(Macintosh) || defined(__arm__)
+ 		return (XDR_PUTLONG(xdrs, (long *)fp));
+ #else
+ 		vs = *((struct vax_single *)fp);
+@@ -146,7 +146,7 @@
+ #endif
+ 
+ 	case XDR_DECODE:
+-#if defined(mc68000) || defined(sparc) || defined(mips) || defined(mmax) || defined(_X86_) || defined(Macintosh)
++#if defined(mc68000) || defined(sparc) || defined(mips) || defined(mmax) || defined(_X86_) || defined(Macintosh) || defined(__arm__)
+ 		return (XDR_GETLONG(xdrs, (long *)fp));
+ #else
+ 		vsp = (struct vax_single *)fp;
+@@ -221,7 +221,7 @@
+ 	double *dp;
+ {
+ 	register long *lp;
+-#if !defined(mc68000) && !defined(sparc) && !defined(mips) && !defined(mmax) && !defined(_X86_) && !defined(Macintosh)
++#if !defined(mc68000) && !defined(sparc) && !defined(mips) && !defined(mmax) && !defined(_X86_) && !defined(Macintosh) && !defined(__arm__)
+ 	struct	ieee_double id;
+ 	struct	vax_double vd;
+ 	register struct dbl_limits *lim;
+@@ -231,7 +231,7 @@
+ 	switch (xdrs->x_op) {
+ 
+ 	case XDR_ENCODE:
+-#if defined(mc68000) || defined(sparc) || defined(mips) || defined(mmax) || defined(_X86_) || defined(Macintosh)
++#if defined(mc68000) || defined(sparc) || defined(mips) || defined(mmax) || defined(_X86_) || defined(Macintosh) || defined(__arm__)
+ 		lp = (long *)dp;
+ #else
+ 		vd = *((struct vax_double *)dp);
+@@ -262,7 +262,7 @@
+ 		return (XDR_PUTLONG(xdrs, lp++) && XDR_PUTLONG(xdrs, lp));
+ #endif
+ 	case XDR_DECODE:
+-#if defined(mc68000) || defined(sparc) || defined(mips) || defined(mmax) || defined(_X86_) || defined(Macintosh)
++#if defined(mc68000) || defined(sparc) || defined(mips) || defined(mmax) || defined(_X86_) || defined(Macintosh) || defined(__arm__)
+ 		lp = (long *)dp;
+ #if defined(_X86_)
+ 		return (XDR_GETLONG(xdrs, lp+1) && XDR_GETLONG(xdrs, lp));
+diff -Naur R-2.12.1-orig//src/include/Defn.h R-2.12.1/src/include/Defn.h
+--- R-2.12.1-orig//src/include/Defn.h	2010-09-16 18:02:11.000000000 -0400
++++ R-2.12.1/src/include/Defn.h	2012-01-13 16:57:43.561605740 -0500
+@@ -178,7 +178,7 @@
+ # include <limits.h>
+ #endif
+ 
+-#if defined HAVE_DECL_SIZE_MAX && HAVE_DECL_SIZE_MAX
++#if (defined (HAVE_DECL_SIZE_MAX) && HAVE_DECL_SIZE_MAX) || (defined(SIZE_MAX) && SIZE_MAX)
+   typedef size_t R_size_t;
+ # define R_SIZE_T_MAX SIZE_MAX
+ #else
