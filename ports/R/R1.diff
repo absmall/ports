@@ -1,6 +1,6 @@
-diff -Naur R-2.12.1/configure ../r-base-2.12.1//configure
---- R-2.12.1/configure	2010-12-08 18:05:51.000000000 -0500
-+++ ../r-base-2.12.1//configure	2011-11-29 09:34:59.766059190 -0500
+diff -Naur R-2.12.1-orig//configure R-2.12.1/configure
+--- R-2.12.1-orig//configure	2010-12-08 18:05:51.000000000 -0500
++++ R-2.12.1/configure	2012-01-12 12:12:21.305398029 -0500
 @@ -6838,7 +6838,7 @@
  $as_echo "defining F77 to be ${F77}" >&6; }
  else
@@ -118,9 +118,9 @@ diff -Naur R-2.12.1/configure ../r-base-2.12.1//configure
   	if test "x$userFCFLAGS" = x; then
            if test $ac_cv_prog_fc_g = yes; then
  	    case "${host_cpu}" in
-diff -Naur R-2.12.1/src/extra/xdr/rpc/types.h ../r-base-2.12.1//src/extra/xdr/rpc/types.h
---- R-2.12.1/src/extra/xdr/rpc/types.h	2010-03-17 10:43:05.000000000 -0400
-+++ ../r-base-2.12.1//src/extra/xdr/rpc/types.h	2011-11-29 09:59:28.565017008 -0500
+diff -Naur R-2.12.1-orig//src/extra/xdr/rpc/types.h R-2.12.1/src/extra/xdr/rpc/types.h
+--- R-2.12.1-orig//src/extra/xdr/rpc/types.h	2010-03-17 10:43:05.000000000 -0400
++++ R-2.12.1/src/extra/xdr/rpc/types.h	2012-01-12 12:12:21.305398029 -0500
 @@ -59,7 +59,7 @@
  #	define NULL 0
  #endif
@@ -130,9 +130,9 @@ diff -Naur R-2.12.1/src/extra/xdr/rpc/types.h ../r-base-2.12.1//src/extra/xdr/rp
  extern char *malloc();
  #endif
  #if defined(WIN32) && defined(LEA_MALLOC)
-diff -Naur R-2.12.1/src/extra/xdr/xdr_float.c ../r-base-2.12.1//src/extra/xdr/xdr_float.c
---- R-2.12.1/src/extra/xdr/xdr_float.c	2010-03-25 04:31:54.000000000 -0400
-+++ ../r-base-2.12.1//src/extra/xdr/xdr_float.c	2011-11-29 10:01:52.981438520 -0500
+diff -Naur R-2.12.1-orig//src/extra/xdr/xdr_float.c R-2.12.1/src/extra/xdr/xdr_float.c
+--- R-2.12.1-orig//src/extra/xdr/xdr_float.c	2010-03-25 04:31:54.000000000 -0400
++++ R-2.12.1/src/extra/xdr/xdr_float.c	2012-01-12 12:12:21.313398032 -0500
 @@ -115,7 +115,7 @@
  #endif
  #endif
@@ -187,3 +187,15 @@ diff -Naur R-2.12.1/src/extra/xdr/xdr_float.c ../r-base-2.12.1//src/extra/xdr/xd
  		lp = (long *)dp;
  #if defined(_X86_)
  		return (XDR_GETLONG(xdrs, lp+1) && XDR_GETLONG(xdrs, lp));
+diff -Naur R-2.12.1-orig//src/include/Defn.h R-2.12.1/src/include/Defn.h
+--- R-2.12.1-orig//src/include/Defn.h	2010-09-16 18:02:11.000000000 -0400
++++ R-2.12.1/src/include/Defn.h	2012-01-13 16:57:43.561605740 -0500
+@@ -178,7 +178,7 @@
+ # include <limits.h>
+ #endif
+ 
+-#if defined HAVE_DECL_SIZE_MAX && HAVE_DECL_SIZE_MAX
++#if (defined (HAVE_DECL_SIZE_MAX) && HAVE_DECL_SIZE_MAX) || (defined(SIZE_MAX) && SIZE_MAX)
+   typedef size_t R_size_t;
+ # define R_SIZE_T_MAX SIZE_MAX
+ #else
