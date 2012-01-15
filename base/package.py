@@ -110,9 +110,11 @@ def packagepackage(tree, package, devMode):
         if i.tag == "file":
             remote = i.get("remote")
             if remote:
-                command += " -e \"%s\" %s" % (i.text, remote)
+                target = remote
             else:
-                command += " -e \"%s\" %s" % (i.text, i.text)
+                target = i.text
+
+            command += " -e \"%s\" %s" % (os.path.expandvars(i.text), target)
         elif i.tag == "argument":
             command += " -arg \"%s\"" % i.text
     logged_command(command)

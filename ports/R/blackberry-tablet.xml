@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<qnx xmlns="http://www.qnx.com/schemas/application/1.0">
+    <id>org.demo.R</id>
+    <filename>R</filename>
+    <name>R</name>
+    <versionNumber>1.0.0</versionNumber>
+    <description>Statistical language</description>
+    <copyright>2011</copyright>
+
+    <initialWindow>
+        <systemChrome>none</systemChrome>
+        <transparent>false</transparent>
+        <autoOrients>true</autoOrients>
+        <aspectRatio>landscape</aspectRatio>
+    </initialWindow>
+
+    <publisher>demo.org</publisher>
+    <permission system="true">run_native</permission>
+    <category>core.games</category>
+    <icon><image>res/icon.png</image></icon>
+    <splashscreen>res/splashscreen.png</splashscreen>
+    <env var="LD_LIBRARY_PATH" value="app/native/lib"/>
+    <env var="R_HOME" value="app/native"/>
+</qnx>

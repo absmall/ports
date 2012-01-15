@@ -19,8 +19,10 @@
     </build>
     <package>
         <file>R</file>
+        <argument>--no-save</argument>
         <file remote="res/icon.png">../icon.png</file>
         <file remote="res/splashscreen.png">../splashscreen.png</file>
+        <file remote="lib/libgfortran.so.3">$QNX_TARGET/armle-v7/lib/libgfortran.so.3</file>
         <file>etc/Renviron</file>
         <file>lib/libRblas.so</file>
         <file>lib/libRlapack.so</file>
