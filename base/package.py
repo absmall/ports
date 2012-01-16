@@ -166,7 +166,7 @@ def build(package, clean, devMode):
     # Build all dependencies
     for i in tree.getroot():
         if i.tag == "depends":
-            build(i.text, clean)
+            build(i.text, clean, devMode)
 
     # Go back to ports directory in case we left to build dependencies
     logged_chdir("%s/%s" % (basedir, package))

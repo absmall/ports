@@ -12,6 +12,14 @@
         </command>
     </build>
     <package>
+        <file>include/readline/chardefs.h</file>
+        <file>include/readline/history.h</file>
+        <file>include/readline/keymaps.h</file>
+        <file>include/readline/readline.h</file>
+        <file>include/readline/rlconf.h</file>
+        <file>include/readline/rlstdc.h</file>
+        <file>include/readline/rltypedefs.h</file>
+        <file>include/readline/tilde.h</file>
         <file>lib/libreadline.so.6</file>
         <file>lib/libhistory.so.6</file>
     </package>
