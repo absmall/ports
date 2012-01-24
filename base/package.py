@@ -22,7 +22,7 @@ def logged_mkdir(dir):
         print "mkdir -p %s" % dir
     else:
         try:
-            os.mkdir(dir)
+            os.makedirs(dir)
         except OSError:
             # If directory exists, that's okay
             pass
@@ -44,7 +44,11 @@ def logged_rmpath(dir):
     if print_commands_only:
         print "rm -rf %s" % dir
     else:
-        shutil.rmtree(dir)
+        try:
+            shutil.rmtree(dir)
+        except OSError:
+            # If directory doesn't exist, that's okay
+            pass
 
 def mkworkdir(clean):
     if clean:
