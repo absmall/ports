@@ -22,11 +22,5 @@
         <file remote="res/icon.png">../icon.png</file>
         <file>../splashscreen.png</file>
         <file remote="res/splashscreen.png">../splashscreen.png</file>
-        <file remote="lib/libqtermlib.so">libqtermlib.so</file>
-        <file remote="lib/libQtCore.so.4">libQtCore.so</file>
-        <file remote="lib/libQtGui.so.4">libQtGui.so</file>
-        <file remote="lib/libQtOpenGL.so.4">libQtOpenGL.so</file>
-        <file remote="lib/libterm.so">libterm.so</file>
-        <file remote="lib/platforms/libblackberry.so">libblackberry.so</file>
     </package>
 </port>

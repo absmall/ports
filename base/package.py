@@ -22,8 +22,8 @@ def logged_mkdir(dir):
         print "mkdir -p %s" % dir
     else:
         try:
-            os.mkdir(dir)
-        except OSError:
+            os.makedirs(dir)
+        except OSError as err:
             # If directory exists, that's okay
             pass
 
@@ -66,6 +66,7 @@ def logged_link(target, name):
     if print_commands_only:
         print "ln -s %s %s" % (target, name)
     else:
+        print "ln -s %s %s" % (target, name)
         os.system("ln -s %s %s" % (target, name))
 
 def downloadpackage(tree):

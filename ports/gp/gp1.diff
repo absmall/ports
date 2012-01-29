@@ -1,6 +1,6 @@
 diff -Naur pari-2.5.0.orig/config/get_cc pari-2.5.0/config/get_cc
 --- pari-2.5.0.orig/config/get_cc	2011-05-30 05:28:34.000000000 -0400
-+++ pari-2.5.0/config/get_cc	2011-12-22 17:50:45.000000000 -0500
++++ pari-2.5.0/config/get_cc	2012-01-28 21:07:46.000000000 -0500
 @@ -27,7 +27,12 @@
  if test -z "$CC"; then
    echo Looking for the compilers ...
@@ -96,7 +96,7 @@ diff -Naur pari-2.5.0.orig/config/get_cc pari-2.5.0/config/get_cc
  if test -z "$__gnuc__"; then
 diff -Naur pari-2.5.0.orig/config/get_double_format pari-2.5.0/config/get_double_format
 --- pari-2.5.0.orig/config/get_double_format	2011-05-30 05:28:34.000000000 -0400
-+++ pari-2.5.0/config/get_double_format	2011-12-22 17:10:13.000000000 -0500
++++ pari-2.5.0/config/get_double_format	2012-01-28 21:07:46.000000000 -0500
 @@ -1,21 +1,25 @@
  exe=$osname-$arch-endian$$
 -if ($CC $CFLAGS $extraflag endian.c -o $exe 2>/dev/null); then
@@ -141,7 +141,7 @@ diff -Naur pari-2.5.0.orig/config/get_double_format pari-2.5.0/config/get_double
  cat << EOT
 diff -Naur pari-2.5.0.orig/config/get_Qt pari-2.5.0/config/get_Qt
 --- pari-2.5.0.orig/config/get_Qt	2011-05-30 05:28:34.000000000 -0400
-+++ pari-2.5.0/config/get_Qt	2011-12-22 17:21:39.000000000 -0500
++++ pari-2.5.0/config/get_Qt	2012-01-28 21:07:46.000000000 -0500
 @@ -1,11 +1,12 @@
  if test -z "$with_qt"; then
    with_qt=yes
@@ -160,7 +160,16 @@ diff -Naur pari-2.5.0.orig/config/get_Qt pari-2.5.0/config/get_Qt
     if test -z "$QTDIR"; then
 diff -Naur pari-2.5.0.orig/config/get_readline pari-2.5.0/config/get_readline
 --- pari-2.5.0.orig/config/get_readline	2011-05-30 05:28:34.000000000 -0400
-+++ pari-2.5.0/config/get_readline	2011-12-29 23:21:23.000000000 -0500
++++ pari-2.5.0/config/get_readline	2012-01-29 14:59:39.176853147 -0500
+@@ -112,7 +112,7 @@
+     rl_include=`dirname $rl_include`
+     RLINCLUDE="-I$rl_include"
+   fi
+-  RLLIBS="-L$readline -lreadline"
++  RLLIBS="-L$readline -lreadline -lncurses"
+   if test -n "$rl_ncurses"; then
+     echo ..."Library ncurses needed by readline"
+     RLLIBS="$RLLIBS -L$rl_ncurses -lncurses"
 @@ -135,25 +135,29 @@
    fi
  fi
@@ -178,6 +187,10 @@ diff -Naur pari-2.5.0.orig/config/get_readline pari-2.5.0/config/get_readline
 -  *Editline*|*EditLine*) readline=
 -    echo "###"
 -    echo "### Editline wrapper detected, building without readline support"
+-    echo "###";;
+-  \?.\?) readline=
+-    echo "###"
+-    echo "### Readline library detected, but does not seem to work"
 +if test -z "$target_host"; then
 +  if test -n "$readline"; then
 +    exe=$osname-$arch-rlv$$
@@ -193,10 +206,6 @@ diff -Naur pari-2.5.0.orig/config/get_readline pari-2.5.0/config/get_readline
 +      echo "###"
 +      echo "### Editline wrapper detected, building without readline support"
      echo "###";;
--  \?.\?) readline=
--    echo "###"
--    echo "### Readline library detected, but does not seem to work"
--    echo "###";;
 -  esac
 +      \?.\?) readline=
 +      echo "###"
@@ -211,7 +220,7 @@ diff -Naur pari-2.5.0.orig/config/get_readline pari-2.5.0/config/get_readline
  if test -n "$readline"; then
 diff -Naur pari-2.5.0.orig/config/Makefile.SH pari-2.5.0/config/Makefile.SH
 --- pari-2.5.0.orig/config/Makefile.SH	2011-05-30 05:28:34.000000000 -0400
-+++ pari-2.5.0/config/Makefile.SH	2011-12-22 17:59:35.000000000 -0500
++++ pari-2.5.0/config/Makefile.SH	2012-01-28 21:07:46.000000000 -0500
 @@ -61,11 +61,11 @@
  none)
    graph=plotnull;;
@@ -268,7 +277,7 @@ diff -Naur pari-2.5.0.orig/config/Makefile.SH pari-2.5.0/config/Makefile.SH
      cflags="$cflags \$(PLOTCFLAGS)"
 diff -Naur pari-2.5.0.orig/src/graph/plotQt4.c pari-2.5.0/src/graph/plotQt4.c
 --- pari-2.5.0.orig/src/graph/plotQt4.c	2011-05-30 05:28:26.000000000 -0400
-+++ pari-2.5.0/src/graph/plotQt4.c	2011-12-22 18:47:06.000000000 -0500
++++ pari-2.5.0/src/graph/plotQt4.c	2012-01-28 21:07:46.000000000 -0500
 @@ -50,6 +50,7 @@
  #include <Qt/qlabel.h>
  #include <Qt/qspinbox.h>
