@@ -150,7 +150,7 @@ def link(source, dest):
     logged_chdir("..")
 
 
-def build(package, clean, devMode):
+def build(package, deps, clean, devMode):
     global basedir
     global built
 
@@ -165,9 +165,10 @@ def build(package, clean, devMode):
     tree = etree.parse("package.xml")
 
     # Build all dependencies
-    for i in tree.getroot():
-        if i.tag == "depends":
-            build(i.text, clean, devMode)
+    if deps:
+        for i in tree.getroot():
+            if i.tag == "depends":
+                build(i.text, deps, clean, devMode)
 
     # Go back to ports directory in case we left to build dependencies
     logged_chdir("%s/%s" % (basedir, package))
@@ -196,6 +197,7 @@ parser.add_argument('-s', '--static', action='store_const', const=1, help='Inclu
 parser.add_argument('-c', '--commands_only', action='store_const', const=1, help='Only print out the commands that would be executed, do not run them')
 parser.add_argument('--clean', action='store_const', const=1, help='Remove all built code before beginning')
 parser.add_argument('--dev', action='store_const', const=1, help='Build in development mode (can be loaded using a debug token, can be debugged, cannot be signed)')
+parser.add_argument('--nodeps', action='store_const', const=1, help='Don\'t build dependencies, they have already been built.')
 parser.add_argument('package', metavar='package', nargs='+', help='Package to build')
 args = vars(parser.parse_args())
 
@@ -215,4 +217,4 @@ else:
     packages = filter(lambda x: x[0]!='.', os.listdir("../ports"))
 
 for package in packages:
-    build(package, args['clean'], args['dev'])
+    build(package, args['nodeps'] is None, args['clean'], args['dev'])
