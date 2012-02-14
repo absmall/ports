@@ -50,6 +50,19 @@ def logged_rmpath(dir):
             # If directory doesn't exist, that's okay
             pass
 
+def logged_git_create_repo():
+    global print_commands_only
+
+    if print_commands_only:
+        print "git init"
+        print "git add *"
+        print "git commit -m 'Initial commit'"
+    else:
+        os.system("git init")
+        os.system("git add *")
+        os.system("git commit -m 'Initial commit'")
+
+
 def mkworkdir(clean):
     if clean:
         logged_rmpath("src")
@@ -86,6 +99,7 @@ def downloadpackage(tree):
         for i in download:
             if i.tag == "command":
                 logged_command(i.text)
+        logged_git_create_repo()
     logged_chdir("..")
 
 def compilepackage(tree):
