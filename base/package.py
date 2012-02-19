@@ -73,14 +73,21 @@ def logged_git_create_repo():
         os.system("git commit -m 'Initial commit'")
         os.system("git tag initial HEAD")
 
-def logged_git_patch():
+def logged_git_create_patch():
     global print_commands_only
 
     if print_commands_only:
         print "git format-patch initial"
     else:
         return subprocess.check_output(["git","format-patch","initial"], ).split()
-            
+
+def logged_git_apply_patch(patch):
+    global print_commands_only
+
+    if print_commands_only:
+        print "git am %s" % patch
+    else:
+        os.system("git am %s" % patch)
 
 def mkworkdir(clean):
     if clean:
@@ -119,6 +126,8 @@ def downloadpackage(tree):
         for i in download:
             if i.tag == "command":
                 logged_command(i.text)
+            elif i.tag == "patch":
+                logged_git_apply_patch("../%s" % i.text)
         logged_git_create_repo()
     logged_chdir("..")
 
@@ -191,7 +200,7 @@ def build_patch(package):
     logged_chdir("%s/%s/src" % (basedir, package))
 
     # Generate the patches
-    patches = logged_git_patch()
+    patches = logged_git_create_patch()
     for i in patches:
         logged_mv(i, "..")
 
@@ -210,11 +219,10 @@ def build_patch(package):
         patch.text = i
         download.append( patch )
 
-        #etree.Element("patch").append(etree.Element("putch")
-        #etree.Element("patch").append(etree.Element(i))
-
     # Write package.xml back out with the changes
-    print etree.tostring(tree)
+    package = open("package.xml", "w")
+    package.write(etree.tostring(tree))
+    package.close()
 
 def build(package, deps, clean, devMode):
     global basedir

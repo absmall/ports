@@ -1,15 +1,15 @@
 <port>
-	<download>
-		<command>wget http://ftp.gnu.org/gnu/bash/bash-4.2.tar.gz</command>
-		<command>tar -zxvf bash-4.2.tar.gz</command>
-        <patch>../bash1.diff</patch>
+    <download>
+        <command>wget http://ftp.gnu.org/gnu/bash/bash-4.2.tar.gz</command>
+        <command>tar -zxvf bash-4.2.tar.gz</command>
         <result>bash-4.2</result>
-	</download>
+        <patch>0001-Customize-for-qnx-since-we-can-t-autodetect-job-cont.patch</patch>
+    </download>
     <build>
         <command>
-		cd bash-4.2
+        cd bash-4.2
         ./configure --cache-file cross-build/arm-qnx.cache --host arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../../obj
-		make install
+        make install
         </command>
     </build>
     <package>

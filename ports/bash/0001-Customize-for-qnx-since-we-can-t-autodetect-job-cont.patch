@@ -1,6 +1,19 @@
-diff -Naur bash-4.2.orig//cross-build/arm-qnx.cache bash-4.2/cross-build/arm-qnx.cache
---- bash-4.2.orig//cross-build/arm-qnx.cache	1969-12-31 19:00:00.000000000 -0500
-+++ bash-4.2/cross-build/arm-qnx.cache	2012-02-13 18:04:21.657170478 -0500
+From 884ce3f028c32d63a658ab46e39cdb898561c1fc Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Sat, 18 Feb 2012 22:00:51 -0500
+Subject: [PATCH] Customize for qnx since we can't autodetect job control when
+ cross compiling
+
+---
+ bash-4.2/cross-build/arm-qnx.cache |  404 ++++++++++++++++++++++++++++++++++++
+ 1 files changed, 404 insertions(+), 0 deletions(-)
+ create mode 100644 bash-4.2/cross-build/arm-qnx.cache
+
+diff --git a/bash-4.2/cross-build/arm-qnx.cache b/bash-4.2/cross-build/arm-qnx.cache
+new file mode 100644
+index 0000000..f80908c
+--- /dev/null
++++ b/bash-4.2/cross-build/arm-qnx.cache
 @@ -0,0 +1,404 @@
 +# This file is a shell script that caches the results of configure
 +# tests run on this system so they can be shared between configure
@@ -406,3 +419,6 @@ diff -Naur bash-4.2.orig//cross-build/arm-qnx.cache bash-4.2/cross-build/arm-qnx
 +nls_cv_header_intl=${nls_cv_header_intl=}
 +nls_cv_header_libgt=${nls_cv_header_libgt=}
 +nls_cv_use_gnu_gettext=${nls_cv_use_gnu_gettext=yes}
+-- 
+1.7.9
+
