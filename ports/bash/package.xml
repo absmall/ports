@@ -2,7 +2,7 @@
 	<download>
 		<command>wget http://ftp.gnu.org/gnu/bash/bash-4.2.tar.gz</command>
 		<command>tar -zxvf bash-4.2.tar.gz</command>
-        <command>patch -p0 &lt; ../bash1.diff</command>
+        <patch>../bash1.diff</patch>
         <result>bash-4.2</result>
 	</download>
     <build>

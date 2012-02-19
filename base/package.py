@@ -3,10 +3,19 @@ import os
 import sys
 import argparse
 import shutil
+import subprocess
 from lxml import etree
 
 statically_package = 0
 print_commands_only = 0
+
+def logged_mv(src, dst):
+    global print_commands_only
+
+    if print_commands_only:
+        print "mv %s %s" % (src,dst)
+    else:
+        os.system("mv %s %s" % (src,dst))
 
 def logged_chdir(dir):
     global print_commands_only
@@ -57,11 +66,21 @@ def logged_git_create_repo():
         print "git init"
         print "git add *"
         print "git commit -m 'Initial commit'"
+        print "git tag initial HEAD"
     else:
         os.system("git init")
         os.system("git add *")
         os.system("git commit -m 'Initial commit'")
+        os.system("git tag initial HEAD")
 
+def logged_git_patch():
+    global print_commands_only
+
+    if print_commands_only:
+        print "git format-patch initial"
+    else:
+        return subprocess.check_output(["git","format-patch","initial"], ).split()
+            
 
 def mkworkdir(clean):
     if clean:
@@ -167,6 +186,35 @@ def link(source, dest):
             logged_link(os.path.relpath(i.text, "../../%s/obj/%s" % (dest, os.path.dirname(i.text))), "../../%s/obj/%s" % (dest, i.text))
     logged_chdir("..")
 
+def build_patch(package):
+    global basedir
+    logged_chdir("%s/%s/src" % (basedir, package))
+
+    # Generate the patches
+    patches = logged_git_patch()
+    for i in patches:
+        logged_mv(i, "..")
+
+    logged_chdir("..")
+
+    # Read package.xml and update it with the patches
+    tree = etree.parse("package.xml")
+    download = tree.getroot().find("download")
+    # Remove existing patches
+    for i in download:
+        if i.tag == "patch":
+            download.remove(i)
+    # Add in new ones
+    for i in patches:
+        patch = etree.Element("patch")
+        patch.text = i
+        download.append( patch )
+
+        #etree.Element("patch").append(etree.Element("putch")
+        #etree.Element("patch").append(etree.Element(i))
+
+    # Write package.xml back out with the changes
+    print etree.tostring(tree)
 
 def build(package, deps, clean, devMode):
     global basedir
@@ -216,6 +264,7 @@ parser.add_argument('-c', '--commands_only', action='store_const', const=1, help
 parser.add_argument('--clean', action='store_const', const=1, help='Remove all built code before beginning')
 parser.add_argument('--dev', action='store_const', const=1, help='Build in development mode (can be loaded using a debug token, can be debugged, cannot be signed)')
 parser.add_argument('--nodeps', action='store_const', const=1, help='Don\'t build dependencies, they have already been built.')
+parser.add_argument('--prepare-patch', action='store_const', const=1, help='Create patch files for the package')
 parser.add_argument('package', metavar='package', nargs='+', help='Package to build')
 args = vars(parser.parse_args())
 
@@ -235,4 +284,7 @@ else:
     packages = filter(lambda x: x[0]!='.', os.listdir("../ports"))
 
 for package in packages:
-    build(package, args['nodeps'] is None, args['clean'], args['dev'])
+    if args['prepare_patch']:
+        build_patch(package)
+    else:
+        build(package, args['nodeps'] is None, args['clean'], args['dev'])
