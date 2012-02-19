@@ -1,0 +1,20 @@
+<port>
+    <download>
+        <command>git clone https://github.com/blackberry/Qt.git</command>
+        <result>Qt</result>
+    </download>
+    <build>
+        <command>
+        cd Qt
+        INSTALL_ROOT=`pwd`/../../obj ./configure-qsk arm v7le
+        make
+        make install
+        </command>
+    </build>
+    <package>
+    <!--TODO-->
+    </package>
+    <export>
+    <!--TODO-->
+    </export>
+</port>

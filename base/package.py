@@ -23,7 +23,7 @@ def logged_mkdir(dir):
     else:
         try:
             os.makedirs(dir)
-        except OSError as err:
+        except OSError:
             # If directory exists, that's okay
             pass
 
@@ -44,7 +44,24 @@ def logged_rmpath(dir):
     if print_commands_only:
         print "rm -rf %s" % dir
     else:
-        shutil.rmtree(dir)
+        try:
+            shutil.rmtree(dir)
+        except OSError:
+            # If directory doesn't exist, that's okay
+            pass
+
+def logged_git_create_repo():
+    global print_commands_only
+
+    if print_commands_only:
+        print "git init"
+        print "git add *"
+        print "git commit -m 'Initial commit'"
+    else:
+        os.system("git init")
+        os.system("git add *")
+        os.system("git commit -m 'Initial commit'")
+
 
 def mkworkdir(clean):
     if clean:
@@ -83,6 +100,7 @@ def downloadpackage(tree):
         for i in download:
             if i.tag == "command":
                 logged_command(i.text)
+        logged_git_create_repo()
     logged_chdir("..")
 
 def compilepackage(tree):
