@@ -1,0 +1,16 @@
+<port>
+    <download>
+        <command>git clone  git@git.rim.net:users/asmall/libterm</command>
+        <result>libterm</result>
+    </download>
+    <build>
+        <command>
+            cd libterm
+            cmake -DCMAKE_TOOLCHAIN_FILE=ntoarm.cmake -DCMAKE_INSTALL_PREFIX=`pwd`/../../obj .
+            make install
+        </command>
+    </build>
+    <package>
+        <file>lib/libterm.so</file>
+    </package>
+</port>
