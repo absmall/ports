@@ -11,6 +11,10 @@
         </command>
     </build>
     <package>
+        <file remote="qterm">bin/qterm</file>
         <file>lib/libterm.so</file>
+        <file>lib/libqtermlib.so</file>
+        <file remote="res/icon.png">../src/libterm/qterm/icon.png</file>
+        <file remote="res/splashscreen.png">../src/libterm/qterm/splashscreen.png</file>
     </package>
 </port>
