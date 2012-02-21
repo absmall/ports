@@ -1,0 +1,45 @@
+From c3ec4975c597b5c5901c1437095dcf9231743317 Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Mon, 20 Feb 2012 20:50:09 -0500
+Subject: [PATCH 2/2] Updates to work with libqterm
+
+---
+ bash-4.2/Makefile.in |    2 +-
+ bash-4.2/shell.c     |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/bash-4.2/Makefile.in b/bash-4.2/Makefile.in
+index 9f9276d..b44203b 100644
+--- a/bash-4.2/Makefile.in
++++ b/bash-4.2/Makefile.in
+@@ -134,7 +134,7 @@ LOCAL_LIBS = @LOCAL_LIBS@
+ LIBS = $(BUILTINS_LIB) $(LIBRARIES) @LIBS@
+ LIBS_FOR_BUILD = 
+ 
+-STATIC_LD = @STATIC_LD@
++STATIC_LD = @STATIC_LD@ -L../../obj/lib -L$(QTDIR)/lib -lqtermlib -lQtCore -lQtGui -lQtOpenGL -lterm -lbps
+ LOCAL_LDFLAGS = @LOCAL_LDFLAGS@
+ 
+ SYSTEM_FLAGS = -DPROGRAM='"$(Program)"' -DCONF_HOSTTYPE='"$(Machine)"' -DCONF_OSTYPE='"$(OS)"' -DCONF_MACHTYPE='"$(MACHTYPE)"' -DCONF_VENDOR='"$(VENDOR)"' $(LOCALE_DEFS)
+diff --git a/bash-4.2/shell.c b/bash-4.2/shell.c
+index 9e74f3b..e00c023 100644
+--- a/bash-4.2/shell.c
++++ b/bash-4.2/shell.c
+@@ -342,12 +342,12 @@ _cygwin32_check_tmp ()
+ #if defined (NO_MAIN_ENV_ARG)
+ /* systems without third argument to main() */
+ int
+-main (argc, argv)
++_main (argc, argv)
+      int argc;
+      char **argv;
+ #else /* !NO_MAIN_ENV_ARG */
+ int
+-main (argc, argv, env)
++_main (argc, argv, env)
+      int argc;
+      char **argv, **env;
+ #endif /* !NO_MAIN_ENV_ARG */
+-- 
+1.7.9
+

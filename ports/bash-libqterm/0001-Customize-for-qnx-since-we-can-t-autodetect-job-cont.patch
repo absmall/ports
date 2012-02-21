@@ -1,8 +1,8 @@
-From 884ce3f028c32d63a658ab46e39cdb898561c1fc Mon Sep 17 00:00:00 2001
+From bfc6772228f50d85b0cd685b57977e04f16d51aa Mon Sep 17 00:00:00 2001
 From: Aaron Small <aaron.small@shadnet.shad.ca>
 Date: Sat, 18 Feb 2012 22:00:51 -0500
-Subject: [PATCH] Customize for qnx since we can't autodetect job control when
- cross compiling
+Subject: [PATCH 1/2] Customize for qnx since we can't autodetect job control
+ when cross compiling
 
 ---
  bash-4.2/cross-build/arm-qnx.cache |  404 ++++++++++++++++++++++++++++++++++++
