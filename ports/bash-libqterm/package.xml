@@ -16,5 +16,13 @@
     </build>
     <package>
         <file>bin/bash</file>
+        <file>lib/libqtermlib.so</file>
+        <file>lib/libterm.so</file>
+        <argument>-platform</argument>
+        <argument>blackberry</argument>
+        <file remote="lib/libQtCore.so.4">$QTDIR/lib/libQtCore.so</file>
+        <file remote="lib/libQtGui.so.4">$QTDIR/lib/libQtGui.so</file>
+        <file remote="lib/libQtOpenGL.so.4">$QTDIR/lib/libQtOpenGL.so</file>
+        <file remote="lib/platforms/libblackberry.so">$QTDIR/plugins/platforms/libblackberry.so</file>
     </package>
 </port>

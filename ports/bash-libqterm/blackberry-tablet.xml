@@ -17,4 +17,5 @@
     <publisher>demo.org</publisher>
     <permission system="true">run_native</permission>
     <category>core.games</category>
+    <env var="LD_LIBRARY_PATH" value="app/native/lib"/>
 </qnx>
