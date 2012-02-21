@@ -126,9 +126,10 @@ def downloadpackage(tree):
         for i in download:
             if i.tag == "command":
                 logged_command(i.text)
-            elif i.tag == "patch":
-                logged_git_apply_patch("../%s" % i.text)
         logged_git_create_repo()
+        for i in download:
+            if i.tag == "patch":
+                logged_git_apply_patch("../%s" % i.text)
     logged_chdir("..")
 
 def compilepackage(tree):
