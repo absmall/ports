@@ -16,11 +16,24 @@ is not in final form. Ideally, an application package should NOT include all
 the libraries it links to. But that isn't working yet, so currently, the
 package should build them all in. This isn't as hard as it sounds, because they
 will automatically be symlinked into the package's obj/lib directory, so it
-just requires a change to the <package> section of package.xml to include the
+just requires adding a <depends> to the <package> section of package.xml to include the
 appropriate files. Eventually, they should not be included in the package, but
 instead have the loader create symlinks on the device to exactly the same
 location where they are now on the host machine.
 
-Notes to packagers:
-rpath is important on playbook. It should always be set to app/native/lib. This
-will remain true before and after I implement the second phase of library loading.
+Tutorial for making a port:
+
+1) Create a directory under ports with the package's name.
+2) Create a package.xml and a blackberry-tablet.xml in that directory. For
+blackberry-tablet.xml, see online documentation. For package.xml, make a <port>
+tag, inside this, make a <depends> tag for each library that the package will
+use. Create a <download> section. In the section, use some <command>'s to
+execute shell commands which will download the package's code. Use a <result>
+tag to say what file means download has completed, and doesn't need to be
+re-downloaded. Create a <build> tag which contains <command>'s with a best
+guest for how to build the code.
+3) Attempt to build the package. Probably building will fail on the first try,
+but under the 'src' directory, a git repository will be created. In this
+directory, tweak things until compile completes, and commit the changes.
+4) Run package.py --prepare-patch <packagename> to update package.xml with patches needed.
+5) Create a <package> tag in package.xml with instructions on which files need to be included in the package.

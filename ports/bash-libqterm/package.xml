@@ -6,7 +6,7 @@
         <result>bash-4.2</result>
         <patch>0001-Customize-for-qnx-since-we-can-t-autodetect-job-cont.patch</patch>
         <patch>0002-Updates-to-work-with-libqterm.patch</patch>
-        </download>
+    </download>
     <build>
         <command>
         cd bash-4.2
