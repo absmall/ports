@@ -3,144 +3,51 @@ import os
 import sys
 import argparse
 import shutil
-import subprocess
+import commands
 from lxml import etree
 
 statically_package = 0
-print_commands_only = 0
-
-def logged_mv(src, dst):
-    global print_commands_only
-
-    if print_commands_only:
-        print "mv %s %s" % (src,dst)
-    else:
-        os.system("mv %s %s" % (src,dst))
-
-def logged_chdir(dir):
-    global print_commands_only
-
-    if print_commands_only:
-        print "cd %s" % dir
-    os.chdir(dir)
-
-def logged_mkdir(dir):
-    global print_commands_only
-
-    if print_commands_only:
-        print "mkdir -p %s" % dir
-    else:
-        try:
-            os.makedirs(dir)
-        except OSError:
-            # If directory exists, that's okay
-            pass
-
-def logged_command(cmd):
-    global print_commands_only
-
-    if print_commands_only:
-        for i in cmd.split('\n'):
-            i = i.strip()
-            if i != "":
-                print i
-    else:
-        os.system(cmd)
-
-def logged_rmpath(dir):
-    global print_commands_only
-
-    if print_commands_only:
-        print "rm -rf %s" % dir
-    else:
-        try:
-            shutil.rmtree(dir)
-        except OSError:
-            # If directory doesn't exist, that's okay
-            pass
-
-def logged_git_create_repo():
-    global print_commands_only
-
-    if print_commands_only:
-        print "git init"
-        print "git add *"
-        print "git commit -m 'Initial commit'"
-        print "git tag initial HEAD"
-    else:
-        os.system("git init")
-        os.system("git add *")
-        os.system("git commit -m 'Initial commit'")
-        os.system("git tag initial HEAD")
-
-def logged_git_create_patch():
-    global print_commands_only
-
-    if print_commands_only:
-        print "git format-patch initial"
-    else:
-        return subprocess.check_output(["git","format-patch","initial"], ).split()
-
-def logged_git_apply_patch(patch):
-    global print_commands_only
-
-    if print_commands_only:
-        print "git am %s" % patch
-    else:
-        os.system("git am %s" % patch)
 
 def mkworkdir(clean):
     if clean:
-        logged_rmpath("src")
-        logged_rmpath("obj")
+        commands.rmpath("src")
+        commands.rmpath("obj")
     try:
-        logged_mkdir("src")
+        commands.mkdir("src")
     except OSError as e:
         pass
 
     try:
-        logged_mkdir("obj")
+        commands.mkdir("obj")
     except OSError as e:
         pass
-
-def logged_link(target, name):
-    global print_commands_only
-
-    if print_commands_only:
-        print "ln -s %s %s" % (target, name)
-    else:
-        print "ln -s %s %s" % (target, name)
-        os.system("ln -s %s %s" % (target, name))
 
 def downloadpackage(tree):
-    global print_commands_only
-
     # Check if the source is already available
     download = tree.getroot().find("download")
 
-    logged_chdir("src")
+    commands.chdir("src")
     if os.path.exists(download.find("result").text):
-        if not print_commands_only:
-            print "Source for '%s' already downloaded" % package
+        print "Source for '%s' already downloaded" % package
     else:
         for i in download:
             if i.tag == "command":
-                logged_command(i.text)
-        logged_git_create_repo()
+                commands.command(i.text)
+        commands.git_create_repo()
         for i in download:
             if i.tag == "patch":
-                logged_git_apply_patch("../%s" % i.text)
-    logged_chdir("..")
+                commands.git_apply_patch("../%s" % i.text)
+    commands.chdir("..")
 
 def compilepackage(tree):
     buildNode = tree.getroot().find("build")
 
-    logged_chdir("src")
+    commands.chdir("src")
     # Build the package
     for i in buildNode:
         if i.tag == "command":
-            logged_command(i.text)
-    logged_chdir("..")
+            commands.command(i.text)
+    commands.chdir("..")
 
 
 def packagepackage(tree, package, devMode):
@@ -151,7 +58,7 @@ def packagepackage(tree, package, devMode):
     command += " %s.bar ../blackberry-tablet.xml" % package
 
     packageNode = tree.getroot().find("package")
-    logged_chdir("obj")
+    commands.chdir("obj")
     if( devMode ):
         command += " -devMode"
     for i in packageNode:
@@ -165,14 +72,14 @@ def packagepackage(tree, package, devMode):
             command += " -e \"%s\" %s" % (os.path.expandvars(i.text), target)
         elif i.tag == "argument":
             command += " -arg \"%s\"" % i.text
-    logged_command(command)
-    logged_chdir("..")
+    commands.command(command)
+    commands.chdir("..")
 
 def link(source, dest):
     global basedir
 
     # Go to ports directory
-    logged_chdir("%s/%s" % (basedir, source))
+    commands.chdir("%s/%s" % (basedir, source))
 
     # Read in the descriptor
     tree = etree.parse("package.xml")
@@ -181,31 +88,31 @@ def link(source, dest):
     # all necessary libraries are available
     for i in tree.getroot():
         if i.tag == "depends":
-            link(i.text, dest)
+            commands.link(i.text, dest)
 
     exportNode = tree.getroot().find("export")
 
-    logged_chdir("obj")
+    commands.chdir("obj")
     # Make sure directories exist
     for i in exportNode:
         if i.tag == "file":
-            logged_mkdir("../../%s/obj/%s" % (dest, os.path.dirname(i.text)))
+            commands.mkdir("../../%s/obj/%s" % (dest, os.path.dirname(i.text)))
     # Setup symlinks
     for i in exportNode:
         if i.tag == "file":
-            logged_link(os.path.relpath(i.text, "../../%s/obj/%s" % (dest, os.path.dirname(i.text))), "../../%s/obj/%s" % (dest, i.text))
-    logged_chdir("..")
+            commands.link(os.path.relpath(i.text, "../../%s/obj/%s" % (dest, os.path.dirname(i.text))), "../../%s/obj/%s" % (dest, i.text))
+    commands.chdir("..")
 
 def build_patch(package):
     global basedir
-    logged_chdir("%s/%s/src" % (basedir, package))
+    commands.chdir("%s/%s/src" % (basedir, package))
 
     # Generate the patches
-    patches = logged_git_create_patch()
+    patches = commands.git_create_patch()
     for i in patches:
-        logged_mv(i, "..")
+        mv(i, "..")
 
-    logged_chdir("..")
+    commands.chdir("..")
 
     # Read package.xml and update it with the patches
     tree = etree.parse("package.xml")
@@ -234,7 +141,7 @@ def build(package, deps, clean, devMode):
         return
 
     # Go to ports directory
-    logged_chdir("%s/%s" % (basedir, package))
+    commands.chdir("%s/%s" % (basedir, package))
 
     # Read in the descriptor
     tree = etree.parse("package.xml")
@@ -246,7 +153,7 @@ def build(package, deps, clean, devMode):
                 build(i.text, deps, clean, devMode)
 
     # Go back to ports directory in case we left to build dependencies
-    logged_chdir("%s/%s" % (basedir, package))
+    commands.chdir("%s/%s" % (basedir, package))
 
     # Set up the workspace
     mkworkdir(clean)
@@ -254,10 +161,10 @@ def build(package, deps, clean, devMode):
     # Link all dependencies
     for i in tree.getroot():
         if i.tag == "depends":
-            link(i.text, package)
+            commands.link(i.text, package)
 
     # Back to ports directory in case we left to link dependencies
-    logged_chdir("%s/%s" % (basedir, package))
+    commands.chdir("%s/%s" % (basedir, package))
 
     downloadpackage(tree)
     compilepackage(tree)
@@ -277,12 +184,12 @@ parser.add_argument('--prepare-patch', action='store_const', const=1, help='Crea
 parser.add_argument('package', metavar='package', nargs='+', help='Package to build')
 args = vars(parser.parse_args())
 
-print_commands_only = args['commands_only']
+commands.print_commands_only = args['commands_only']
 statically_package = args['static']
 
 # Go to ports directory
-logged_chdir(os.path.dirname(sys.argv[0]))
-logged_chdir("../ports")
+commands.chdir(os.path.dirname(sys.argv[0]))
+commands.chdir("../ports")
 
 basedir = os.getcwd()
 
