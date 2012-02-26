@@ -10,15 +10,14 @@ statically_package = 0
 
 def mkworkdir(clean):
     if clean:
-        commands.rmpath("src")
-        commands.rmpath("obj")
+        commands.rmpath("build")
     try:
-        commands.mkdir("src")
+        commands.mkdir("build")
     except OSError as e:
         pass
 
     try:
-        commands.mkdir("obj")
+        commands.mkdir("build/bbfs")
     except OSError as e:
         pass
 
@@ -26,7 +25,7 @@ def downloadpackage(tree):
     # Check if the source is already available
     download = tree.getroot().find("download")
 
-    commands.chdir("src")
+    commands.chdir("build")
     if os.path.exists(download.find("result").text):
         print "Source for '%s' already downloaded" % package
     else:
@@ -42,7 +41,7 @@ def downloadpackage(tree):
 def compilepackage(tree):
     buildNode = tree.getroot().find("build")
 
-    commands.chdir("src")
+    commands.chdir("build")
     # Build the package
     for i in buildNode:
         if i.tag == "command":
@@ -55,10 +54,10 @@ def packagepackage(tree, package, devMode):
     command = "blackberry-nativepackager"
 
     # Package name
-    command += " %s.bar ../blackberry-tablet.xml" % package
+    command += " %s.bar ../../blackberry-tablet.xml" % package
 
     packageNode = tree.getroot().find("package")
-    commands.chdir("obj")
+    commands.chdir("build/bbfs")
     if( devMode ):
         command += " -devMode"
     for i in packageNode:
@@ -73,7 +72,7 @@ def packagepackage(tree, package, devMode):
         elif i.tag == "argument":
             command += " -arg \"%s\"" % i.text
     commands.command(command)
-    commands.chdir("..")
+    commands.chdir("../..")
 
 def link(source, dest):
     global basedir
@@ -92,20 +91,20 @@ def link(source, dest):
 
     exportNode = tree.getroot().find("export")
 
-    commands.chdir("obj")
+    commands.chdir("build/bbfs")
     # Make sure directories exist
     for i in exportNode:
         if i.tag == "file":
-            commands.mkdir("../../%s/obj/%s" % (dest, os.path.dirname(i.text)))
+            commands.mkdir("../../../%s/build/bbfs/%s" % (dest, os.path.dirname(i.text)))
     # Setup symlinks
     for i in exportNode:
         if i.tag == "file":
-            commands.link(os.path.relpath(i.text, "../../%s/obj/%s" % (dest, os.path.dirname(i.text))), "../../%s/obj/%s" % (dest, i.text))
-    commands.chdir("..")
+            commands.link(os.path.relpath(i.text, "../../../%s/build/bbfs/%s" % (dest, os.path.dirname(i.text))), "../../../%s/build/bbfs/%s" % (dest, i.text))
+    commands.chdir("../..")
 
 def build_patch(package):
     global basedir
-    commands.chdir("%s/%s/src" % (basedir, package))
+    commands.chdir("%s/%s/build" % (basedir, package))
 
     # Generate the patches
     patches = commands.git_create_patch()
@@ -161,7 +160,8 @@ def build(package, deps, clean, devMode):
     # Link all dependencies
     for i in tree.getroot():
         if i.tag == "depends":
-            commands.link(i.text, package)
+            print "Linking"
+            link(i.text, package)
 
     # Back to ports directory in case we left to link dependencies
     commands.chdir("%s/%s" % (basedir, package))
@@ -177,6 +177,7 @@ built = []
 parser = argparse.ArgumentParser(description='Build packages for playbook')
 parser.add_argument('-s', '--static', action='store_const', const=1, help='Include all shared libraries in the package (this is like statically linking the libraries')
 parser.add_argument('-c', '--commands_only', action='store_const', const=1, help='Only print out the commands that would be executed, do not run them')
+parser.add_argument('-v', '--verbose', action='store_const', const=1, help='Lots of output')
 parser.add_argument('--clean', action='store_const', const=1, help='Remove all built code before beginning')
 parser.add_argument('--dev', action='store_const', const=1, help='Build in development mode (can be loaded using a debug token, can be debugged, cannot be signed)')
 parser.add_argument('--nodeps', action='store_const', const=1, help='Don\'t build dependencies, they have already been built.')
@@ -184,7 +185,8 @@ parser.add_argument('--prepare-patch', action='store_const', const=1, help='Crea
 parser.add_argument('package', metavar='package', nargs='+', help='Package to build')
 args = vars(parser.parse_args())
 
-commands.print_commands_only = args['commands_only']
+commands.print_commands = args['commands_only'] or args['verbose']
+commands.run_commands = not args['commands_only']
 statically_package = args['static']
 
 # Go to ports directory

@@ -9,15 +9,15 @@
         <command>
             cd gnuplot
             ./prepare
-            ./configure --host arm-unknown-nto-qnx6.5.0eabi --without-readline --without-cairo --without-lua --prefix=`pwd`/../obj
+            ./configure --host arm-unknown-nto-qnx6.5.0eabi --without-readline --without-cairo --without-lua --prefix=`pwd`/../bbfs
             make
-            cp src/gnuplot ../../obj
+            cp src/gnuplot ../bbfs
         </command>
     </build>
     <package>
         <file>gnuplot</file>
-        <file remote="res/icon.png">../icon.png</file>
-        <file>../splashscreen.png</file>
-        <file remote="res/splashscreen.png">../splashscreen.png</file>
+        <file remote="res/icon.png">../../icon.png</file>
+        <file>../../splashscreen.png</file>
+        <file remote="res/splashscreen.png">../../splashscreen.png</file>
     </package>
 </port>

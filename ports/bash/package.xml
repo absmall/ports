@@ -8,7 +8,7 @@
     <build>
         <command>
         cd bash-4.2
-        ./configure --cache-file cross-build/arm-qnx.cache --host arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../../obj
+        ./configure --cache-file cross-build/arm-qnx.cache --host arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../bbfs
         make install
         </command>
     </build>

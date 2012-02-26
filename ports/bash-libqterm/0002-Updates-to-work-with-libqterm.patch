@@ -17,7 +17,7 @@ index 9f9276d..b44203b 100644
  LIBS_FOR_BUILD = 
  
 -STATIC_LD = @STATIC_LD@
-+STATIC_LD = @STATIC_LD@ -L../../obj/lib -L$(QTDIR)/lib -lqtermlib -lQtCore -lQtGui -lQtOpenGL -lterm -lbps
++STATIC_LD = @STATIC_LD@ -L../bbfs/lib -L$(QTDIR)/lib -lqtermlib -lQtCore -lQtGui -lQtOpenGL -lterm -lbps
  LOCAL_LDFLAGS = @LOCAL_LDFLAGS@
  
  SYSTEM_FLAGS = -DPROGRAM='"$(Program)"' -DCONF_HOSTTYPE='"$(Machine)"' -DCONF_OSTYPE='"$(OS)"' -DCONF_MACHTYPE='"$(MACHTYPE)"' -DCONF_VENDOR='"$(VENDOR)"' $(LOCALE_DEFS)

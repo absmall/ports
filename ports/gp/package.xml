@@ -9,8 +9,8 @@
     <build>
         <command>
             cd pari-2.5.0
-            #doubleformat=1 ./Configure --host=arm-unknown-nto-qnx6.5.0eabi --without-readline --prefix=`pwd`/../../obj
-            doubleformat=1 ./Configure --host=arm-unknown-nto-qnx6.5.0eabi --with-readline=`pwd`/../../obj --prefix=`pwd`/../../obj
+            #doubleformat=1 ./Configure --host=arm-unknown-nto-qnx6.5.0eabi --without-readline --prefix=`pwd`/../bbfs
+            doubleformat=1 ./Configure --host=arm-unknown-nto-qnx6.5.0eabi --with-readline=`pwd`/../../obj --prefix=`pwd`/../bbfs
             cd Oqnx6.5.0eabi-arm-unknown-nto
             make install
         </command>
