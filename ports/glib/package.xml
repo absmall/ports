@@ -1,0 +1,38 @@
+<port>
+    <depends>gettext</depends>
+    <depends>libffi</depends>
+    <download>
+        <command>wget http://ftp.gnome.org/pub/gnome/sources/glib/2.32/glib-2.32.0.tar.xz</command>
+        <command>tar -Jxvf glib-2.32.0.tar.xz</command>
+        <result>glib-2.32.0</result>
+        <patch>0001-Workaround-because-qnx-has-a-function-called-delay-d.patch</patch>
+        <patch>0002-Workaround-because-qnx-doesn-t-support-SA_RESTART.patch</patch>
+        <patch>0003-QNX-s-getfsstat-doesn-t-seem-compatible-with-what-gl.patch</patch>
+        <patch>0004-Add-configure-changes-to-properly-detect-qnx-functio.patch</patch>
+        <patch>0005-Add-cache-file-to-give-values-that-can-t-be-guessed-.patch</patch>
+    </download>
+    <build>
+        <command>
+        export LIBFFI_CFLAGS=-I.
+        export LIBFFI_LIBS="-L`pwd`/bbfs/lib -lffi"
+        export CFLAGS=-I`pwd`/bbfs/include
+        cd glib-2.32.0
+        autoconf
+        ./configure --host arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../bbfs --cache-file=config.cache
+        make
+        make install
+        </command>
+    </build>
+    <package>
+        <file>lib/libgio-2.0.so</file>
+        <file>lib/libgio-2.0.so.3200</file>
+        <file>lib/libglib-2.0.so</file>
+        <file>lib/libglib-2.0.so.3200</file>
+        <file>lib/libgmodule-2.0.so</file>
+        <file>lib/libgmodule-2.0.so.3200</file>
+        <file>lib/libgobject-2.0.so</file>
+        <file>lib/libgobject-2.0.so.3200</file>
+        <file>lib/libgthread-2.0.so</file>
+        <file>lib/libgthread-2.0.so.3200</file>
+    </package>
+</port>

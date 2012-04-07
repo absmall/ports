@@ -1,0 +1,51 @@
+From b015c42d500be57f203d4c638048f5cb57c648cd Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Fri, 6 Apr 2012 20:31:02 -0400
+Subject: [PATCH 3/5] QNX's getfsstat doesn't seem compatible with what glib
+ expects. Needs more investigation why.
+
+---
+ glib-2.32.0/gio/Makefile.am   |    4 ++++
+ glib-2.32.0/gio/gunixmounts.c |    4 ++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/glib-2.32.0/gio/Makefile.am b/glib-2.32.0/gio/Makefile.am
+index 69db690..f3059dd 100644
+--- a/glib-2.32.0/gio/Makefile.am
++++ b/glib-2.32.0/gio/Makefile.am
+@@ -227,6 +227,10 @@ if HAVE_FAM
+ SUBDIRS += fam
+ endif
+ 
++if OS_QNX
++LIBS += -lnbutil
++endif
++
+ if OS_UNIX
+ appinfo_sources += gdesktopappinfo.c
+ platform_libadd += xdgmime/libxdgmime.la $(RESOLVER_LIBADD)
+diff --git a/glib-2.32.0/gio/gunixmounts.c b/glib-2.32.0/gio/gunixmounts.c
+index e288e06..e68bb00 100644
+--- a/glib-2.32.0/gio/gunixmounts.c
++++ b/glib-2.32.0/gio/gunixmounts.c
+@@ -193,7 +193,7 @@ G_DEFINE_TYPE (GUnixMountMonitor, g_unix_mount_monitor, G_TYPE_OBJECT);
+ #endif
+ 
+ #if (defined(HAVE_GETVFSSTAT) || defined(HAVE_GETFSSTAT)) && defined(HAVE_FSTAB_H) && defined(HAVE_SYS_MOUNT_H)
+-#include <sys/ucred.h>
++#include <nbutil.h>
+ #include <sys/mount.h>
+ #include <fstab.h>
+ #ifdef HAVE_SYS_SYSCTL_H
+@@ -645,7 +645,7 @@ _g_get_unix_mounts (void)
+ #if defined(HAVE_GETVFSSTAT)
+       if (mntent[i].f_flag & ST_RDONLY)
+ #elif defined(HAVE_GETFSSTAT)
+-      if (mntent[i].f_flags & MNT_RDONLY)
++      if (mntent[i].f_flag & MNT_RDONLY)
+ #endif
+         mount_entry->is_read_only = TRUE;
+ 
+-- 
+1.7.9.1
+

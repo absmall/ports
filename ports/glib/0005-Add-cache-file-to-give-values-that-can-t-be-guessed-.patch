@@ -1,0 +1,44 @@
+From 9f274eec904682f3164233e48e401593ea5d4fc4 Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Fri, 6 Apr 2012 21:22:21 -0400
+Subject: [PATCH 5/5] Add cache file to give values that can't be guessed when
+ cross-compiling. The reason getfsstat is in there is
+ that qnx's getfsstat doesn't conform to the BSD
+ standard, so doesn't get picked up, but we need
+ something, so I hacked glib to make it work. The reason
+ elf_begin is in there is that qnx has an elf_begin, but
+ is missing other necessary parts of libelf
+
+---
+ glib-2.32.0/config.cache |   19 +++++++++++++++++++
+ 1 files changed, 19 insertions(+), 0 deletions(-)
+ create mode 100644 glib-2.32.0/config.cache
+
+diff --git a/glib-2.32.0/config.cache b/glib-2.32.0/config.cache
+new file mode 100644
+index 0000000..6af724e
+--- /dev/null
++++ b/glib-2.32.0/config.cache
+@@ -0,0 +1,19 @@
++# This file is a shell script that caches the results of configure
++# tests run on this system so they can be shared between configure
++# scripts and configure runs, see configure's option --config-cache.
++# It is not useful on other systems.  If it contains results you don't
++# want to keep, you may remove or edit it.
++#
++# config.status only pays attention to the cache file if you give it
++# the --recheck option to rerun configure.
++#
++# `ac_cv_env_foo' variables (set or unset) will be overridden when
++# loading this file, other *unset* `ac_cv_foo' will be assigned the
++# following values.
++
++ac_cv_func_getfsstat=${ac_cv_func_getfsstat=yes}
++ac_cv_func_posix_getpwuid_r=${ac_cv_func_posix_getpwuid_r=yes}
++ac_cv_func_posix_getgrgid_r=${ac_cv_func_posix_getgrgid_r=yes}
++ac_cv_lib_elf_elf_begin=${ac_cv_lib_elf_elf_begin=no}
++glib_cv_stack_grows=${glib_cv_stack_grows=no}
++glib_cv_uscore=${glib_cv_uscore=no}
+-- 
+1.7.9.1
+
