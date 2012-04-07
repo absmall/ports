@@ -119,7 +119,7 @@ def build_patch(package):
     # Generate the patches
     patches = commands.git_create_patch()
     for i in patches:
-        mv(i, "..")
+        commands.mv(i, "..")
 
     commands.chdir("..")
 
