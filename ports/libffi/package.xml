@@ -16,5 +16,8 @@
     </package>
     <export>
         <file>lib/libffi.so.5</file>
+        <file>lib/libffi.so</file>
+        <file remote="include/ffi.h">lib/libffi-3.0.10/include/ffi.h</file>
+        <file remote="include/ffitarget.h">lib/libffi-3.0.10/include/ffitarget.h</file>
     </export>
 </port>

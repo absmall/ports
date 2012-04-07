@@ -95,11 +95,21 @@ def link(source, dest):
     # Make sure directories exist
     for i in exportNode:
         if i.tag == "file":
-            commands.mkdir("../../../%s/build/bbfs/%s" % (dest, os.path.dirname(i.text)))
+            remote = i.get("remote")
+            if remote:
+                target = remote
+            else:
+                target = i.text
+            commands.mkdir("../../../%s/build/bbfs/%s" % (dest, os.path.dirname(target)))
     # Setup symlinks
     for i in exportNode:
         if i.tag == "file":
-            commands.link(os.path.relpath(i.text, "../../../%s/build/bbfs/%s" % (dest, os.path.dirname(i.text))), "../../../%s/build/bbfs/%s" % (dest, i.text))
+            remote = i.get("remote")
+            if remote:
+                target = remote
+            else:
+                target = i.text
+        commands.link(os.path.relpath(i.text, "../../../%s/build/bbfs/%s" % (dest, os.path.dirname(target))), "../../../%s/build/bbfs/%s" % (dest, target))
     commands.chdir("../..")
 
 def build_patch(package):
