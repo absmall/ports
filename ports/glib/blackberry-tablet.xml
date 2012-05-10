@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <qnx xmlns="http://www.qnx.com/schemas/application/1.0">
-    <id>org.demo.bashshell</id>
-    <filename>bin/bash</filename>
-    <name>bash</name>
+    <id>org.demo.glib</id>
+	<filename>lib/libglib-2.0.so</filename>
+    <name>glib</name>
     <versionNumber>1.0.0</versionNumber>
-    <description>Shell</description>
-    <copyright>2011</copyright>
+    <description>Gnome object library</description>
+    <copyright>2012</copyright>
 
     <initialWindow>
         <systemChrome>none</systemChrome>

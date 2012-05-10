@@ -1,0 +1,23 @@
+<port>
+    <download>
+        <command>wget ftp://sourceware.org/pub/libffi/libffi-3.0.10.tar.gz</command>
+        <command>tar -zxvf libffi-3.0.10.tar.gz</command>
+        <result>libffi-3.0.10</result>
+    </download>
+    <build>
+        <command>
+        cd libffi-3.0.10
+        ./configure --host arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../bbfs
+        make install
+        </command>
+    </build>
+    <package>
+        <file>lib/libffi.so.5</file>
+    </package>
+    <export>
+        <file>lib/libffi.so.5</file>
+        <file>lib/libffi.so</file>
+        <file remote="include/ffi.h">lib/libffi-3.0.10/include/ffi.h</file>
+        <file remote="include/ffitarget.h">lib/libffi-3.0.10/include/ffitarget.h</file>
+    </export>
+</port>

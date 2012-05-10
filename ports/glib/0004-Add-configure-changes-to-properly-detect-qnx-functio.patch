@@ -1,0 +1,57 @@
+From a2a799c9d42f84581034397b5e3a80b697485a38 Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Fri, 6 Apr 2012 20:33:09 -0400
+Subject: [PATCH 4/5] Add configure changes to properly detect qnx
+ functionality
+
+---
+ glib-2.32.0/configure.ac |   12 +++++++++++-
+ 1 files changed, 11 insertions(+), 1 deletions(-)
+
+diff --git a/glib-2.32.0/configure.ac b/glib-2.32.0/configure.ac
+index 48868d2..8685595 100644
+--- a/glib-2.32.0/configure.ac
++++ b/glib-2.32.0/configure.ac
+@@ -160,6 +160,9 @@ case $host in
+   *-*-linux*)
+     glib_os_linux=yes
+     ;;
++  *-*-*-qnx*)
++    glib_os_qnx=yes
++    ;;
+ esac
+ 
+ AC_MSG_RESULT([$glib_native_win32])
+@@ -180,6 +183,7 @@ AM_CONDITIONAL(OS_WIN32_X64, [test "$LIB_EXE_MACHINE_FLAG" = "X64"])
+ AM_CONDITIONAL(OS_UNIX, [test "$glib_native_win32" != "yes"])
+ AM_CONDITIONAL(OS_LINUX, [test "$glib_os_linux" = "yes"])
+ AM_CONDITIONAL(OS_CARBON, [test "$glib_have_carbon" = "yes"])
++AM_CONDITIONAL(OS_QNX, [test "$glib_os_qnx" = "yes"])
+ 
+ if test "$glib_native_win32" = "yes"; then
+   AC_CHECK_TOOL(WINDRES, windres, no)
+@@ -668,6 +672,7 @@ CFLAGS=$glib_save_CFLAGS
+ dnl
+ dnl check in which direction the stack grows
+ dnl
++AC_CACHE_SAVE
+ AC_CACHE_CHECK([for growing stack pointer],glib_cv_stack_grows,[
+         AC_TRY_RUN([
+ 	volatile int *a = 0, *b = 0;
+@@ -1067,7 +1072,12 @@ if test $glib_native_win32 = no; then
+                                         [res_query("test", 0, 0, (void *)0, 0);],
+                                         [AC_MSG_RESULT([in -lbind])
+                                          NETWORK_LIBS="-lbind $NETWORK_LIBS"],
+-                                        [AC_MSG_ERROR(not found)])])
++                                        [LIBS="-lsocket $save_libs"
++                                        AC_TRY_LINK([#include <resolv.h>],
++                                        [res_query("test", 0, 0,(void *)0, 0);],
++                                        [AC_MSG_RESULT([in -lsocket])
++                                        NETWORK_LIBS="-lsocket $NETWORK_LIBS"],
++                                        [AC_MSG_ERROR(not found)])])])
+                LIBS="$save_libs"])
+   AC_CHECK_FUNC(socket, :, AC_CHECK_LIB(socket, socket,
+ 				        [NETWORK_LIBS="-lsocket $NETWORK_LIBS"],
+-- 
+1.7.9.1
+
