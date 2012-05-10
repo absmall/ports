@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<qnx xmlns="http://www.qnx.com/schemas/application/1.0">
+    <id>org.demo.mutt</id>
+    <filename>bin/mutt</filename>
+    <name>mutt</name>
+    <versionNumber>1.0.0</versionNumber>
+    <description>Email client</description>
+    <copyright>2011</copyright>
+
+    <initialWindow>
+        <systemChrome>none</systemChrome>
+        <transparent>false</transparent>
+        <autoOrients>true</autoOrients>
+        <aspectRatio>landscape</aspectRatio>
+    </initialWindow>
+
+    <publisher>demo.org</publisher>
+    <permission system="true">run_native</permission>
+</qnx>

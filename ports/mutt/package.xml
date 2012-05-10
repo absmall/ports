@@ -1,0 +1,18 @@
+<port>
+    <download>
+        <command>wget ftp://ftp.mutt.org/mutt/devel/mutt-1.5.21.tar.gz</command>
+        <command>tar -zxvf mutt-1.5.21.tar.gz</command>
+        <result>mutt-1.5.21</result>
+        <patch>0001-Quick-hacks-to-work-around-ncurses-issues.-Should-be.patch</patch>
+    </download>
+    <build>
+        <command>
+        cd mutt-1.5.21
+        ./configure --host arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../../obj
+        make install
+        </command>
+    </build>
+    <package>
+        <file>bin/mutt</file>
+    </package>
+</port>
