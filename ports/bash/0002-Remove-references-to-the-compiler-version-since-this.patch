@@ -1,7 +1,7 @@
 From 9fc21f0c1dd8800cf7a7b22e8a2367fa259bfbe6 Mon Sep 17 00:00:00 2001
 From: Aaron Small <aaron.small@shadnet.shad.ca>
 Date: Mon, 21 May 2012 19:11:10 -0400
-Subject: [PATCH 2/2] Remove references to the compiler version, since this
+Subject: [PATCH 2/3] Remove references to the compiler version, since this
  can change and doesn't need to be cached
 
 ---
