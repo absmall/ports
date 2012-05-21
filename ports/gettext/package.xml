@@ -7,9 +7,9 @@
     <build>
         <command>
         cd gettext-0.18.1.1
-        #./configure --host arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../bbfs
-        #make
-        #make install
+        ./configure --host arm-unknown-nto-qnx${QNX_VERSION}eabi --prefix=`pwd`/../bbfs
+        make
+        make install
         </command>
     </build>
     <package>

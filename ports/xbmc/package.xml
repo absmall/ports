@@ -7,7 +7,7 @@
     <build>
         <command>
             cd xbmc-11.0
-            ./configure --host arm-unknown-nto-qnx8.0.0eabi --prefix=`pwd`/../bbfs
+            ./configure --host arm-unknown-nto-qnx${QNX_VERSION}eabi --prefix=`pwd`/../bbfs
             make
         </command>
     </build>

@@ -4,9 +4,13 @@ import sys
 import argparse
 import shutil
 import commands
+import subprocess
 from lxml import etree
 
 statically_package = 0
+
+def version():
+    return subprocess.check_output('ls  $QNX_HOST/usr/bin/arm*gcc | sed \'s/.*arm-unknown-nto-qnx\\(.*\\)eabi-gcc/\\1/\'', shell=True).strip()
 
 def mkworkdir(clean):
     if clean:
@@ -204,6 +208,9 @@ commands.chdir(os.path.dirname(sys.argv[0]))
 commands.chdir("../ports")
 
 basedir = os.getcwd()
+
+# Set an NDK version
+os.putenv("QNX_VERSION", version())
 
 # See what is there
 if( len(args['package']) >= 1 ):

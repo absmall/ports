@@ -9,7 +9,7 @@
     <build>
         <command>
             cd R-2.12.1
-            ./configure --host=arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../bbfs --without-readline --without-x
+            ./configure --host=arm-unknown-nto-qnx${QNX_VERSION}eabi --prefix=`pwd`/../bbfs --without-readline --without-x
             make
             cp bin/exec/R ../../obj
             cp -r etc ../../obj
