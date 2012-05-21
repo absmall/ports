@@ -7,7 +7,7 @@
     <build>
         <command>
         cd libffi-3.0.10
-        ./configure --host arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../bbfs
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
         make install
         </command>
     </build>

@@ -8,11 +8,13 @@ import subprocess
 from lxml import etree
 
 statically_package = 0
+platforms = ["x86", "armv7"]
 
-def version():
-    return subprocess.check_output('ls  $QNX_HOST/usr/bin/arm*gcc | sed \'s/.*arm-unknown-nto-qnx\\(.*\\)eabi-gcc/\\1/\'', shell=True).strip()
+def version(platform):
+    return subprocess.check_output(['nto'+platform+'-gcc', '-dumpmachine']).strip()
 
 def mkworkdir(clean):
+    global platform
     if clean:
         commands.rmpath("build")
     try:
@@ -21,7 +23,7 @@ def mkworkdir(clean):
         pass
 
     try:
-        commands.mkdir("build/bbfs")
+        commands.mkdir("build/"+platform)
     except OSError as e:
         pass
 
@@ -61,7 +63,7 @@ def packagepackage(tree, package, devMode):
     command += " %s.bar ../../blackberry-tablet.xml" % package
 
     packageNode = tree.getroot().find("package")
-    commands.chdir("build/bbfs")
+    commands.chdir("build/"+platform)
     if( devMode ):
         command += " -devMode"
     for i in packageNode:
@@ -95,7 +97,7 @@ def link(source, dest):
 
     exportNode = tree.getroot().find("export")
 
-    commands.chdir("build/bbfs")
+    commands.chdir("build/"+platform)
     # Make sure directories exist
     for i in exportNode:
         if i.tag == "file":
@@ -104,7 +106,7 @@ def link(source, dest):
                 target = remote
             else:
                 target = i.text
-            commands.mkdir("../../../%s/build/bbfs/%s" % (dest, os.path.dirname(target)))
+            commands.mkdir("../../../%s/build/%s/%s" % (dest, platform, os.path.dirname(target)))
     # Setup symlinks
     for i in exportNode:
         if i.tag == "file":
@@ -113,7 +115,7 @@ def link(source, dest):
                 target = remote
             else:
                 target = i.text
-        commands.link(os.path.relpath(i.text, "../../../%s/build/bbfs/%s" % (dest, os.path.dirname(target))), "../../../%s/build/bbfs/%s" % (dest, target))
+        commands.link(os.path.relpath(i.text, "../../../%s/build/%s/%s" % (dest, platform, os.path.dirname(target))), "../../../%s/build/%s/%s" % (dest, platform, target))
     commands.chdir("../..")
 
 def build_patch(package):
@@ -148,6 +150,7 @@ def build_patch(package):
 def build(package, deps, clean, devMode):
     global basedir
     global built
+    global platform
 
     # See if this is already built
     if package in built:
@@ -167,6 +170,9 @@ def build(package, deps, clean, devMode):
 
     # Go back to ports directory in case we left to build dependencies
     commands.chdir("%s/%s" % (basedir, package))
+
+    # Give a target in which to install built files
+    os.putenv("QNX_INSTALL", basedir+"/"+package+"/build/"+platform)
 
     # Set up the workspace
     mkworkdir(clean)
@@ -196,6 +202,7 @@ parser.add_argument('--clean', action='store_const', const=1, help='Remove all b
 parser.add_argument('--dev', action='store_const', const=1, help='Build in development mode (can be loaded using a debug token, can be debugged, cannot be signed)')
 parser.add_argument('--nodeps', action='store_const', const=1, help='Don\'t build dependencies, they have already been built.')
 parser.add_argument('--prepare-patch', action='store_const', const=1, help='Create patch files for the package')
+parser.add_argument('--platform', action='store', nargs='?', default="armv7", help='Platform to build for')
 parser.add_argument('package', metavar='package', nargs='+', help='Package to build')
 args = vars(parser.parse_args())
 
@@ -209,8 +216,9 @@ commands.chdir("../ports")
 
 basedir = os.getcwd()
 
-# Set an NDK version
-os.putenv("QNX_VERSION", version())
+# Set environment variables for the build to use
+os.putenv("QNX_VERSION", version(args['platform']))
+platform = args['platform']
 
 # See what is there
 if( len(args['package']) >= 1 ):

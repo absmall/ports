@@ -18,7 +18,7 @@
         export CFLAGS=-I`pwd`/bbfs/include
         cd glib-2.32.0
         autoconf
-        ./configure --host arm-unknown-nto-qnx${QNX_VERSION}eabi --prefix=`pwd`/../bbfs --cache-file=config.cache
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL} --cache-file=config.cache
         make
         make install
         </command>

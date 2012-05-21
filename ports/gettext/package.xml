@@ -7,7 +7,7 @@
     <build>
         <command>
         cd gettext-0.18.1.1
-        ./configure --host arm-unknown-nto-qnx${QNX_VERSION}eabi --prefix=`pwd`/../bbfs
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
         make
         make install
         </command>

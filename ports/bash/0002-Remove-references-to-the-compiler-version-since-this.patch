@@ -1,0 +1,44 @@
+From 9fc21f0c1dd8800cf7a7b22e8a2367fa259bfbe6 Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Mon, 21 May 2012 19:11:10 -0400
+Subject: [PATCH 2/2] Remove references to the compiler version, since this
+ can change and doesn't need to be cached
+
+---
+ bash-4.2/cross-build/arm-qnx.cache |    5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/bash-4.2/cross-build/arm-qnx.cache b/bash-4.2/cross-build/arm-qnx.cache
+index f80908c..407c823 100644
+--- a/bash-4.2/cross-build/arm-qnx.cache
++++ b/bash-4.2/cross-build/arm-qnx.cache
+@@ -42,7 +42,6 @@ ac_cv_env_YFLAGS_value=
+ ac_cv_env_build_alias_set=
+ ac_cv_env_build_alias_value=
+ ac_cv_env_host_alias_set=set
+-ac_cv_env_host_alias_value=arm-unknown-nto-qnx6.5.0eabi
+ ac_cv_env_target_alias_set=
+ ac_cv_env_target_alias_value=
+ ac_cv_func___argz_count=${ac_cv_func___argz_count=no}
+@@ -249,7 +248,6 @@ ac_cv_header_unistd_h=${ac_cv_header_unistd_h=yes}
+ ac_cv_header_varargs_h=${ac_cv_header_varargs_h=no}
+ ac_cv_header_wchar_h=${ac_cv_header_wchar_h=yes}
+ ac_cv_header_wctype_h=${ac_cv_header_wctype_h=yes}
+-ac_cv_host=${ac_cv_host=arm-unknown-nto-qnx6.5.0eabi}
+ ac_cv_lib_cposix_strerror=${ac_cv_lib_cposix_strerror=no}
+ ac_cv_lib_dl_dlopen=${ac_cv_lib_dl_dlopen=no}
+ ac_cv_lib_socket_getpeername=${ac_cv_lib_socket_getpeername=no}
+@@ -267,10 +265,7 @@ ac_cv_path_MSGMERGE=${ac_cv_path_MSGMERGE=/usr/bin/msgmerge}
+ ac_cv_path_XGETTEXT=${ac_cv_path_XGETTEXT=/usr/bin/xgettext}
+ ac_cv_path_install=${ac_cv_path_install='/usr/bin/install -c'}
+ ac_cv_prog_AR=${ac_cv_prog_AR=ar}
+-ac_cv_prog_CC=${ac_cv_prog_CC=arm-unknown-nto-qnx6.5.0eabi-gcc}
+-ac_cv_prog_CPP=${ac_cv_prog_CPP='arm-unknown-nto-qnx6.5.0eabi-gcc -E'}
+ ac_cv_prog_INTLBISON=${ac_cv_prog_INTLBISON=bison}
+-ac_cv_prog_RANLIB=${ac_cv_prog_RANLIB=arm-unknown-nto-qnx6.5.0eabi-ranlib}
+ ac_cv_prog_YACC=${ac_cv_prog_YACC='bison -y'}
+ ac_cv_prog_cc_c89=${ac_cv_prog_cc_c89=}
+ ac_cv_prog_cc_g=${ac_cv_prog_cc_g=yes}
+-- 
+1.7.10
+

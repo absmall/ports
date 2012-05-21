@@ -9,7 +9,7 @@
     <build>
         <command>
             cd pari-2.5.0
-            doubleformat=1 ./Configure --host=arm-unknown-nto-qnx${QNX_VERSION}eabi --with-readline=`pwd`/../../obj --prefix=`pwd`/../bbfs
+            doubleformat=1 ./Configure --host ${QNX_VERSION} --with-readline=`pwd`/../../obj --prefix=${QNX_INSTALL}
             cd Oqnx6.5.0eabi-arm-unknown-nto
             make install
         </command>

@@ -8,7 +8,7 @@
     <build>
         <command>
         cd mutt-1.5.21
-        ./configure --host arm-unknown-nto-qnx${QNX_VERSION}eabi --prefix=`pwd`/../../obj
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
         make install
         </command>
     </build>

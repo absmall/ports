@@ -10,7 +10,7 @@
     <build>
         <command>
         cd bash-4.2
-        ./configure --cache-file cross-build/arm-qnx.cache --host arm-unknown-nto-qnx6.5.0eabi --prefix=`pwd`/../bbfs
+        ./configure --cache-file cross-build/arm-qnx.cache --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
         make install
         </command>
     </build>

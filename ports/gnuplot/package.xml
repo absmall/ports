@@ -9,7 +9,7 @@
         <command>
             cd gnuplot
             ./prepare
-            ./configure --host arm-unknown-nto-qnx${QNX_VERSION}eabi --without-readline --without-cairo --without-lua --prefix=`pwd`/../bbfs
+            ./configure --host ${QNX_VERSION} --without-readline --without-cairo --without-lua --prefix=${QNX_INSTALL}
             make
             cp src/gnuplot ../bbfs
         </command>
