@@ -1,0 +1,20 @@
+<port>
+    <download>
+        <command>wget http://mirrors.xbmc.org/releases/source/xbmc-11.0.tar.gz</command>
+        <command>tar -zxvf xbmc-11.0.tar.gz</command>
+        <result>xbmc-11.0</result>
+    </download>
+    <build>
+        <command>
+            cd xbmc-11.0
+            ./configure --host arm-unknown-nto-qnx8.0.0eabi --prefix=`pwd`/../bbfs
+            make
+        </command>
+    </build>
+    <package>
+        <file>xbmc</file>
+        <file remote="res/icon.png">../../icon.png</file>
+        <file>../../splashscreen.png</file>
+        <file remote="res/splashscreen.png">../../splashscreen.png</file>
+    </package>
+</port>
