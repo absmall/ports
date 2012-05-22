@@ -1,0 +1,18 @@
+<port>
+    <download>
+        <command>git clone https://github.com/blackberry/Boost.git</command>
+        <result>boost</result>
+    </download>
+    <build>
+        <command>
+        cd Boost/rim-build
+        ./build.sh install
+        </command>
+    </build>
+    <package>
+    <!--TODO-->
+    </package>
+    <export>
+    <!--TODO-->
+    </export>
+</port>
