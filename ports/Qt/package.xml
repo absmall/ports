@@ -6,7 +6,7 @@
     <build>
         <command>
         cd Qt
-        INSTALL_ROOT=`pwd`/../../obj ./configure-qsk arm v7le
+        INSTALL_ROOT=${QNX_INSTALL} ./configure-qsk arm v7le
         make
         make install
         </command>

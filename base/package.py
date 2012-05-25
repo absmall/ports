@@ -217,7 +217,12 @@ commands.chdir("../ports")
 basedir = os.getcwd()
 
 # Set environment variables for the build to use
-os.putenv("QNX_VERSION", version(args['platform']))
+os.putenv("QNX_PLATFORM", args['platform'])
+try:
+    os.putenv("QNX_VERSION", version(args['platform']))
+except:
+    print "BBNDK is not available. Please source bbndk-env.sh"
+    sys.exit(1)
 platform = args['platform']
 
 # See what is there

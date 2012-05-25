@@ -14,8 +14,8 @@
     <build>
         <command>
         export LIBFFI_CFLAGS=-I.
-        export LIBFFI_LIBS="-L`pwd`/bbfs/lib -lffi"
-        export CFLAGS=-I`pwd`/bbfs/include
+        export LIBFFI_LIBS="-L`pwd`/$QNX_PLATFORM/lib -lffi"
+        export CFLAGS=-I`pwd`/$QNX_PLATFORM/include
         cd glib-2.32.0
         autoconf
         ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL} --cache-file=config.cache
