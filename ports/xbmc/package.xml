@@ -1,4 +1,5 @@
 <port>
+    <depends>boost</depends>
     <download>
         <command>wget http://mirrors.xbmc.org/releases/source/xbmc-11.0.tar.gz</command>
         <command>tar -zxvf xbmc-11.0.tar.gz</command>
@@ -7,6 +8,8 @@
     <build>
         <command>
             cd xbmc-11.0
+            export CPPFLAGS=-I$QNX_INSTALL/include
+            export CXXFLAGS=-I$QNX_INSTALL/include
             ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
             make
         </command>
