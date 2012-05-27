@@ -13,12 +13,85 @@
         </command>
     </build>
     <package>
-        <file>lib/libffi.so.5</file>
+        <file>lib/libmysqlclient_r.so</file>
+        <file>lib/libmysql.so.16</file>
+        <file>lib/libmysql.so</file>
+        <file>lib/libmysql.so.16.0.0</file>
+        <file>lib/libmysqlclient.so</file>
+        <file>lib/libmysqlclient.a</file>
     </package>
     <export>
-        <file>lib/libffi.so.5</file>
-        <file>lib/libffi.so</file>
-        <file remote="include/ffi.h">lib/libffi-3.0.10/include/ffi.h</file>
-        <file remote="include/ffitarget.h">lib/libffi-3.0.10/include/ffitarget.h</file>
+        <file>include/my_nosys.h</file>
+        <file>include/myisampack.h</file>
+        <file>include/mysys/rijndael.h</file>
+        <file>include/my_global.h</file>
+        <file>include/my_no_pthread.h</file>
+        <file>include/my_getopt.h</file>
+        <file>include/waiting_threads.h</file>
+        <file>include/sslopt-case.h</file>
+        <file>include/atomic/nolock.h</file>
+        <file>include/atomic/x86-gcc.h</file>
+        <file>include/atomic/rwlock.h</file>
+        <file>include/atomic/gcc_builtins.h</file>
+        <file>include/atomic/generic-msvc.h</file>
+        <file>include/thr_lock.h</file>
+        <file>include/queues.h</file>
+        <file>include/sslopt-vars.h</file>
+        <file>include/mysql_version.h</file>
+        <file>include/mysql.h</file>
+        <file>include/my_trie.h</file>
+        <file>include/m_ctype.h</file>
+        <file>include/my_time.h</file>
+        <file>include/my_pthread.h</file>
+        <file>include/my_atomic.h</file>
+        <file>include/t_ctype.h</file>
+        <file>include/my_attribute.h</file>
+        <file>include/my_stacktrace.h</file>
+        <file>include/my_alloc.h</file>
+        <file>include/m_string.h</file>
+        <file>include/typelib.h</file>
+        <file>include/my_charsets.h</file>
+        <file>include/decimal.h</file>
+        <file>include/my_aes.h</file>
+        <file>include/my_net.h</file>
+        <file>include/my_xml.h</file>
+        <file>include/sha1.h</file>
+        <file>include/my_uctype.h</file>
+        <file>include/wqueue.h</file>
+        <file>include/sslopt-longopts.h</file>
+        <file>include/config-win.h</file>
+        <file>include/my_bit.h</file>
+        <file>include/thr_alarm.h</file>
+        <file>include/my_bitmap.h</file>
+        <file>include/my_config.h</file>
+        <file>include/violite.h</file>
+        <file>include/my_sys.h</file>
+        <file>include/lf.h</file>
+        <file>include/my_md5.h</file>
+        <file>include/my_list.h</file>
+        <file>include/base64.h</file>
+        <file>include/my_alarm.h</file>
+        <file>include/mysql_com.h</file>
+        <file>include/my_vle.h</file>
+        <file>include/my_tree.h</file>
+        <file>include/hash.h</file>
+        <file>include/sql_common.h</file>
+        <file>include/sha2.h</file>
+        <file>include/my_base.h</file>
+        <file>include/errmsg.h</file>
+        <file>include/my_dir.h</file>
+        <file>include/mysql_time.h</file>
+        <file>include/service_versions.h</file>
+        <file>include/my_dbug.h</file>
+        <file>include/my_libwrap.h</file>
+        <file>include/mysqld_error.h</file>
+        <file>include/keycache.h</file>
+        <file>include/mysys_err.h</file>
+        <file>lib/libmysqlclient_r.so</file>
+        <file>lib/libmysql.so.16</file>
+        <file>lib/libmysql.so</file>
+        <file>lib/libmysql.so.16.0.0</file>
+        <file>lib/libmysqlclient.so</file>
+        <file>lib/libmysqlclient.a</file>
     </export>
 </port>

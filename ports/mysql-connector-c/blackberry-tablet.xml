@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <qnx xmlns="http://www.qnx.com/schemas/application/1.0">
-    <id>org.demo.libffi</id>
-	<filename>lib/libffi.so.5</filename>
-    <name>libffi</name>
+    <id>org.demo.mysql-connector-c</id>
+    <filename>lib/libmysql.so</filename>
+    <name>mysql-connector-</name>
     <versionNumber>1.0.0</versionNumber>
-    <description>Foreign function interface library</description>
-    <copyright>2012</copyright>
+    <description>Mysql access library</description>
+    <copyright>2011</copyright>
 
     <initialWindow>
         <systemChrome>none</systemChrome>
