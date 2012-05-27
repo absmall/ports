@@ -1,0 +1,24 @@
+<port>
+    <download>
+        <command>wget http://dev.mysql.com/get/Downloads/Connector-C/mysql-connector-c-6.0.2.tar.gz/from/http://mirror.csclub.uwaterloo.ca/mysql/ --output-document=mysql-connector-c-6.0.2.tar.gz</command>
+        <command>tar -zxvf mysql-connector-c-6.0.2.tar.gz</command>
+        <result>mysql-connector-c-6.0.2</result>
+        <patch>0001-Force-fPIC.patch</patch>
+    </download>
+    <build>
+        <command>
+        cd mysql-connector-c-6.0.2
+        cmake -DCMAKE_TOOLCHAIN_FILE=../../ntoarm.cmake -DCMAKE_INSTALL_PREFIX=${QNX_INSTALL}
+        make install
+        </command>
+    </build>
+    <package>
+        <file>lib/libffi.so.5</file>
+    </package>
+    <export>
+        <file>lib/libffi.so.5</file>
+        <file>lib/libffi.so</file>
+        <file remote="include/ffi.h">lib/libffi-3.0.10/include/ffi.h</file>
+        <file remote="include/ffitarget.h">lib/libffi-3.0.10/include/ffitarget.h</file>
+    </export>
+</port>
