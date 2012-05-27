@@ -21,6 +21,7 @@
         <file>lib/libmysqlclient.a</file>
     </package>
     <export>
+        <file>bin/mysql_config</file>
         <file>include/my_nosys.h</file>
         <file>include/myisampack.h</file>
         <file>include/mysys/rijndael.h</file>
