@@ -130,7 +130,8 @@ def build_patch(package):
     commands.chdir("..")
 
     # Read package.xml and update it with the patches
-    tree = etree.parse("package.xml")
+    parser = etree.XMLParser(remove_blank_text=True)
+    tree = etree.parse("package.xml", parser)
     download = tree.getroot().find("download")
     # Remove existing patches
     for i in download:
@@ -144,7 +145,7 @@ def build_patch(package):
 
     # Write package.xml back out with the changes
     package = open("package.xml", "w")
-    package.write(etree.tostring(tree))
+    package.write(etree.tostring(tree, pretty_print=True))
     package.close()
 
 def build(package, deps, clean, devMode):
