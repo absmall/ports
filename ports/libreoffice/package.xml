@@ -1,17 +1,18 @@
 <port>
-    <download>
-        <command>wget http://download.documentfoundation.org/libreoffice/src/3.6.3/libreoffice-core-3.6.3.2.tar.xz</command>
-        <command>tar -Jxf libreoffice-core-3.6.3.2.tar.xz</command>
-        <result>libreoffice-core-3.6.3.2</result>
-    </download>
-    <build>
-        <command>
+  <download>
+    <command>wget http://download.documentfoundation.org/libreoffice/src/3.6.3/libreoffice-core-3.6.3.2.tar.xz</command>
+    <command>tar -Jxf libreoffice-core-3.6.3.2.tar.xz</command>
+    <result>libreoffice-core-3.6.3.2</result>
+    <patch>0001-Add-basic-qnx-configuration-such-that-configure-scri.patch</patch>
+  </download>
+  <build>
+    <command>
         cd libreoffice-core-3.6.3.2
         ./autogen.sh --host ${QNX_VERSION} --prefix=${QNX_INSTALL} --without-java --enable-python=no --disable-opengl --without-doxygen
         make install
         </command>
-    </build>
-    <package>
-        <file>bin/libreoffice</file>
-    </package>
+  </build>
+  <package>
+    <file>bin/libreoffice</file>
+  </package>
 </port>

@@ -1,0 +1,97 @@
+From 814924e3c574c1ef4c11dcf07078050314547303 Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Sat, 3 Nov 2012 16:00:48 -0400
+Subject: [PATCH] Add basic qnx configuration, such that configure script can
+ complete successfully for bb10
+
+---
+ libreoffice-core-3.6.3.2/configure.in |   52 +++++++++++++++++++++++++++++++--
+ 1 file changed, 50 insertions(+), 2 deletions(-)
+
+diff --git a/libreoffice-core-3.6.3.2/configure.in b/libreoffice-core-3.6.3.2/configure.in
+index b2ae537..e11a9c0 100644
+--- a/libreoffice-core-3.6.3.2/configure.in
++++ b/libreoffice-core-3.6.3.2/configure.in
+@@ -352,6 +352,30 @@ dragonfly*)
+     _os=DragonFly
+     ;;
+ 
++nto-qnx*)
++    build_gstreamer=no
++    test_cups=no
++    test_fontconfig=no
++    test_freetype=no
++    test_gtk=no
++    test_tde=no
++    test_kde=no
++    test_kde4=no
++    test_randr=no
++    test_xrender=no
++    test_unix_quickstarter=no
++    _os=Qnx
++
++    # Verify that the NDK options are proper
++    if test ! -f "$QNX_TARGET/armle-v7/lib/libc.a"; then
++        AC_MSG_ERROR([QNX_TARGET does not point to a qnx NDK])
++    fi
++
++    BUILD_TYPE="$BUILD_TYPE FONTCONFIG FREETYPE"
++    FREETYPE_TARBALL=dbf2caca1d3afd410a29217a9809d397-freetype-2.4.8.tar.bz2
++    FONTCONFIG_TARBALL=77e15a92006ddc2adbb06f840d591c0e-fontconfig-2.8.0.tar.gz
++    ;;
++
+ linux-androideabi*)
+     build_gstreamer=no
+     test_cups=no
+@@ -3320,6 +3344,30 @@ linux-androideabi*)
+     SOLARLIB="-L${SOLARVER}/${OUTPATH}${PROEXT}/lib"
+     ;;
+ 
++nto-qnx*)
++    COM=GCC
++    GUI=UNX
++    GUIBASE=android
++    OS=QNX
++    RTL_OS=Qnx
++    P_SEP=:
++
++    case "$host_cpu" in
++
++    arm|armel)
++        CPU=R
++        CPUNAME=ARM
++        RTL_ARCH=ARM_EABI
++        OUTPATH=unxandr
++        ;;
++    *)
++        AC_MSG_ERROR([Unsupported host_cpu $host_cpu for host_os $host_os])
++        ;;
++    esac
++    SOLARINC="$SOLARINC -I$SRC_ROOT/solenv/inc/$OUTPATH"
++    SOLARLIB="-L${SOLARVER}/${OUTPATH}${PROEXT}/lib"
++    ;;
++
+ mingw*)
+     COM=GCC
+     GUI=WNT
+@@ -3734,7 +3782,7 @@ elif test "$enable_cups" = "yes"; then
+         AC_MSG_ERROR([CUPS makes no sense for $_os])
+     fi
+     ENABLE_CUPS="YES"
+-elif test $_os = iOS -o $_os = Android; then
++elif test $_os = iOS -o $_os = Android -o $_os = Qnx; then
+     ENABLE_CUPS=NO
+ else
+     ENABLE_CUPS="YES"
+@@ -8001,7 +8049,7 @@ dnl ***************************************
+ dnl testing for X libraries and includes...
+ dnl ***************************************
+ WANT_X11="no"
+-if test $_os != Darwin -a $_os != WINNT -a $_os != Android -a $_os != iOS -a "$enable_headless" != "yes"; then
++if test $_os != Darwin -a $_os != WINNT -a $_os != Android -a $_os != Qnx -a $_os != iOS -a "$enable_headless" != "yes"; then
+     WANT_X11="yes"
+ fi
+ AC_MSG_RESULT([$WANT_X11])
+-- 
+1.7.10.4
+
