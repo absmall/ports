@@ -1,0 +1,17 @@
+<port>
+    <download>
+        <command>wget http://download.documentfoundation.org/libreoffice/src/3.6.3/libreoffice-core-3.6.3.2.tar.xz</command>
+        <command>tar -Jxf libreoffice-core-3.6.3.2.tar.xz</command>
+        <result>libreoffice-core-3.6.3.2</result>
+    </download>
+    <build>
+        <command>
+        cd libreoffice-core-3.6.3.2
+        ./autogen.sh --host ${QNX_VERSION} --prefix=${QNX_INSTALL} --without-java --enable-python=no --disable-opengl --without-doxygen
+        make install
+        </command>
+    </build>
+    <package>
+        <file>bin/libreoffice</file>
+    </package>
+</port>
