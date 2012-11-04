@@ -16,4 +16,12 @@
   <package>
     <file>bin/cppunit-config</file>
   </package>
+  <export>
+    <file>lib/pkgconfig</file>
+    <file>libcppunit.la</file>
+    <file>libcppunit.so</file>
+    <file>libcppunit.a</file>
+    <file>libcppunit-1.12.so.1</file>
+    <file>pkgconfig/cppunit.pc</file>
+  </export>
 </port>
