@@ -173,7 +173,8 @@ def build(package, deps, clean, devMode):
     commands.chdir("%s/%s" % (basedir, package))
 
     # Give a target in which to install built files
-    os.putenv("QNX_INSTALL", basedir+"/"+package+"/build/"+platform)
+    installpath = "%s/%s/build/%s" % (basedir, package, platform)
+    os.environ["QNX_INSTALL"]=installpath
 
     # Set up the workspace
     mkworkdir(clean)
@@ -213,12 +214,15 @@ statically_package = args['static']
 
 # Go to ports directory
 commands.chdir(os.path.dirname(sys.argv[0]))
+bindir = os.getcwd()
 commands.chdir("../ports")
 
 basedir = os.getcwd()
 
 # Set environment variables for the build to use
 os.putenv("QNX_PLATFORM", args['platform'])
+os.environ["PATH"]="%s:%s" % (os.getenv("PATH"), bindir)
+
 try:
     os.putenv("QNX_VERSION", version(args['platform']))
 except:
