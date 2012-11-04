@@ -1,0 +1,25 @@
+From 689f31814d856697d18f7226e221987ee904d15f Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Sat, 3 Nov 2012 22:21:02 -0400
+Subject: [PATCH] Resolve ambiguous cast
+
+---
+ cppunit-1.12.1/config/ax_cxx_have_isfinite.m4 |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cppunit-1.12.1/config/ax_cxx_have_isfinite.m4 b/cppunit-1.12.1/config/ax_cxx_have_isfinite.m4
+index 5f9c7fc..2c53320 100644
+--- a/cppunit-1.12.1/config/ax_cxx_have_isfinite.m4
++++ b/cppunit-1.12.1/config/ax_cxx_have_isfinite.m4
+@@ -14,7 +14,7 @@ AC_DEFUN([AX_CXX_HAVE_ISFINITE],
+      AC_LINK_IFELSE(
+        [AC_LANG_PROGRAM(
+          [[#include <math.h>]],
+-         [[int f = isfinite( 3 );]])],
++         [[int f = isfinite( 3.0 );]])],
+        [ax_cv_cxx_have_isfinite=yes],
+        [ax_cv_cxx_have_isfinite=no])
+      AC_LANG_RESTORE])
+-- 
+1.7.10.4
+

@@ -3,6 +3,7 @@
     <command>wget http://downloads.sourceforge.net/project/cppunit/cppunit/1.12.1/cppunit-1.12.1.tar.gz</command>
     <command>tar -zxf cppunit-1.12.1.tar.gz</command>
     <result>cppunit-1.12.1</result>
+    <patch>0001-Resolve-ambiguous-cast.patch</patch>
   </download>
   <build>
     <command>
