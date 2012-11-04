@@ -1,0 +1,18 @@
+<port>
+  <download>
+    <command>wget http://downloads.sourceforge.net/project/cppunit/cppunit/1.12.1/cppunit-1.12.1.tar.gz</command>
+    <command>tar -zxf cppunit-1.12.1.tar.gz</command>
+    <result>cppunit-1.12.1</result>
+  </download>
+  <build>
+    <command>
+        cd cppunit-1.12.1
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
+        make
+        make install
+        </command>
+  </build>
+  <package>
+    <file>bin/cppunit-config</file>
+  </package>
+</port>
