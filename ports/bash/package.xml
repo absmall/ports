@@ -1,20 +1,20 @@
 <port>
-    <download>
-        <command>wget http://ftp.gnu.org/gnu/bash/bash-4.2.tar.gz</command>
-        <command>tar -zxvf bash-4.2.tar.gz</command>
-        <result>bash-4.2</result>
-        <patch>0001-Customize-for-qnx-since-we-can-t-autodetect-job-cont.patch</patch>
-        <patch>0002-Remove-references-to-the-compiler-version-since-this.patch</patch>
-        <patch>0003-Remove-obsolete-qnx-specific-build-flags.patch</patch>
-    </download>
-    <build>
-        <command>
+  <download>
+    <command>wget http://ftp.gnu.org/gnu/bash/bash-4.2.tar.gz</command>
+    <command>tar -zxvf bash-4.2.tar.gz</command>
+    <result>bash-4.2</result>
+    <patch>0001-Customize-for-qnx-since-we-can-t-autodetect-job-cont.patch</patch>
+    <patch>0002-Remove-references-to-the-compiler-version-since-this.patch</patch>
+    <patch>0003-Remove-obsolete-qnx-specific-build-flags.patch</patch>
+  </download>
+  <build>
+    <command>
         cd bash-4.2
         ./configure --cache-file cross-build/arm-qnx.cache --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
         make install
         </command>
-    </build>
-    <package>
-        <file>bin/bash</file>
-    </package>
+  </build>
+  <package>
+    <file>bin/bash</file>
+  </package>
 </port>
