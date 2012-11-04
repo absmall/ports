@@ -8,8 +8,8 @@
   <build>
     <command>
         cd libreoffice-core-3.6.3.2
-        ./autogen.sh --host ${QNX_VERSION} --prefix=${QNX_INSTALL} --without-java --enable-python=no --disable-opengl --without-doxygen
-        make install
+        ./autogen.sh --host ${QNX_VERSION} --build=x86_64-unknown-linux-gnu --prefix=${QNX_INSTALL} --without-java --enable-python=no --disable-opengl --without-doxygen --with-system-cppunit --with-system-curl
+        make
         </command>
   </build>
   <package>
