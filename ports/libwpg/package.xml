@@ -13,6 +13,10 @@
         make install
         </command>
   </build>
+  <package>
+    <file>bin/wpg2raw</file>
+    <file>bin/wpg2svg</file>
+  </package>
   <export>
     <file>include/libwpg-0.2/libwpg/WPGraphics.h</file>
     <file>include/libwpg-0.2/libwpg/libwpg.h</file>

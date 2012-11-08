@@ -2,6 +2,7 @@
   <depends>cppunit</depends>
   <depends>libwpd</depends>
   <depends>libwpg</depends>
+  <depends>neon</depends>
   <download>
     <command>wget http://download.documentfoundation.org/libreoffice/src/3.6.3/libreoffice-core-3.6.3.2.tar.xz</command>
     <command>tar -Jxf libreoffice-core-3.6.3.2.tar.xz</command>
@@ -11,7 +12,7 @@
   <build>
     <command>
         cd libreoffice-core-3.6.3.2
-        ./autogen.sh --host ${QNX_VERSION} --build=x86_64-unknown-linux-gnu --prefix=${QNX_INSTALL} --without-java --enable-python=no --disable-opengl --without-doxygen --with-system-cppunit --with-system-curl --disable-mozilla --disable-gconf --disable-gnome-vfs --with-system-icu --with-system-expat --disable-ext-pdfimport --with-system-libwpd --with-system-libwpg --with-system-openssl
+        ./autogen.sh --host ${QNX_VERSION} --build=x86_64-unknown-linux-gnu --prefix=${QNX_INSTALL} --without-java --enable-python=no --disable-opengl --without-doxygen --with-system-cppunit --with-system-curl --disable-mozilla --disable-gconf --disable-gnome-vfs --with-system-icu --with-system-expat --disable-ext-pdfimport --with-system-libwpd --with-system-libwpg --with-system-openssl --with-system-neon
         make
         </command>
   </build>
