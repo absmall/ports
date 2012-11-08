@@ -13,4 +13,35 @@
         make install
         </command>
   </build>
+  <export>
+    <file>include/libwpg-0.2/libwpg/WPGraphics.h</file>
+    <file>include/libwpg-0.2/libwpg/libwpg.h</file>
+    <file>include/libwpg-0.2/libwpg/WPGPaintInterface.h</file>
+    <file>include/libwpd-0.9/libwpd/WPDocument.h</file>
+    <file>include/libwpd-0.9/libwpd/WPXString.h</file>
+    <file>include/libwpd-0.9/libwpd/WPXDocumentInterface.h</file>
+    <file>include/libwpd-0.9/libwpd/WPXProperty.h</file>
+    <file>include/libwpd-0.9/libwpd/WPXPropertyList.h</file>
+    <file>include/libwpd-0.9/libwpd/WPXPropertyListVector.h</file>
+    <file>include/libwpd-0.9/libwpd/WPXBinaryData.h</file>
+    <file>include/libwpd-0.9/libwpd/libwpd.h</file>
+    <file>include/libwpd-0.9/libwpd-stream/WPXStream.h</file>
+    <file>include/libwpd-0.9/libwpd-stream/WPXStreamImplementation.h</file>
+    <file>include/libwpd-0.9/libwpd-stream/libwpd-stream.h</file>
+    <file>lib/libwpg-0.2.so.2</file>
+    <file>lib/libwpd-0.9.la</file>
+    <file>lib/libwpd-stream-0.9.so</file>
+    <file>lib/libwpg-0.2.so</file>
+    <file>lib/libwpg-0.2.la</file>
+    <file>lib/libwpd-0.9.so.9</file>
+    <file>lib/libwpd-stream-0.9.so.9</file>
+    <file>lib/libwpg-0.2.a</file>
+    <file>lib/libwpd-stream-0.9.a</file>
+    <file>lib/libwpd-0.9.a</file>
+    <file>lib/libwpd-0.9.so</file>
+    <file>lib/pkgconfig/libwpd-stream-0.9.pc</file>
+    <file>lib/pkgconfig/libwpg-0.2.pc</file>
+    <file>lib/pkgconfig/libwpd-0.9.pc</file>
+    <file>lib/libwpd-stream-0.9.la</file>
+  </export>
 </port>
