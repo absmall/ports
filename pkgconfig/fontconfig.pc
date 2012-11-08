@@ -1,0 +1,16 @@
+prefix=/home/absmall/rim/bbndk/target_10_0_6_384/qnx6
+exec_prefix=${prefix}
+libdir=${prefix}/armle-v7/lib
+includedir=${prefix}/include
+sysconfdir=/etc
+localstatedir=/var
+PACKAGE=fontconfig
+confdir=${sysconfdir}/fonts
+cachedir=${localstatedir}/cache/${PACKAGE}
+
+Name: Fontconfig
+Description: Font configuration and customization library
+Version: 2.9.0
+Libs: -L${libdir} -lfontconfig
+Libs.private:  -lexpat -L/usr/lib/x86_64-linux-gnu -lfreetype -lz 
+Cflags: -I${includedir}

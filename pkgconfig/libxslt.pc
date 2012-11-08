@@ -1,0 +1,13 @@
+prefix=/home/absmall/rim/bbndk/target_10_0_6_384/qnx6
+exec_prefix=${prefix}/armle-v7
+libdir=${prefix}/armle-v7/lib
+includedir=${prefix}/usr/include
+
+
+Name: libxslt
+Version: 1.1.26
+Description: XSLT library version 2.
+Requires: libxml-2.0
+Libs: -L${libdir} -lxslt  -L/usr/lib -lxml2
+Libs.private: -lm
+Cflags: -I${includedir}

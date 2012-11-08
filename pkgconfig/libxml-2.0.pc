@@ -1,0 +1,13 @@
+prefix=/home/absmall/rim/bbndk/target_10_0_6_384/qnx6
+exec_prefix=${prefix}
+libdir=${prefix}/armle-v7/lib
+includedir=${prefix}/include
+modules=1
+
+Name: libXML
+Version: 2.8.0
+Description: libXML library version2.
+Requires:
+Libs: -L${libdir} -lxml2
+Libs.private:  -lz  -lm  
+Cflags: -I${includedir}/libxml2 

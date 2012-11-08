@@ -1,0 +1,12 @@
+prefix=/home/absmall/rim/bbndk/target_10_0_6_384/qnx6
+exec_prefix=${prefix}
+libdir=${exec_prefix}/armle-v7/lib
+includedir=${prefix}/include
+
+Name: OpenSSL
+Description: Secure Sockets Layer and cryptography libraries and tools
+Version: 1.0.1c
+Requires: 
+Libs: -L${libdir} -lssl -lcrypto
+Libs.private: -ldl -lz
+Cflags: -I${includedir} 
