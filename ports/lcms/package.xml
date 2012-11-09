@@ -1,0 +1,30 @@
+<port>
+  <download>
+    <command>wget http://downloads.sourceforge.net/project/lcms/lcms/2.4/lcms2-2.4.tar.gz</command>
+    <command>tar -zxf lcms2-2.4.tar.gz</command>
+    <result>lcms2-2.4</result>
+  </download>
+  <build>
+    <command>
+        cd lcms2-2.4
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
+        make
+        make install
+        </command>
+  </build>
+  <package>
+    <file>bin/psicc</file>
+    <file>bin/transicc</file>
+    <file>bin/linkicc</file>
+    <file>bin/jpgicc</file>
+  </package>
+  <export>
+    <file>include/lcms2.h</file>
+    <file>include/lcms2_plugin.h</file>
+    <file>lib/liblcms2.so</file>
+    <file>lib/liblcms2.so.2</file>
+    <file>lib/liblcms2.a</file>
+    <file>lib/liblcms2.la</file>
+    <file>lib/pkgconfig/lcms2.pc</file>
+  </export>
+</port>
