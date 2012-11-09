@@ -1,0 +1,25 @@
+From ef3791cb253ca4270e449ea21aece410fc621e10 Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Thu, 8 Nov 2012 21:21:04 -0500
+Subject: [PATCH 1/4] give qnx autoconf cache file
+
+---
+ vim73/src/auto/config.cache |    6 ++++++
+ 1 file changed, 6 insertions(+)
+ create mode 100644 vim73/src/auto/config.cache
+
+diff --git a/vim73/src/auto/config.cache b/vim73/src/auto/config.cache
+new file mode 100644
+index 0000000..5ba417a
+--- /dev/null
++++ b/vim73/src/auto/config.cache
+@@ -0,0 +1,6 @@
++vim_cv_toupper_broken=${vim_cv_toupper_broken=no}
++vim_cv_terminfo=${vim_cv_terminfo=yes}
++vim_cv_tty_group=${vim_cv_tty_group=no}
++vim_cv_tty_mode=${vim_cv_tty_mode=no}
++vim_cv_getcwd_broken=${vim_cv_getcwd_broken=no}
++vim_cv_stat_ignores_slash=${vim_cv_stat_ignores_slash=yes}
+-- 
+1.7.10.4
+

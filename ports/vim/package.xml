@@ -1,0 +1,22 @@
+<port>
+  <download>
+    <command>wget ftp://ftp.vim.org/pub/vim/unix/vim-7.3.tar.bz2</command>
+    <command>tar -jxf vim-7.3.tar.bz2</command>
+    <result>vim73</result>
+    <patch>0001-give-qnx-autoconf-cache-file.patch</patch>
+    <patch>0002-Update-configure-scripts-so-configure-now-completes.patch</patch>
+    <patch>0003-Fix-build-when-uname-is-not-qnx-but-__QNXNTO__-is-de.patch</patch>
+    <patch>0004-Final-updates-to-config-cache.patch</patch>
+  </download>
+  <build>
+    <command>
+        cd vim73
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL} --with-tlib=ncurses
+        make
+        make install
+        </command>
+  </build>
+  <package>
+    <file>bin/vim</file>
+  </package>
+</port>

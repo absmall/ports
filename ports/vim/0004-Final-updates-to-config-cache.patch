@@ -1,0 +1,25 @@
+From 24c3f92e09a49047fa174d4f6ff2562343cfa89f Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Thu, 8 Nov 2012 21:49:48 -0500
+Subject: [PATCH 4/4] Final updates to config cache
+
+---
+ vim73/src/auto/config.cache |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/vim73/src/auto/config.cache b/vim73/src/auto/config.cache
+index f96a5c5..9da29f6 100644
+--- a/vim73/src/auto/config.cache
++++ b/vim73/src/auto/config.cache
+@@ -150,7 +150,7 @@ ac_cv_prog_AWK=${ac_cv_prog_AWK=mawk}
+ ac_cv_prog_CC=${ac_cv_prog_CC=arm-unknown-nto-qnx8.0.0eabi-gcc}
+ ac_cv_prog_CPP=${ac_cv_prog_CPP='arm-unknown-nto-qnx8.0.0eabi-gcc -E'}
+ ac_cv_prog_MSGFMT=${ac_cv_prog_MSGFMT=msgfmt}
+-ac_cv_prog_STRIP=${ac_cv_prog_STRIP=strip}
++ac_cv_prog_STRIP=${ac_cv_prog_STRIP=arm-unknown-nto-qnx8.0.0eabi-strip}
+ ac_cv_prog_cc_c89=${ac_cv_prog_cc_c89=}
+ ac_cv_prog_cc_g=${ac_cv_prog_cc_g=yes}
+ ac_cv_prog_gcc_traditional=${ac_cv_prog_gcc_traditional=no}
+-- 
+1.7.10.4
+
