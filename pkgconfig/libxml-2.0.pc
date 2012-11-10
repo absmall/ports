@@ -1,4 +1,4 @@
-prefix=/home/absmall/rim/bbndk/target_10_0_6_384/qnx6
+prefix=${QNX_TARGET}
 exec_prefix=${prefix}
 libdir=${prefix}/armle-v7/lib
 includedir=${prefix}/include
