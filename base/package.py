@@ -164,7 +164,7 @@ def build(package, deps, clean, devMode):
     tree = etree.parse("package.xml")
 
     # Build all dependencies
-    if deps:
+    if deps == 'full':
         for i in tree.getroot():
             if i.tag == "depends":
                 build(i.text, deps, clean, devMode)
@@ -180,10 +180,10 @@ def build(package, deps, clean, devMode):
     mkworkdir(clean)
 
     # Link all dependencies
-    for i in tree.getroot():
-        if i.tag == "depends":
-            print "Linking"
-            link(i.text, package)
+    if deps == 'link' or deps == 'full':
+        for i in tree.getroot():
+            if i.tag == "depends":
+                link(i.text, package)
 
     # Back to ports directory in case we left to link dependencies
     commands.chdir("%s/%s" % (basedir, package))
@@ -202,7 +202,7 @@ parser.add_argument('-c', '--commands_only', action='store_const', const=1, help
 parser.add_argument('-v', '--verbose', action='store_const', const=1, help='Lots of output')
 parser.add_argument('--clean', action='store_const', const=1, help='Remove all built code before beginning')
 parser.add_argument('--dev', action='store_const', const=1, help='Build in development mode (can be loaded using a debug token, can be debugged, cannot be signed)')
-parser.add_argument('--nodeps', action='store_const', const=1, help='Don\'t build dependencies, they have already been built.')
+parser.add_argument('--deps', choices=['none', 'link', 'full'], default='full', help='Don\'t build dependencies, they have already been built.')
 parser.add_argument('--prepare-patch', action='store_const', const=1, help='Create patch files for the package')
 parser.add_argument('--platform', action='store', nargs='?', default="armv7", help='Platform to build for')
 parser.add_argument('package', metavar='package', nargs='+', help='Package to build')
@@ -240,4 +240,4 @@ for package in packages:
     if args['prepare_patch']:
         build_patch(package)
     else:
-        build(package, args['nodeps'] is None, args['clean'], args['dev'])
+        build(package, args['deps'], args['clean'], args['dev'])
