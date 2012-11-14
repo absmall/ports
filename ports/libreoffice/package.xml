@@ -4,6 +4,7 @@
   <depends>libwpg</depends>
   <depends>libcdr</depends>
   <depends>neon</depends>
+  <depends>lcms</depends>
   <download>
     <command>wget http://download.documentfoundation.org/libreoffice/src/3.6.3/libreoffice-core-3.6.3.2.tar.xz</command>
     <command>tar -Jxf libreoffice-core-3.6.3.2.tar.xz</command>
