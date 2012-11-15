@@ -1,0 +1,20 @@
+<port>
+  <depends>pixman</depends>
+  <download>
+    <command>wget http://www.cairographics.org/releases/cairo-1.12.8.tar.xz</command>
+    <command>tar -Jxf cairo-1.12.8.tar.xz</command>
+    <result>cairo-1.12.8</result>
+  </download>
+  <build>
+    <command>
+        cd cairo-1.12.8
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
+        make
+        make install
+        </command>
+  </build>
+  <package>
+  </package>
+  <export>
+  </export>
+</port>
