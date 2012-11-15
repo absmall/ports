@@ -1,0 +1,29 @@
+<port>
+  <depends>raptor</depends>
+  <download>
+    <command>wget http://download.librdf.org/source/rasqal-0.9.16.tar.gz</command>
+    <command>tar -zxf rasqal-0.9.16.tar.gz</command>
+    <result>rasqal-0.9.16</result>
+  </download>
+  <build>
+    <command>
+        cd rasqal-0.9.16
+        PATH=${QNX_INSTALL}/bin:$PATH ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
+        make
+        make install
+        </command>
+  </build>
+  <package>
+    <file>bin/rasqal-config</file>
+  </package>
+  <export>
+    <file>bin/rasqal-config</file>
+    <file>include/rasqal/rasqal.h</file>
+    <file>lib/librasqal.so.1.0.0</file>
+    <file>lib/librasqal.so</file>
+    <file>lib/librasqal.so.1</file>
+    <file>lib/librasqal.la</file>
+    <file>lib/pkgconfig/rasqal.pc</file>
+    <file>lib/librasqal.a</file>
+  </export>
+</port>

@@ -16,6 +16,7 @@
     <file>bin/raptor-config</file>
   </package>
   <export>
+    <file>bin/raptor-config</file>
     <file>include/raptor.h</file>
     <file>lib/libraptor.a</file>
     <file>lib/libraptor.so</file>

@@ -1,0 +1,52 @@
+<port>
+  <depends>raptor</depends>
+  <depends>rasqal</depends>
+  <download>
+    <command>wget http://download.librdf.org/source/redland-1.0.10.tar.gz</command>
+    <command>tar -zxf redland-1.0.10.tar.gz</command>
+    <result>redland-1.0.10</result>
+  </download>
+  <build>
+    <command>
+        cd redland-1.0.10
+        export PKG_CONFIG=../../../../base/arm-unknown-nto-qnx8.0.0eabi-pkg-config
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
+        make
+        make install
+        </command>
+  </build>
+  <package>
+    <file>bin/redland-config</file>
+  </package>
+  <export>
+    <file>bin/redland-config</file>
+    <file>include/rdf_serializer.h</file>
+    <file>include/rdf_statement.h</file>
+    <file>include/rdf_node.h</file>
+    <file>include/rdf_utf8.h</file>
+    <file>include/rdf_hash.h</file>
+    <file>include/rdf_digest.h</file>
+    <file>include/rdf_iterator.h</file>
+    <file>include/raptor.h</file>
+    <file>include/rdf_log.h</file>
+    <file>include/redland.h</file>
+    <file>include/rdf_list.h</file>
+    <file>include/rdf_storage.h</file>
+    <file>include/rdf_raptor.h</file>
+    <file>include/librdf.h</file>
+    <file>include/rdf_model.h</file>
+    <file>include/rdf_concepts.h</file>
+    <file>include/rdf_uri.h</file>
+    <file>include/rdf_storage_module.h</file>
+    <file>include/rdf_init.h</file>
+    <file>include/rdf_stream.h</file>
+    <file>include/rdf_query.h</file>
+    <file>include/rdf_parser.h</file>
+    <file>lib/librasqal.so.1.0.0</file>
+    <file>lib/librdf.a</file>
+    <file>lib/librdf.so.0</file>
+    <file>lib/librdf.la</file>
+    <file>lib/librdf.so</file>
+    <file>lib/pkgconfig/redland.pc</file>
+  </export>
+</port>
