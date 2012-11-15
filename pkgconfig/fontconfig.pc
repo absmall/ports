@@ -12,5 +12,5 @@ Name: Fontconfig
 Description: Font configuration and customization library
 Version: 2.9.0
 Libs: -L${libdir} -lfontconfig
-Libs.private:  -lexpat -L/usr/lib/x86_64-linux-gnu -lfreetype -lz 
+Libs.private:  -lexpat -lfreetype -lz 
 Cflags: -I${includedir}
