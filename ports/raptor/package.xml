@@ -1,0 +1,26 @@
+<port>
+  <download>
+    <command>wget http://download.librdf.org/source/raptor-1.4.21.tar.gz</command>
+    <command>tar -zxf raptor-1.4.21.tar.gz</command>
+    <result>raptor-1.4.21</result>
+  </download>
+  <build>
+    <command>
+        cd raptor-1.4.21
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
+        make
+        make install
+        </command>
+  </build>
+  <package>
+    <file>bin/raptor-config</file>
+  </package>
+  <export>
+    <file>include/raptor.h</file>
+    <file>lib/libraptor.a</file>
+    <file>lib/libraptor.so</file>
+    <file>lib/libraptor.so.3</file>
+    <file>lib/libraptor.la</file>
+    <file>lib/pkgconfig/raptor.pc</file>
+  </export>
+</port>
