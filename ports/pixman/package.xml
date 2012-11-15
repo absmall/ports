@@ -1,0 +1,26 @@
+<port>
+  <download>
+    <command>wget http://www.cairographics.org/releases/pixman-0.28.0.tar.gz</command>
+    <command>tar -zxf pixman-0.28.0.tar.gz</command>
+    <result>pixman-0.28.0</result>
+  </download>
+  <build>
+    <command>
+        cd pixman-0.28.0
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
+        make
+        make install
+        </command>
+  </build>
+  <package>
+    <file>include/pixman-1/pixman.h</file>
+  </package>
+  <export>
+    <file>include/pixman-1/pixman.h</file>
+    <file>include/pixman-1/pixman-version.h</file>
+    <file>lib/libpixman-1.so</file>
+    <file>lib/libpixman-1.a</file>
+    <file>lib/libpixman-1.so.28</file>
+    <file>lib/pkgconfig/pixman-1.pc</file>
+  </export>
+</port>
