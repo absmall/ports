@@ -221,7 +221,7 @@ basedir = os.getcwd()
 
 # Set environment variables for the build to use
 os.putenv("QNX_PLATFORM", args['platform'])
-os.environ["PATH"]="%s:%s" % (os.getenv("PATH"), bindir)
+os.environ["PATH"]="%s:%s" % (bindir, os.getenv("PATH"))
 
 try:
     os.putenv("QNX_VERSION", version(args['platform']))
