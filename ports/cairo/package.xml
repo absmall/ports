@@ -14,7 +14,34 @@
         </command>
   </build>
   <package>
+    <file>lib/libcairo.so</file>
   </package>
   <export>
+    <file>include/cairo/cairo-pdf.h</file>
+    <file>include/cairo/cairo-deprecated.h</file>
+    <file>include/cairo/cairo.h</file>
+    <file>include/cairo/cairo-features.h</file>
+    <file>include/cairo/cairo-script.h</file>
+    <file>include/cairo/cairo-ps.h</file>
+    <file>include/cairo/cairo-version.h</file>
+    <file>include/cairo/cairo-ft.h</file>
+    <file>include/cairo/cairo-script-interpreter.h</file>
+    <file>include/cairo/cairo-svg.h</file>
+    <file>lib/libcairo-script-interpreter.a</file>
+    <file>lib/libcairo.la</file>
+    <file>lib/libcairo-script-interpreter.so.11202</file>
+    <file>lib/libcairo.so</file>
+    <file>lib/libcairo-script-interpreter.la</file>
+    <file>lib/libcairo.a</file>
+    <file>lib/libcairo-script-interpreter.so</file>
+    <file>lib/pkgconfig/cairo-png.pc</file>
+    <file>lib/pkgconfig/cairo.pc</file>
+    <file>lib/pkgconfig/cairo-pdf.pc</file>
+    <file>lib/pkgconfig/cairo-fc.pc</file>
+    <file>lib/pkgconfig/cairo-ps.pc</file>
+    <file>lib/pkgconfig/cairo-ft.pc</file>
+    <file>lib/pkgconfig/cairo-script.pc</file>
+    <file>lib/pkgconfig/cairo-svg.pc</file>
+    <file>lib/libcairo.so.11202</file>
   </export>
 </port>
