@@ -12,7 +12,7 @@
 prefix=${QNX_TARGET}
 exec_prefix=${prefix}
 exec_prefix_set=no
-includedir=${prefix}/include
+includedir=${prefix}/usr/include
 libdir=${prefix}/armle-v7/lib
 enable_shared=
 wl=-Wl,
