@@ -6,7 +6,7 @@
     <build>
         <command>
         cd Boost/rim-build
-        #./build.sh install
+        ./build.sh install static
         mkdir ${QNX_INSTALL}/include
         rm -rf ${QNX_INSTALL}/include/*
         cp -a ../boost ${QNX_INSTALL}/include
