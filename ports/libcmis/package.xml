@@ -1,0 +1,22 @@
+<port>
+    <depends>cppunit</depends>
+    <depends>boost</depends>
+  <download>
+    <command>wget http://downloads.sourceforge.net/project/libcmis/libcmis-0.3.0.tar.gz</command>
+    <command>tar -zxf libcmis-0.3.0.tar.gz</command>
+    <result>libcmis-0.3.0</result>
+  </download>
+  <build>
+    <command>
+        cd libcmis-0.3.0
+        export CPLUS_INCLUDE_PATH=${QNX_INSTALL}/include
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
+        make
+        make install
+        </command>
+  </build>
+  <package>
+  </package>
+  <export>
+  </export>
+</port>
