@@ -8963,58 +8963,33 @@
         <file>include/boost/cstdint.hpp</file>
         <file>include/boost/move/move_helpers.hpp</file>
         <file>include/boost/move/move.hpp</file>
-        <file>lib/libboost_iostreams.so</file>
-        <file>lib/libboost_math_c99l.so.1.48.0</file>
-        <file>lib/libboost_program_options.so.1.48.0</file>
-        <file>lib/libboost_date_time.so.1.48.0</file>
-        <file>lib/libboost_wave.so</file>
-        <file>lib/libboost_graph.so</file>
-        <file>lib/libboost_math_tr1.so.1.48.0</file>
-        <file>lib/libboost_thread.so</file>
-        <file>lib/libboost_system.so.1.48.0</file>
-        <file>lib/libboost_chrono.so</file>
-        <file>lib/libboost_prg_exec_monitor.so</file>
-        <file>lib/libboost_math_tr1f.so</file>
-        <file>lib/libboost_system.so</file>
-        <file>lib/libboost_chrono.so.1.48.0</file>
-        <file>lib/libboost_math_tr1.so</file>
-        <file>lib/libboost_test.so</file>
-        <file>lib/libboost_regex.so.1.48.0</file>
-        <file>lib/libboost_timer.so</file>
-        <file>lib/libboost_filesystem.so</file>
+        <file>lib/libboost_test.a</file>
+        <file>lib/libboost_thread.a</file>
+        <file>lib/libboost_wave.a</file>
+        <file>lib/libboost_filesystem.a</file>
+        <file>lib/libboost_date_time.a</file>
+        <file>lib/libboost_locale.a</file>
+        <file>lib/libboost_math_c99f.a</file>
+        <file>lib/libboost_math_tr1l.a</file>
+        <file>lib/libboost_serialization.a</file>
+        <file>lib/libboost_regex.a</file>
         <file>lib/libboost_test_exec_monitor.a</file>
-        <file>lib/libboost_math_c99.so</file>
-        <file>lib/libboost_filesystem.so.1.48.0</file>
-        <file>lib/libboost_test.so.1.48.0</file>
-        <file>lib/libboost_serialization.so</file>
-        <file>lib/libboost_iostreams.so.1.48.0</file>
-        <file>lib/libboost_unit_test_framework.so.1.48.0</file>
-        <file>lib/libboost_math_tr1l.so.1.48.0</file>
-        <file>lib/libboost_wave.so.1.48.0</file>
-        <file>lib/libboost_wserialization.so.1.48.0</file>
-        <file>lib/libboost_unit_test_framework.so</file>
-        <file>lib/libboost_graph.so.1.48.0</file>
-        <file>lib/libboost_math_tr1l.so</file>
+        <file>lib/libboost_math_tr1.a</file>
+        <file>lib/libboost_random.a</file>
+        <file>lib/libboost_program_options.a</file>
+        <file>lib/libboost_graph.a</file>
+        <file>lib/libboost_iostreams.a</file>
         <file>lib/libboost_exception.a</file>
-        <file>lib/libboost_date_time.so</file>
-        <file>lib/libboost_signals.so</file>
-        <file>lib/libboost_random.so.1.48.0</file>
-        <file>lib/libboost_random.so</file>
-        <file>lib/libboost_math_c99.so.1.48.0</file>
-        <file>lib/libboost_signals.so.1.48.0</file>
-        <file>lib/libboost_prg_exec_monitor.so.1.48.0</file>
-        <file>lib/libboost_locale.so</file>
-        <file>lib/libboost_thread.so.1.48.0</file>
-        <file>lib/libboost_timer.so.1.48.0</file>
-        <file>lib/libboost_regex.so</file>
-        <file>lib/libboost_program_options.so</file>
-        <file>lib/libboost_math_c99l.so</file>
-        <file>lib/libboost_math_c99f.so.1.48.0</file>
-        <file>lib/libboost_math_c99f.so</file>
-        <file>lib/libboost_wserialization.so</file>
-        <file>lib/libboost_math_tr1f.so.1.48.0</file>
-        <file>lib/libboost_serialization.so.1.48.0</file>
-        <file>lib/libboost_locale.so.1.48.0</file>
+        <file>lib/libboost_math_c99l.a</file>
+        <file>lib/libboost_unit_test_framework.a</file>
+        <file>lib/libboost_chrono.a</file>
+        <file>lib/libboost_signals.a</file>
+        <file>lib/libboost_math_c99.a</file>
+        <file>lib/libboost_wserialization.a</file>
+        <file>lib/libboost_timer.a</file>
+        <file>lib/libboost_prg_exec_monitor.a</file>
+        <file>lib/libboost_system.a</file>
+        <file>lib/libboost_math_tr1f.a</file>
     </export>
 </port>
 
