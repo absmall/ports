@@ -10,7 +10,7 @@
     <command>
         cd libcmis-0.3.0
         export CPLUS_INCLUDE_PATH=${QNX_INSTALL}/include
-        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL} --with-boost=${QNX_INSTALL}
         make
         make install
         </command>
