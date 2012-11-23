@@ -1,10 +1,11 @@
 <port>
-    <depends>cppunit</depends>
-    <depends>boost</depends>
+  <depends>cppunit</depends>
+  <depends>boost</depends>
   <download>
     <command>wget http://downloads.sourceforge.net/project/libcmis/libcmis-0.3.0.tar.gz</command>
     <command>tar -zxf libcmis-0.3.0.tar.gz</command>
     <result>libcmis-0.3.0</result>
+    <patch>0001-Turn-off-warnings-as-errors-since-our-gcc-toolchain-.patch</patch>
   </download>
   <build>
     <command>
