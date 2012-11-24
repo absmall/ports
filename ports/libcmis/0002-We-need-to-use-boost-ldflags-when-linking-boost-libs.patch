@@ -1,0 +1,84 @@
+From 6a4b2ea06d81561bfd07030c4362d7c1df3b931e Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Sat, 24 Nov 2012 00:52:39 -0500
+Subject: [PATCH 2/2] We need to use boost ldflags when linking boost libs
+
+---
+ libcmis-0.3.0/src/Makefile.am           |    3 ++-
+ libcmis-0.3.0/src/libcmis-c/Makefile.am |    9 ++++++---
+ libcmis-0.3.0/src/libcmis/Makefile.am   |    6 ++++--
+ 3 files changed, 12 insertions(+), 6 deletions(-)
+
+diff --git a/libcmis-0.3.0/src/Makefile.am b/libcmis-0.3.0/src/Makefile.am
+index d2693f2..b7c15e5 100644
+--- a/libcmis-0.3.0/src/Makefile.am
++++ b/libcmis-0.3.0/src/Makefile.am
+@@ -9,5 +9,6 @@ cmis_client_SOURCES = cmis-client.cxx
+ cmis_client_LDADD = $(top_builddir)/src/libcmis/libcmis-@LIBCMIS_API_VERSION@.la \
+ 	$(XML2_LIBS) \
+ 	$(BOOST_PROGRAM_OPTIONS_LIBS) \
+-	$(BOOST_DATE_TIME_LIBS)
++	$(BOOST_DATE_TIME_LIBS) \
++	$(BOOST_PROGRAM_OPTIONS_LDFLAGS)
+ endif
+diff --git a/libcmis-0.3.0/src/libcmis-c/Makefile.am b/libcmis-0.3.0/src/libcmis-c/Makefile.am
+index 7d6df28..b85c89d 100644
+--- a/libcmis-0.3.0/src/libcmis-c/Makefile.am
++++ b/libcmis-0.3.0/src/libcmis-c/Makefile.am
+@@ -39,7 +39,8 @@ libcmis_c_@LIBCMIS_API_VERSION@_la_LIBADD = \
+ 	$(XML2_LIBS) \
+ 	$(CURL_LIBS) \
+ 	$(BOOST_SMART_PTR_LIBS) \
+-	$(BOOST_DATE_TIME_LIBS)
++	$(BOOST_DATE_TIME_LIBS) \
++	$(BOOST_PROGRAM_OPTIONS_LDFLAGS)
+ 
+ libcmis_c_@LIBCMIS_API_VERSION@_la_includedir = $(includedir)/libcmis-c-@LIBCMIS_API_VERSION@/libcmis-c
+ 
+@@ -69,7 +70,8 @@ test_api_LDADD = \
+ 	$(XML2_LIBS) \
+ 	$(CURL_LIBS) \
+ 	$(CPPUNIT_LIBS) \
+-	$(BOOST_DATE_TIME_LIBS)
++	$(BOOST_DATE_TIME_LIBS) \
++	$(BOOST_PROGRAM_OPTIONS_LDFLAGS)
+ 
+ test_c_build_SOURCES = \
+ 	test-build.c
+@@ -82,7 +84,8 @@ test_c_build_LDADD = \
+ 	$(XML2_LIBS) \
+ 	$(CURL_LIBS) \
+ 	$(CPPUNIT_LIBS) \
+-	$(BOOST_DATE_TIME_LIBS)
++	$(BOOST_DATE_TIME_LIBS) \
++	$(BOOST_PROGRAM_OPTIONS_LDFLAGS)
+ 
+ TESTS = test-api
+ 
+diff --git a/libcmis-0.3.0/src/libcmis/Makefile.am b/libcmis-0.3.0/src/libcmis/Makefile.am
+index 633084c..493a602 100644
+--- a/libcmis-0.3.0/src/libcmis/Makefile.am
++++ b/libcmis-0.3.0/src/libcmis/Makefile.am
+@@ -73,7 +73,8 @@ libcmis_@LIBCMIS_API_VERSION@_la_LIBADD = \
+ 	$(XML2_LIBS) \
+ 	$(CURL_LIBS) \
+ 	$(BOOST_SMART_PTR_LIBS) \
+-	$(BOOST_DATE_TIME_LIBS)
++	$(BOOST_DATE_TIME_LIBS) \
++	$(BOOST_PROGRAM_OPTIONS_LDFLAGS)
+ 
+ libcmis_@LIBCMIS_API_VERSION@_la_includedir = $(includedir)/libcmis-@LIBCMIS_API_VERSION@/libcmis
+ 
+@@ -130,7 +131,8 @@ test_ws_LDADD = libcmis-@LIBCMIS_API_VERSION@.la \
+ 	$(XML2_LIBS) \
+ 	$(CURL_LIBS) \
+ 	$(CPPUNIT_LIBS) \
+-	$(BOOST_DATE_TIME_LIBS)
++	$(BOOST_DATE_TIME_LIBS) \
++	$(BOOST_PROGRAM_OPTIONS_LDFLAGS)
+ 
+ if ENABLE_LONG_TESTS
+ long_tests = \
+-- 
+1.7.10.4
+

@@ -6,6 +6,7 @@
     <command>tar -zxf libcmis-0.3.0.tar.gz</command>
     <result>libcmis-0.3.0</result>
     <patch>0001-Turn-off-warnings-as-errors-since-our-gcc-toolchain-.patch</patch>
+    <patch>0002-We-need-to-use-boost-ldflags-when-linking-boost-libs.patch</patch>
   </download>
   <build>
     <command>
