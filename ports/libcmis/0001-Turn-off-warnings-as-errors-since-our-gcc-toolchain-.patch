@@ -1,8 +1,8 @@
 From 33f65771cd3da62eff2fbcf2a1cd9e7d488faa1c Mon Sep 17 00:00:00 2001
 From: Aaron Small <aaron.small@shadnet.shad.ca>
 Date: Thu, 22 Nov 2012 22:32:39 -0500
-Subject: [PATCH] Turn off warnings as errors since our gcc toolchain has some
- warnings built into it.
+Subject: [PATCH 1/2] Turn off warnings as errors since our gcc toolchain has
+ some warnings built into it.
 
 ---
  libcmis-0.3.0/configure.ac |    6 +++---

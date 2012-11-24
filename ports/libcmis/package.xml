@@ -18,7 +18,42 @@
         </command>
   </build>
   <package>
+    <file>bin/cmis-client</file>
   </package>
   <export>
+    <file>include/libcmis-c-0.3/libcmis-c/repository.h</file>
+    <file>include/libcmis-c-0.3/libcmis-c/session-factory.h</file>
+    <file>include/libcmis-c-0.3/libcmis-c/types.h</file>
+    <file>include/libcmis-c-0.3/libcmis-c/session.h</file>
+    <file>include/libcmis-c-0.3/libcmis-c/property.h</file>
+    <file>include/libcmis-c-0.3/libcmis-c/document.h</file>
+    <file>include/libcmis-c-0.3/libcmis-c/vectors.h</file>
+    <file>include/libcmis-c-0.3/libcmis-c/error.h</file>
+    <file>include/libcmis-c-0.3/libcmis-c/property-type.h</file>
+    <file>include/libcmis-c-0.3/libcmis-c/folder.h</file>
+    <file>include/libcmis-c-0.3/libcmis-c/object.h</file>
+    <file>include/libcmis-c-0.3/libcmis-c/allowable-actions.h</file>
+    <file>include/libcmis-c-0.3/libcmis-c/object-type.h</file>
+    <file>include/libcmis-0.3/libcmis/repository.hxx</file>
+    <file>include/libcmis-0.3/libcmis/property.hxx</file>
+    <file>include/libcmis-0.3/libcmis/session.hxx</file>
+    <file>include/libcmis-0.3/libcmis/allowable-actions.hxx</file>
+    <file>include/libcmis-0.3/libcmis/object.hxx</file>
+    <file>include/libcmis-0.3/libcmis/folder.hxx</file>
+    <file>include/libcmis-0.3/libcmis/document.hxx</file>
+    <file>include/libcmis-0.3/libcmis/exception.hxx</file>
+    <file>include/libcmis-0.3/libcmis/xml-utils.hxx</file>
+    <file>include/libcmis-0.3/libcmis/session-factory.hxx</file>
+    <file>include/libcmis-0.3/libcmis/property-type.hxx</file>
+    <file>include/libcmis-0.3/libcmis/xmlserializable.hxx</file>
+    <file>include/libcmis-0.3/libcmis/object-type.hxx</file>
+    <file>lib/libcmis-c-0.3.a</file>
+    <file>lib/libcmis-0.3.so.3</file>
+    <file>lib/libcmis-0.3.la</file>
+    <file>lib/libcmis-0.3.a</file>
+    <file>lib/libcmis-0.3.so</file>
+    <file>lib/libcmis-c-0.3.la</file>
+    <file>lib/libcmis-c-0.3.so.3</file>
+    <file>lib/libcmis-c-0.3.so</file>
   </export>
 </port>
