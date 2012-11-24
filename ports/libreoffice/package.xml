@@ -11,6 +11,7 @@
   <depends>pixman</depends>
   <depends>cairo</depends>
   <depends>boost</depends>
+  <depends>libcmis</depends>
   <download>
     <command>wget http://download.documentfoundation.org/libreoffice/src/3.6.3/libreoffice-core-3.6.3.2.tar.xz</command>
     <command>tar -Jxf libreoffice-core-3.6.3.2.tar.xz</command>
@@ -21,7 +22,7 @@
     <command>
         cd libreoffice-core-3.6.3.2
         export CPLUS_INCLUDE_PATH=${QNX_INSTALL}/include
-        ./autogen.sh --host ${QNX_VERSION} --build=x86_64-unknown-linux-gnu --prefix=${QNX_INSTALL} --without-java --enable-python=no --disable-opengl --without-doxygen --with-system-cppunit --with-system-curl --disable-mozilla --disable-gconf --disable-gnome-vfs --with-system-icu --with-system-expat --disable-ext-pdfimport --with-system-libwpd --with-system-libwpg --with-system-openssl --with-system-neon --with-system-libcdr --with-system-redland --with-system-cairo --with-system-boost --with-boost=${QNX_INSTALL}
+        ./autogen.sh --host ${QNX_VERSION} --build=x86_64-unknown-linux-gnu --prefix=${QNX_INSTALL} --without-java --enable-python=no --disable-opengl --without-doxygen --with-system-cppunit --with-system-curl --disable-mozilla --disable-gconf --disable-gnome-vfs --with-system-icu --with-system-expat --disable-ext-pdfimport --with-system-libwpd --with-system-libwpg --with-system-openssl --with-system-neon --with-system-libcdr --with-system-redland --with-system-cairo --with-system-boost --with-boost=${QNX_INSTALL} --with-system-libcmis
         make
         </command>
   </build>
