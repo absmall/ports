@@ -1,0 +1,25 @@
+From 869d69e05997eaa8e9b23f2c25588cdd5abc2c05 Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Sat, 24 Nov 2012 22:40:38 -0500
+Subject: [PATCH 3/3] Bump libcmis requirement to 0.3
+
+---
+ libreoffice-core-3.6.3.2/configure.in |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libreoffice-core-3.6.3.2/configure.in b/libreoffice-core-3.6.3.2/configure.in
+index e11a9c0..61a4039 100644
+--- a/libreoffice-core-3.6.3.2/configure.in
++++ b/libreoffice-core-3.6.3.2/configure.in
+@@ -6342,7 +6342,7 @@ AC_MSG_CHECKING([which libcmis to use])
+ if test "$with_system_libcmis" = "yes"; then
+     AC_MSG_RESULT([external])
+     SYSTEM_LIBCMIS=YES
+-    PKG_CHECK_MODULES( LIBCMIS, libcmis-0.2 >= 0.2.1 )
++    PKG_CHECK_MODULES( LIBCMIS, libcmis-0.3 >= 0.3.0 )
+ else
+     AC_MSG_RESULT([internal])
+     SYSTEM_LIBCMIS=NO
+-- 
+1.7.10.4
+
