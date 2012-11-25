@@ -92,10 +92,9 @@ def link(source, dest):
     if source in linked:
         return
     linked.append(source)
-    commands.chdir("%s/%s" % (basedir, source))
 
     # Read in the descriptor
-    tree = etree.parse("package.xml")
+    tree = etree.parse("%s/%s/package.xml" % (basedir, source))
 
     # We need to follow the link paths to make sure
     # all necessary libraries are available
@@ -105,7 +104,6 @@ def link(source, dest):
 
     exportNode = tree.getroot().find("export")
 
-    commands.chdir("build/"+platform)
     # Make sure directories exist
     for i in exportNode:
         if i.tag == "file":
@@ -114,7 +112,7 @@ def link(source, dest):
                 target = remote
             else:
                 target = i.text
-            commands.mkdir("../../../%s/build/%s/%s" % (dest, platform, os.path.dirname(target)))
+            commands.mkdir(os.path.dirname(target))
     # Setup symlinks
     for i in exportNode:
         if i.tag == "file":
@@ -123,8 +121,7 @@ def link(source, dest):
                 target = remote
             else:
                 target = i.text
-        commands.link(os.path.relpath(i.text, "../../../%s/build/%s/%s" % (dest, platform, os.path.dirname(target))), "../../../%s/build/%s/%s" % (dest, platform, target))
-    commands.chdir("../..")
+        commands.link(os.path.relpath("../../../%s/build/%s/%s" % (source, platform, i.text), os.path.dirname(target)), target)
 
 def getlinks(source):
     global basedir
@@ -253,6 +250,7 @@ def build(package, deps, clean, devMode):
 
     # Set up the workspace
     mkworkdir(clean)
+    commands.chdir("build/%s" % platform)
 
     # Link all dependencies
     if deps == 'link' or deps == 'full':
