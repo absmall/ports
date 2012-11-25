@@ -10,6 +10,10 @@ from lxml import etree
 statically_package = 0
 platforms = ["x86", "armv7"]
 
+linked = []
+built = []
+
+
 def version(platform):
     return subprocess.check_output(['nto'+platform+'-gcc', '-dumpmachine']).strip()
 
@@ -82,8 +86,12 @@ def packagepackage(tree, package, devMode):
 
 def link(source, dest):
     global basedir
+    global linked
 
     # Go to ports directory
+    if source in linked:
+        return
+    linked.append(source)
     commands.chdir("%s/%s" % (basedir, source))
 
     # Read in the descriptor
@@ -93,7 +101,7 @@ def link(source, dest):
     # all necessary libraries are available
     for i in tree.getroot():
         if i.tag == "depends":
-            commands.link(i.text, dest)
+            link(i.text, dest)
 
     exportNode = tree.getroot().find("export")
 
@@ -258,9 +266,7 @@ def build(package, deps, clean, devMode):
     downloadpackage(tree)
     compilepackage(tree)
     packagepackage(tree, package, devMode)
-    built += package
-
-built = []
+    built.append(package)
 
 # Parse arguments
 parser = argparse.ArgumentParser(description='Build packages for playbook')
