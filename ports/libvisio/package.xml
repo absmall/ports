@@ -6,6 +6,7 @@
     <command>wget http://cgit.freedesktop.org/libreoffice/contrib/libvisio/snapshot/libvisio-0.0.21.tar.gz</command>
     <command>tar -zxf libvisio-0.0.21.tar.gz</command>
     <result>libvisio-0.0.21</result>
+    <patch>0001-Add-support-for-having-boost-installed-to-nonstandar.patch</patch>
   </download>
   <build>
     <command>
@@ -20,5 +21,19 @@
   <package>
   </package>
   <export>
+    <file>bin/vsd2raw</file>
+    <file>bin/vss2raw</file>
+    <file>bin/vsd2text</file>
+    <file>bin/vss2xhtml</file>
+    <file>bin/vsd2xhtml</file>
+    <file>bin/vss2text</file>
+    <file>include/libvisio-0.0/libvisio/libvisio.h</file>
+    <file>include/libvisio-0.0/libvisio/VisioDocument.h</file>
+    <file>include/libvisio-0.0/libvisio/VSDStringVector.h</file>
+    <file>lib/libvisio-0.0.a</file>
+    <file>lib/libvisio-0.0.so.0</file>
+    <file>lib/libvisio-0.0.la</file>
+    <file>lib/libvisio-0.0.so</file>
+    <file>lib/pkgconfig/libvisio-0.0.pc</file>
   </export>
 </port>
