@@ -118,6 +118,36 @@ def link(source, dest):
         commands.link(os.path.relpath(i.text, "../../../%s/build/%s/%s" % (dest, platform, os.path.dirname(target))), "../../../%s/build/%s/%s" % (dest, platform, target))
     commands.chdir("../..")
 
+def getlinks(source):
+    global basedir
+
+    ret = []
+    # Go to ports directory
+    commands.chdir("%s/%s" % (basedir, source))
+
+    # Read in the descriptor
+    tree = etree.parse("package.xml")
+
+    # We need to follow the link paths to make sure
+    # all necessary libraries are available
+    for i in tree.getroot():
+        if i.tag == "depends":
+            ret += getlinks(i.text)
+
+    exportNode = tree.getroot().find("export")
+
+    # Setup symlinks
+    for i in exportNode:
+        if i.tag == "file":
+            remote = i.get("remote")
+            if remote:
+                target = remote
+            else:
+                target = i.text
+        ret.append(target)
+    commands.chdir("../..")
+    return ret
+
 def build_patch(package):
     global basedir
     commands.chdir("%s/%s/build" % (basedir, package))
@@ -144,6 +174,43 @@ def build_patch(package):
         download.append( patch )
 
     # Write package.xml back out with the changes
+    package = open("package.xml", "w")
+    package.write(etree.tostring(tree, pretty_print=True))
+    package.close()
+
+def build_exports(package):
+    global basedir
+    commands.chdir("%s/%s" % (basedir, package))
+
+    # Read package.xml
+    parser = etree.XMLParser(remove_blank_text=True)
+    tree = etree.parse("package.xml", parser)
+
+    # Find which files come from dependencies
+    links = []
+    for i in tree.getroot():
+        if i.tag == "depends":
+            links += getlinks(i.text)
+
+    commands.chdir("%s/%s/build/%s" % (basedir, package, platform))
+    export = tree.getroot().find("export")
+    # Remove existing exports
+    for i in export:
+        if i.tag == "file":
+            export.remove(i)
+
+    exports = os.walk(".")
+    # Add in new ones
+    for dirpath,dirnames,files in exports:
+        for i in files:
+            path = os.path.normpath(os.path.join(dirpath, i))
+            if path not in links:
+                file = etree.Element("file")
+                file.text = path
+                export.append( file )
+
+    # Write package.xml back out with the changes
+    commands.chdir("../..")
     package = open("package.xml", "w")
     package.write(etree.tostring(tree, pretty_print=True))
     package.close()
@@ -204,6 +271,7 @@ parser.add_argument('--clean', action='store_const', const=1, help='Remove all b
 parser.add_argument('--dev', action='store_const', const=1, help='Build in development mode (can be loaded using a debug token, can be debugged, cannot be signed)')
 parser.add_argument('--deps', choices=['none', 'link', 'full'], default='full', help='Don\'t build dependencies, they have already been built.')
 parser.add_argument('--prepare-patch', action='store_const', const=1, help='Create patch files for the package')
+parser.add_argument('--prepare-exports', action='store_const', const=1, help='Create default export files for the package')
 parser.add_argument('--platform', action='store', nargs='?', default="armv7", help='Platform to build for')
 parser.add_argument('package', metavar='package', nargs='+', help='Package to build')
 args = vars(parser.parse_args())
@@ -239,5 +307,7 @@ else:
 for package in packages:
     if args['prepare_patch']:
         build_patch(package)
+    elif args['prepare_exports']:
+        build_exports(package)
     else:
         build(package, args['deps'], args['clean'], args['dev'])
