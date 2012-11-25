@@ -31,7 +31,11 @@ def link(target, name):
         print "ln -s %s %s" % (target, name)
     if run_commands:
         print "ln -s %s %s" % (target, name)
-        os.system("ln -s %s %s" % (target, name))
+        try:
+            os.symlink(target, name)
+        except OSError:
+            # If link exists, that's probably okay
+            pass
 
 def command(cmd):
     if print_commands:
