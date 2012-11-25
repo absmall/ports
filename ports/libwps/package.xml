@@ -1,0 +1,30 @@
+<port>
+  <depends>libwpd</depends>
+  <download>
+    <command>wget http://downloads.sourceforge.net/project/libwps/libwps/libwps-0.2.7/libwps-0.2.7.tar.bz2</command>
+    <command>tar -jxf libwps-0.2.7.tar.bz2</command>
+    <result>libwps-0.2.7</result>
+    <patch>0001-Fix-missing-include.patch</patch>
+  </download>
+  <build>
+    <command>
+        cd libwps-0.2.7
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL} --with-sharedptr=tr1
+        make
+        make install
+        </command>
+  </build>
+  <package>
+  </package>
+  <export>
+    <file>bin/wps2html</file>
+    <file>bin/wps2raw</file>
+    <file>bin/wps2text</file>
+    <file>include/libwps-0.2/libwps/libwps.h</file>
+    <file>include/libwps-0.2/libwps/WPSDocument.h</file>
+    <file>lib/libwps-0.2.so</file>
+    <file>lib/libwps-0.2.a</file>
+    <file>lib/libwps-0.2.la</file>
+    <file>lib/pkgconfig/libwps-0.2.pc</file>
+  </export>
+</port>

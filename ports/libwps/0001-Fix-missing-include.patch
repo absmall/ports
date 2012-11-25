@@ -1,0 +1,24 @@
+From 29b5b1428e8b8bcd0ce9fc3ac5dfdc7900f9a48c Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Sun, 25 Nov 2012 00:12:51 -0500
+Subject: [PATCH] Fix missing include
+
+---
+ libwps-0.2.7/src/lib/WPSOLEParser.cpp |    1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/libwps-0.2.7/src/lib/WPSOLEParser.cpp b/libwps-0.2.7/src/lib/WPSOLEParser.cpp
+index 29f3064..ba0bc18 100644
+--- a/libwps-0.2.7/src/lib/WPSOLEParser.cpp
++++ b/libwps-0.2.7/src/lib/WPSOLEParser.cpp
+@@ -72,6 +72,7 @@
+ #include <map>
+ #include <sstream>
+ #include <string>
++#include <stdlib.h>
+ 
+ #include <libwpd/WPXBinaryData.h>
+ 
+-- 
+1.7.10.4
+
