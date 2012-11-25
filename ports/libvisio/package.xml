@@ -1,0 +1,24 @@
+<port>
+  <depends>libwpd</depends>
+  <depends>libwpg</depends>
+  <depends>boost</depends>
+  <download>
+    <command>wget http://cgit.freedesktop.org/libreoffice/contrib/libvisio/snapshot/libvisio-0.0.21.tar.gz</command>
+    <command>tar -zxf libvisio-0.0.21.tar.gz</command>
+    <result>libvisio-0.0.21</result>
+  </download>
+  <build>
+    <command>
+        cd libvisio-0.0.21
+        ./autogen.sh
+        autoreconf -fi
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL} --with-boost=${QNX_INSTALL} --disable-werror
+        make
+        make install
+        </command>
+  </build>
+  <package>
+  </package>
+  <export>
+  </export>
+</port>
