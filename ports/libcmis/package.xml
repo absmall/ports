@@ -12,7 +12,7 @@
     <command>
         cd libcmis-0.3.0
         export CPLUS_INCLUDE_PATH=${QNX_INSTALL}/include
-        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL} --with-boost=${QNX_INSTALL}
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL} --with-boost=${QNX_INSTALL} --without-man
         make
         make install
         </command>
@@ -21,6 +21,7 @@
     <file>bin/cmis-client</file>
   </package>
   <export>
+    <file>bin/cmis-client</file>
     <file>include/libcmis-c-0.3/libcmis-c/repository.h</file>
     <file>include/libcmis-c-0.3/libcmis-c/session-factory.h</file>
     <file>include/libcmis-c-0.3/libcmis-c/types.h</file>
@@ -54,6 +55,9 @@
     <file>lib/libcmis-0.3.so</file>
     <file>lib/libcmis-c-0.3.la</file>
     <file>lib/libcmis-c-0.3.so.3</file>
+    <file>lib/pkgconfig/libcmis-c-0.3.pc</file>
+    <file>lib/pkgconfig/libcmis-0.3.pc</file>
     <file>lib/libcmis-c-0.3.so</file>
+    <file>share/man/manx/cmis-client.xml</file>
   </export>
 </port>
