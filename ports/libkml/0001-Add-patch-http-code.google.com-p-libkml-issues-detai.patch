@@ -1,0 +1,194 @@
+From 4a9a314c99acd41c765ccba77093f9822a3eed3f Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Thu, 13 Dec 2012 23:02:54 -0500
+Subject: [PATCH 1/3] Add patch
+ http://code.google.com/p/libkml/issues/detail?id=170 to
+ fix long long issue
+
+---
+ libkml-1.2.0/configure.ac                    |    1 +
+ libkml-1.2.0/examples/engine/Makefile.am     |    2 +-
+ libkml-1.2.0/examples/gpx/Makefile.am        |    2 +-
+ libkml-1.2.0/examples/gx/Makefile.am         |    2 +-
+ libkml-1.2.0/examples/hellonet/Makefile.am   |    2 +-
+ libkml-1.2.0/examples/helloworld/Makefile.am |    2 +-
+ libkml-1.2.0/examples/regionator/Makefile.am |    2 +-
+ libkml-1.2.0/examples/xsd/Makefile.am        |    2 +-
+ libkml-1.2.0/src/kml/convenience/Makefile.am |    2 +-
+ libkml-1.2.0/src/kml/dom/Makefile.am         |    2 +-
+ libkml-1.2.0/src/kml/engine/Makefile.am      |    2 +-
+ libkml-1.2.0/src/kml/regionator/Makefile.am  |    2 +-
+ libkml-1.2.0/src/kml/xsd/Makefile.am         |    2 +-
+ 13 files changed, 13 insertions(+), 12 deletions(-)
+
+diff --git a/libkml-1.2.0/configure.ac b/libkml-1.2.0/configure.ac
+index fff8c92..248691c 100644
+--- a/libkml-1.2.0/configure.ac
++++ b/libkml-1.2.0/configure.ac
+@@ -7,6 +7,7 @@ AC_INIT(libkml, 1.2.0, http://code.google.com/p/libkml/issues)
+ AC_CONFIG_SRCDIR(README)
+ AC_CONFIG_AUX_DIR(config)
+ AM_INIT_AUTOMAKE(-Wall -Werror)
++m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
+ 
+ AC_PROG_CPP
+ AC_PROG_CXX
+diff --git a/libkml-1.2.0/examples/engine/Makefile.am b/libkml-1.2.0/examples/engine/Makefile.am
+index baf346b..7c818da 100644
+--- a/libkml-1.2.0/examples/engine/Makefile.am
++++ b/libkml-1.2.0/examples/engine/Makefile.am
+@@ -2,7 +2,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/src \
+ 	      -I$(top_srcdir)/third_party/boost_1_34_1
+ 
+ if GCC
+-AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -fno-rtti
++AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -Wno-long-long -fno-rtti
+ endif
+ 
+ noinst_PROGRAMS = \
+diff --git a/libkml-1.2.0/examples/gpx/Makefile.am b/libkml-1.2.0/examples/gpx/Makefile.am
+index 056cd1d..da9cd81 100644
+--- a/libkml-1.2.0/examples/gpx/Makefile.am
++++ b/libkml-1.2.0/examples/gpx/Makefile.am
+@@ -2,7 +2,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/src \
+ 	      -I$(top_srcdir)/third_party/boost_1_34_1
+ 
+ if GCC
+-AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -fno-rtti
++AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -Wno-long-long -fno-rtti
+ endif
+ 
+ noinst_PROGRAMS = gpxtracktokml
+diff --git a/libkml-1.2.0/examples/gx/Makefile.am b/libkml-1.2.0/examples/gx/Makefile.am
+index 85040ab..b2787b8 100644
+--- a/libkml-1.2.0/examples/gx/Makefile.am
++++ b/libkml-1.2.0/examples/gx/Makefile.am
+@@ -2,7 +2,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/src \
+ 	      -I$(top_srcdir)/third_party/boost_1_34_1
+ 
+ if GCC
+-AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -fno-rtti
++AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -Wno-long-long -fno-rtti
+ endif
+ 
+ noinst_PROGRAMS = \
+diff --git a/libkml-1.2.0/examples/hellonet/Makefile.am b/libkml-1.2.0/examples/hellonet/Makefile.am
+index f4d313e..47558ef 100644
+--- a/libkml-1.2.0/examples/hellonet/Makefile.am
++++ b/libkml-1.2.0/examples/hellonet/Makefile.am
+@@ -4,7 +4,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/src \
+ 	      -I$(top_srcdir)/third_party/boost_1_34_1
+ 
+ if GCC
+-AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -fno-rtti
++AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -Wno-long-long -fno-rtti
+ endif
+ 
+ noinst_PROGRAMS = csvurl2gmap getgmapkml getgsheetcsv getgsheetkml \
+diff --git a/libkml-1.2.0/examples/helloworld/Makefile.am b/libkml-1.2.0/examples/helloworld/Makefile.am
+index 76f4e92..2ecb1a3 100644
+--- a/libkml-1.2.0/examples/helloworld/Makefile.am
++++ b/libkml-1.2.0/examples/helloworld/Makefile.am
+@@ -4,7 +4,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/src \
+ 
+ 
+ if GCC
+-AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -fno-rtti
++AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -Wno-long-long -fno-rtti
+ endif
+ 
+ noinst_LTLIBRARIES = libhelloutil.la
+diff --git a/libkml-1.2.0/examples/regionator/Makefile.am b/libkml-1.2.0/examples/regionator/Makefile.am
+index fa42288..b87fb9b 100644
+--- a/libkml-1.2.0/examples/regionator/Makefile.am
++++ b/libkml-1.2.0/examples/regionator/Makefile.am
+@@ -3,7 +3,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/src \
+               -I$(top_srcdir)/third_party/zlib-1.2.3/contrib
+ 
+ if GCC
+-AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -fno-rtti
++AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -Wno-long-long -fno-rtti
+ endif
+ 
+ noinst_PROGRAMS = csvregionator
+diff --git a/libkml-1.2.0/examples/xsd/Makefile.am b/libkml-1.2.0/examples/xsd/Makefile.am
+index 5d2dea7..1b6289a 100644
+--- a/libkml-1.2.0/examples/xsd/Makefile.am
++++ b/libkml-1.2.0/examples/xsd/Makefile.am
+@@ -3,7 +3,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/src \
+ 	      -I$(top_srcdir)/third_party/boost_1_34_1
+ 
+ if GCC
+-AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -fno-rtti
++AM_CXXFLAGS = -Wall -Werror -ansi -pedantic -Wno-long-long -fno-rtti
+ endif
+ 
+ noinst_PROGRAMS = xsdchildren xsdcoverage xsdelements xsdenums xsdfind xsdtypes
+diff --git a/libkml-1.2.0/src/kml/convenience/Makefile.am b/libkml-1.2.0/src/kml/convenience/Makefile.am
+index 8327c8c..3629bb5 100644
+--- a/libkml-1.2.0/src/kml/convenience/Makefile.am
++++ b/libkml-1.2.0/src/kml/convenience/Makefile.am
+@@ -3,7 +3,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/src \
+               -I$(top_srcdir)/third_party/googletest-r108/include
+ 
+ if GCC
+-AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -fno-rtti
++AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -Wno-long-long -fno-rtti
+ AM_TEST_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -fno-rtti -DGTEST_HAS_RTTI=0
+ endif
+ 
+diff --git a/libkml-1.2.0/src/kml/dom/Makefile.am b/libkml-1.2.0/src/kml/dom/Makefile.am
+index 9dfd56b..b088224 100644
+--- a/libkml-1.2.0/src/kml/dom/Makefile.am
++++ b/libkml-1.2.0/src/kml/dom/Makefile.am
+@@ -3,7 +3,7 @@ AM_CPPFLAGS= -I$(top_srcdir)/src \
+ 	     -I$(top_srcdir)/third_party/googletest-r108/include
+ 
+ if GCC
+-AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -fno-rtti
++AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -Wno-long-long -fno-rtti
+ AM_TEST_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -fno-rtti -DGTEST_HAS_RTTI=0
+ endif
+ 
+diff --git a/libkml-1.2.0/src/kml/engine/Makefile.am b/libkml-1.2.0/src/kml/engine/Makefile.am
+index 4fecdfb..bb0148c 100644
+--- a/libkml-1.2.0/src/kml/engine/Makefile.am
++++ b/libkml-1.2.0/src/kml/engine/Makefile.am
+@@ -3,7 +3,7 @@ AM_CPPFLAGS= -I$(top_srcdir)/src \
+ 	     -I$(top_srcdir)/third_party/googletest-r108/include
+ 
+ if GCC
+-AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -fno-rtti
++AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -Wno-long-long -fno-rtti
+ AM_TEST_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -fno-rtti -DGTEST_HAS_RTTI=0
+ endif
+ 
+diff --git a/libkml-1.2.0/src/kml/regionator/Makefile.am b/libkml-1.2.0/src/kml/regionator/Makefile.am
+index 523c913..87681ec 100644
+--- a/libkml-1.2.0/src/kml/regionator/Makefile.am
++++ b/libkml-1.2.0/src/kml/regionator/Makefile.am
+@@ -4,7 +4,7 @@ AM_CPPFLAGS= -I$(top_srcdir)/src \
+ 
+ 
+ if GCC
+-AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -fno-rtti
++AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -Wno-long-long -fno-rtti
+ AM_TEST_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -fno-rtti -DGTEST_HAS_RTTI=0
+ endif
+ 
+diff --git a/libkml-1.2.0/src/kml/xsd/Makefile.am b/libkml-1.2.0/src/kml/xsd/Makefile.am
+index 3db1f15..420b8cb 100644
+--- a/libkml-1.2.0/src/kml/xsd/Makefile.am
++++ b/libkml-1.2.0/src/kml/xsd/Makefile.am
+@@ -3,7 +3,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/src \
+ 	      -I$(top_srcdir)/third_party/googletest-r108/include
+ 
+ if GCC
+-AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -fno-rtti
++AM_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -pedantic -Wno-long-long -fno-rtti
+ AM_TEST_CXXFLAGS = -Wall -Wextra -Wno-unused-parameter -Werror -ansi -fno-rtti -DGTEST_HAS_RTTI=0
+ endif
+ 
+-- 
+1.7.10.4
+

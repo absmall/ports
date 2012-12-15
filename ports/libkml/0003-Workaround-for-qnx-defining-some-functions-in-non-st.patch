@@ -1,0 +1,47 @@
+From 2214cd3f0f6fbfe83eebed0fa8bf129c405ff8fd Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Thu, 13 Dec 2012 23:04:09 -0500
+Subject: [PATCH 3/3] Workaround for qnx defining some functions in
+ non-standard headers
+
+---
+ libkml-1.2.0/src/kml/base/date_time.cc  |    4 +++-
+ libkml-1.2.0/src/kml/base/file_posix.cc |    2 ++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/libkml-1.2.0/src/kml/base/date_time.cc b/libkml-1.2.0/src/kml/base/date_time.cc
+index 729b221..6b9347f 100644
+--- a/libkml-1.2.0/src/kml/base/date_time.cc
++++ b/libkml-1.2.0/src/kml/base/date_time.cc
+@@ -28,12 +28,14 @@
+ #include "kml/base/date_time.h"
+ #include "boost/scoped_ptr.hpp"
+ #include <stdlib.h>
++#include <string.h>
+ 
+ // TODO: fix this for real.
+-#ifdef _WIN32
++#if defined(_WIN32) || defined(__QNXNTO__)
+ time_t timegm(struct tm* tm) {
+   // Not yet implemented on this platform.
+   time_t not_implemented;
++  memset(&not_implemented, 0, sizeof(time_t));
+   return not_implemented;
+ }
+ char* strptime(const char* buf, const char* format, struct tm* tm) {
+diff --git a/libkml-1.2.0/src/kml/base/file_posix.cc b/libkml-1.2.0/src/kml/base/file_posix.cc
+index 764ae55..024ff50 100644
+--- a/libkml-1.2.0/src/kml/base/file_posix.cc
++++ b/libkml-1.2.0/src/kml/base/file_posix.cc
+@@ -26,6 +26,8 @@
+ // The file contains the implementation of the File methods specific to
+ // POSIX platforms.
+ 
++#define _POSIX_C_SOURCE 199506
++#include <unistd.h>
+ #include "kml/base/file.h"
+ #include <stdlib.h>
+ #include <string.h>
+-- 
+1.7.10.4
+

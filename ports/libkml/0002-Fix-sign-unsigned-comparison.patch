@@ -1,0 +1,25 @@
+From dd2d517a61b0e54460ece856464018478a91e644 Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Thu, 13 Dec 2012 23:03:28 -0500
+Subject: [PATCH 2/3] Fix sign/unsigned comparison
+
+---
+ libkml-1.2.0/examples/gpx/gpxtracktokml.cc |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libkml-1.2.0/examples/gpx/gpxtracktokml.cc b/libkml-1.2.0/examples/gpx/gpxtracktokml.cc
+index b8f3d13..6bd9602 100644
+--- a/libkml-1.2.0/examples/gpx/gpxtracktokml.cc
++++ b/libkml-1.2.0/examples/gpx/gpxtracktokml.cc
+@@ -63,7 +63,7 @@ using kmldom::StyleMapPtr;
+ static const char kDotIcon[] =
+     "http://maps.google.com/mapfiles/kml/shapes/shaded_dot.png";
+ 
+-static const int kTripThreshold = 600;  // 10 minutes.
++static const unsigned int kTripThreshold = 600;  // 10 minutes.
+ 
+ static IconStylePtr CreateIconStyle(double scale) {
+   KmlFactory* kml_factory = KmlFactory::GetFactory();
+-- 
+1.7.10.4
+
