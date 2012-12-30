@@ -59,11 +59,13 @@ def rmpath(dir):
 
 def git_create_repo():
     if print_commands:
+        print "find . -name .git | xargs rm -rf"
         print "git init"
         print "git add *"
         print "git commit -m 'Initial commit'"
         print "git tag initial HEAD"
     if run_commands:
+        os.system("find . -name .git | xargs rm -rf")
         os.system("git init")
         os.system("git add *")
         os.system("git commit -m 'Initial commit'")
