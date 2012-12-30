@@ -14,7 +14,8 @@ def mv(src, dst):
 def chdir(dir):
     if print_commands:
         print "cd %s" % dir
-    os.chdir(dir)
+    else:
+        os.chdir(dir)
 
 def mkdir(dir):
     if print_commands:
