@@ -8,7 +8,7 @@
         cd clucene
         mkdir -p obj
         cd obj
-        cmake -DCMAKE_INSTALL_PREFIX=${QNX_INSTALL} ..
+        cmake -DCMAKE_INSTALL_PREFIX=${QNX_INSTALL} -DBUILD_CONTRIBS=ON -DBUILD_CONTRIBS_LIB=ON ..
         make install
         </command>
   </build>
