@@ -1,0 +1,19 @@
+<port>
+  <download>
+    <command>wget ftp://ftp.mozilla.org/pub/mozilla.org/nspr/releases/v4.9.4/src/nspr-4.9.4.tar.gz</command>
+    <command>tar -zxf nspr-4.9.4.tar.gz</command>
+    <result>nspr-4.9.4</result>
+  </download>
+  <build>
+    <command>
+        cd nspr-4.9.4/mozilla/nsprpub
+        ./configure --build $(build/autoconf/config.guess) --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
+        make
+        make install
+        </command>
+  </build>
+  <package>
+  </package>
+  <export>
+  </export>
+</port>
