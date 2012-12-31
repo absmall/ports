@@ -1,7 +1,7 @@
 From 770dd3fe79169d122f6f475894e16518c39fb09d Mon Sep 17 00:00:00 2001
 From: Aaron Small <aaron.small@shadnet.shad.ca>
 Date: Sat, 3 Nov 2012 19:20:47 -0400
-Subject: [PATCH 2/3] Add qnx compiler description, based on android's
+Subject: [PATCH 2/5] Add qnx compiler description, based on android's
 
 ---
  .../solenv/gbuild/platform/QNX_ARM_GCC.mk          |  102 ++++++++++++++++++++

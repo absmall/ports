@@ -22,6 +22,8 @@
     <patch>0001-Add-basic-qnx-configuration-such-that-configure-scri.patch</patch>
     <patch>0002-Add-qnx-compiler-description-based-on-android-s.patch</patch>
     <patch>0003-Bump-libcmis-requirement-to-0.3.patch</patch>
+    <patch>0004-Fix-libraries-used-for-sal-on-qnx.patch</patch>
+    <patch>0005-Proper-sal-configuration-for-qnx.patch</patch>
   </download>
   <build>
     <command>

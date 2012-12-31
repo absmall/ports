@@ -1,0 +1,41 @@
+From 4826c125a494cef53afbc73121281ff2e0888ea2 Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Sun, 30 Dec 2012 22:11:03 -0500
+Subject: [PATCH 4/5] Fix libraries used for sal on qnx
+
+---
+ libreoffice-core-3.6.3.2/sal/Library_sal.mk                    |    2 +-
+ libreoffice-core-3.6.3.2/solenv/gbuild/platform/QNX_ARM_GCC.mk |    4 ----
+ 2 files changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/libreoffice-core-3.6.3.2/sal/Library_sal.mk b/libreoffice-core-3.6.3.2/sal/Library_sal.mk
+index de22417..0cec427 100644
+--- a/libreoffice-core-3.6.3.2/sal/Library_sal.mk
++++ b/libreoffice-core-3.6.3.2/sal/Library_sal.mk
+@@ -58,7 +58,7 @@ $(eval $(call gb_Library_add_defs,sal,\
+ 
+ $(eval $(call gb_Library_use_libraries,sal,\
+ 	$(if $(filter $(GUI),UNX), \
+-		$(if $(filter $(OS),ANDROID),, \
++		$(if $(filter $(OS),QNX)$(filter $(OS),ANDROID),, \
+ 			pthread \
+ 		) \
+ 	) \
+diff --git a/libreoffice-core-3.6.3.2/solenv/gbuild/platform/QNX_ARM_GCC.mk b/libreoffice-core-3.6.3.2/solenv/gbuild/platform/QNX_ARM_GCC.mk
+index 5c7f434..71f284b 100644
+--- a/libreoffice-core-3.6.3.2/solenv/gbuild/platform/QNX_ARM_GCC.mk
++++ b/libreoffice-core-3.6.3.2/solenv/gbuild/platform/QNX_ARM_GCC.mk
+@@ -33,10 +33,6 @@ gb_CFLAGS += -fno-omit-frame-pointer
+ 
+ include $(GBUILDDIR)/platform/unxgcc.mk
+ 
+-# Link almost everything with -lgnustl_shared
+-gb_STDLIBS := \
+-	gnustl_shared
+-
+ gb_Library_PLAINLIBS_NONE := \
+ 
+ # No unit testing can be run
+-- 
+1.7.10.4
+
