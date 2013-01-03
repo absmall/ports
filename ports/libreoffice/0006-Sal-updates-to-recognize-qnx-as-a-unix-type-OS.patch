@@ -1,0 +1,141 @@
+From 2918f7c557666833862a0605a3f3a5d00bdd97cd Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Wed, 2 Jan 2013 19:12:23 -0500
+Subject: [PATCH 6/6] Sal updates to recognize qnx as a unix-type OS
+
+---
+ libreoffice-core-3.6.3.2/sal/inc/osl/endian.h    |   15 ++++++++++-
+ libreoffice-core-3.6.3.2/sal/inc/sal/alloca.h    |    2 +-
+ libreoffice-core-3.6.3.2/sal/osl/unx/signal.c    |    5 ++++
+ libreoffice-core-3.6.3.2/sal/osl/unx/system.h    |   31 +++++++++++++++++++++-
+ libreoffice-core-3.6.3.2/sal/rtl/source/math.cxx |    2 +-
+ 5 files changed, 51 insertions(+), 4 deletions(-)
+
+diff --git a/libreoffice-core-3.6.3.2/sal/inc/osl/endian.h b/libreoffice-core-3.6.3.2/sal/inc/osl/endian.h
+index dace25b..c28c268 100644
+--- a/libreoffice-core-3.6.3.2/sal/inc/osl/endian.h
++++ b/libreoffice-core-3.6.3.2/sal/inc/osl/endian.h
+@@ -77,6 +77,19 @@ extern "C" {
+ #   endif
+ #endif
+ 
++#ifdef QNX
++#   include <sys/platform.h>
++#   if defined(__LITTLEENDIAN__)
++#           ifndef _LITTLE_ENDIAN
++#       define _LITTLE_ENDIAN
++#           endif
++#   elif defined(__BIGENDIAN__)
++#           ifndef _BIG_ENDIAN
++#       define _BIG_ENDIAN
++#           endif
++#   endif
++#endif
++
+ #ifdef NETBSD
+ #   include <machine/endian.h>
+ #   if BYTE_ORDER == LITTLE_ENDIAN
+@@ -148,7 +161,7 @@ extern "C" {
+     !defined(AIX)     && !defined(OPENBSD) && \
+     !defined(SOLARIS) && !defined(MACOSX) && !defined(FREEBSD) && \
+     !defined(DRAGONFLY) && \
+-    !defined(IOS)     && !defined(ANDROID)
++    !defined(IOS)     && !defined(ANDROID) && !defined(QNX)
+ #   error "Target platform not specified !"
+ #endif
+ 
+diff --git a/libreoffice-core-3.6.3.2/sal/inc/sal/alloca.h b/libreoffice-core-3.6.3.2/sal/inc/sal/alloca.h
+index a0c2ce6..b9d50c1 100644
+--- a/libreoffice-core-3.6.3.2/sal/inc/sal/alloca.h
++++ b/libreoffice-core-3.6.3.2/sal/inc/sal/alloca.h
+@@ -29,7 +29,7 @@
+ #ifndef INCLUDED_SAL_ALLOCA_H
+ #define INCLUDED_SAL_ALLOCA_H
+ 
+-#if defined (SOLARIS) || defined (LINUX) || defined(__EMX__) || defined(AIX) || defined(ANDROID)
++#if defined (SOLARIS) || defined (LINUX) || defined(__EMX__) || defined(AIX) || defined(ANDROID) || defined(QNX)
+ 
+ #ifndef INCLUDED_ALLOCA_H
+ #include <alloca.h>
+diff --git a/libreoffice-core-3.6.3.2/sal/osl/unx/signal.c b/libreoffice-core-3.6.3.2/sal/osl/unx/signal.c
+index 57263c7..417348c 100644
+--- a/libreoffice-core-3.6.3.2/sal/osl/unx/signal.c
++++ b/libreoffice-core-3.6.3.2/sal/osl/unx/signal.c
+@@ -259,7 +259,12 @@ static sal_Bool InitSignal()
+     SignalListMutex = osl_createMutex();
+ 
+     act.sa_handler = SignalHandlerFunction;
++#if defined(QNX)
++    // QNX doesn't support SA_RESTART
++    act.sa_flags   = 0;
++#else
+     act.sa_flags   = SA_RESTART;
++#endif
+ 
+     sigfillset(&(act.sa_mask));
+ 
+diff --git a/libreoffice-core-3.6.3.2/sal/osl/unx/system.h b/libreoffice-core-3.6.3.2/sal/osl/unx/system.h
+index 576be1a..97db7bf 100644
+--- a/libreoffice-core-3.6.3.2/sal/osl/unx/system.h
++++ b/libreoffice-core-3.6.3.2/sal/osl/unx/system.h
+@@ -119,6 +119,35 @@
+ #   define  NO_PTHREAD_PRIORITY
+ #endif
+ 
++#ifdef QNX
++#   include <pthread.h>
++#   include <sys/ioctl.h>
++#   include <gulliver.h>
++#   include <dlfcn.h>
++#   include <sys/un.h>
++#   include <netinet/tcp.h>
++#   include <signal.h>
++#   include <sys/time.h>
++#   include <semaphore.h>
++#   if defined(__LITTLEENDIAN__)
++#       define _LITTLE_ENDIAN
++#   elif defined(__BIGENDIAN__)
++#               ifndef _BIG_ENDIAN
++#               define _BIG_ENDIAN
++#               endif
++#   endif
++#   define  IORESOURCE_TRANSFER_BSD
++#   define  IOCHANNEL_TRANSFER_BSD_RENO
++#   define  pthread_testcancel()
++#   define  NO_PTHREAD_PRIORITY
++#   define  PTHREAD_SIGACTION           pthread_sigaction
++
++#   ifndef ETIME
++#       define ETIME ETIMEDOUT
++#   endif
++
++#endif
++
+ #ifdef NETBSD
+ #   define  NO_PTHREAD_RTL
+ #endif
+@@ -311,7 +340,7 @@ int macxp_resolveAlias(char *path, int buflen);
+     !defined(AIX)     && \
+     !defined(SOLARIS) && !defined(MACOSX) && \
+     !defined(OPENBSD) && !defined(DRAGONFLY) && \
+-    !defined(IOS) && !defined(ANDROID)
++    !defined(IOS) && !defined(ANDROID) && !defined(QNX)
+ #   error "Target platform not specified!"
+ #endif
+ 
+diff --git a/libreoffice-core-3.6.3.2/sal/rtl/source/math.cxx b/libreoffice-core-3.6.3.2/sal/rtl/source/math.cxx
+index 67b3a51..35df402 100644
+--- a/libreoffice-core-3.6.3.2/sal/rtl/source/math.cxx
++++ b/libreoffice-core-3.6.3.2/sal/rtl/source/math.cxx
+@@ -430,7 +430,7 @@ inline void doubleToString(StringT ** pResult,
+     typename T::Char * pBuf;
+     sal_Int32 nBuf = static_cast< sal_Int32 >
+         ( nDigits <= 0 ? std::max< sal_Int32 >( nDecPlaces, abs(nExp) )
+-          : nDigits + nDecPlaces ) + 10 + (pGroups ? abs(nDigits) * 2 : 0);
++          : nDigits + nDecPlaces ) + 10 + (pGroups ? abs((int)nDigits) * 2 : 0);
+     if ( nBuf > nBufMax )
+     {
+         pBuf = reinterpret_cast< typename T::Char * >(
+-- 
+1.7.10.4
+

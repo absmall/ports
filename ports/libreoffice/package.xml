@@ -24,10 +24,12 @@
     <patch>0003-Bump-libcmis-requirement-to-0.3.patch</patch>
     <patch>0004-Fix-libraries-used-for-sal-on-qnx.patch</patch>
     <patch>0005-Proper-sal-configuration-for-qnx.patch</patch>
+    <patch>0006-Sal-updates-to-recognize-qnx-as-a-unix-type-OS.patch</patch>
   </download>
   <build>
     <command>
         cd libreoffice-core-3.6.3.2
+        export C_INCLUDE_PATH=${QNX_INSTALL}/include
         export CPLUS_INCLUDE_PATH=${QNX_INSTALL}/include
         ./autogen.sh --host ${QNX_VERSION} --build=x86_64-unknown-linux-gnu --prefix=${QNX_INSTALL} --without-java --enable-python=no --disable-opengl --without-doxygen --with-system-cppunit --with-system-curl --disable-mozilla --disable-gconf --disable-gnome-vfs --with-system-icu --with-system-expat --disable-ext-pdfimport --with-system-libwpd --with-system-libwpg --with-system-openssl --with-system-neon --with-system-libcdr --with-system-redland --with-system-cairo --with-system-boost --with-boost=${QNX_INSTALL} --with-system-libcmis --with-system-libwps --with-system-libvisio --with-system-clucene --disable-xmlsec
         make

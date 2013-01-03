@@ -1,7 +1,7 @@
 From 869d69e05997eaa8e9b23f2c25588cdd5abc2c05 Mon Sep 17 00:00:00 2001
 From: Aaron Small <aaron.small@shadnet.shad.ca>
 Date: Sat, 24 Nov 2012 22:40:38 -0500
-Subject: [PATCH 3/5] Bump libcmis requirement to 0.3
+Subject: [PATCH 3/6] Bump libcmis requirement to 0.3
 
 ---
  libreoffice-core-3.6.3.2/configure.in |    2 +-

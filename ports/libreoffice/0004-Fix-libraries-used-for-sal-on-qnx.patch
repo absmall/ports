@@ -1,7 +1,7 @@
 From 4826c125a494cef53afbc73121281ff2e0888ea2 Mon Sep 17 00:00:00 2001
 From: Aaron Small <aaron.small@shadnet.shad.ca>
 Date: Sun, 30 Dec 2012 22:11:03 -0500
-Subject: [PATCH 4/5] Fix libraries used for sal on qnx
+Subject: [PATCH 4/6] Fix libraries used for sal on qnx
 
 ---
  libreoffice-core-3.6.3.2/sal/Library_sal.mk                    |    2 +-
