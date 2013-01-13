@@ -1,7 +1,7 @@
 From d39126ae4d6416c71069df5bc1242f464e6fe855 Mon Sep 17 00:00:00 2001
 From: Aaron Small <aaron.small@shadnet.shad.ca>
 Date: Sun, 30 Dec 2012 22:28:10 -0500
-Subject: [PATCH 5/6] Proper sal configuration for qnx
+Subject: [PATCH 5/8] Proper sal configuration for qnx
 
 ---
  libreoffice-core-3.6.3.2/sal/inc/sal/config.h |    3 ++-
