@@ -1,0 +1,25 @@
+From 1481922eaa404647365500c2734731a454117768 Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Sun, 13 Jan 2013 22:01:40 -0500
+Subject: [PATCH 9/9] Add cast so that stoc compiles
+
+---
+ libreoffice-core-3.6.3.2/stoc/source/uriproc/UriReferenceFactory.cxx |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libreoffice-core-3.6.3.2/stoc/source/uriproc/UriReferenceFactory.cxx b/libreoffice-core-3.6.3.2/stoc/source/uriproc/UriReferenceFactory.cxx
+index a354356..9162134 100644
+--- a/libreoffice-core-3.6.3.2/stoc/source/uriproc/UriReferenceFactory.cxx
++++ b/libreoffice-core-3.6.3.2/stoc/source/uriproc/UriReferenceFactory.cxx
+@@ -289,7 +289,7 @@ void processSegments(
+                 continue;
+             } else if ( segment == ".." ) {
+                 if (segments.empty()
+-                    || /*MSVC trouble: std::*/abs(segments.back()) == 1)
++                    || /*MSVC trouble: std::*/abs((int)segments.back()) == 1)
+                 {
+                     segments.push_back(base ? -1 : 1);
+                 } else {
+-- 
+1.7.10.4
+

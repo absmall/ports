@@ -28,6 +28,7 @@
     <patch>0006-Sal-updates-to-recognize-qnx-as-a-unix-type-OS.patch</patch>
     <patch>0007-sal-is-now-fully-building-although-it-took-an-awful-.patch</patch>
     <patch>0008-idlc-now-compiles.patch</patch>
+    <patch>0009-Add-cast-so-that-stoc-compiles.patch</patch>
   </download>
   <build>
     <command>

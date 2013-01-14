@@ -1,7 +1,7 @@
 From 2918f7c557666833862a0605a3f3a5d00bdd97cd Mon Sep 17 00:00:00 2001
 From: Aaron Small <aaron.small@shadnet.shad.ca>
 Date: Wed, 2 Jan 2013 19:12:23 -0500
-Subject: [PATCH 6/8] Sal updates to recognize qnx as a unix-type OS
+Subject: [PATCH 6/9] Sal updates to recognize qnx as a unix-type OS
 
 ---
  libreoffice-core-3.6.3.2/sal/inc/osl/endian.h    |   15 ++++++++++-
