@@ -1,12 +1,15 @@
 <port>
     <download>
-        <command>git clone  git@git.rim.net:users/asmall/libterm</command>
+        <command>git clone  ~/work/libterm</command>
+        <!--<command>git clone  git@git.rim.net:users/asmall/libterm</command>-->
         <result>libterm</result>
     </download>
     <build>
         <command>
             cd libterm
-            cmake -DCMAKE_TOOLCHAIN_FILE=ntoarm.cmake -DCMAKE_INSTALL_PREFIX=`pwd`/../bbfs .
+            mkdir obj.playbook
+            cd obj.playbook
+            cmake -DCMAKE_TOOLCHAIN_FILE=../ntoarm.cmake -DCMAKE_INSTALL_PREFIX=${QNX_INSTALL} ..
             make install
         </command>
     </build>
