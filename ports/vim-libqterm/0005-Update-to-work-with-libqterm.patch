@@ -1,0 +1,61 @@
+From 0db18a71c6c292d851eeab333d3e641114a10686 Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Mon, 14 Jan 2013 22:18:14 -0500
+Subject: [PATCH 5/5] Update to work with libqterm
+
+---
+ vim73/src/Makefile       |    1 +
+ vim73/src/auto/config.mk |    4 ++--
+ vim73/src/main.c         |    2 +-
+ 3 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/vim73/src/Makefile b/vim73/src/Makefile
+index e582eed..0c758ee 100644
+--- a/vim73/src/Makefile
++++ b/vim73/src/Makefile
+@@ -713,6 +713,7 @@ LINT_OPTIONS = -beprxzF
+ 
+ ### SCO 3.2, with different library name for terminfo
+ #EXTRA_LIBS = -ltinfo
++EXTRA_LIBS = -lterm -lqtermlib -lQtOpenGL -lQtCore -lQtGui -L../../armv7/lib -L$(QNX_TARGET)/armle-v7/usr/lib/qt4/lib
+ 
+ ### UTS2 for Amdahl UTS 2.1.x
+ #EXTRA_DEFS = -DUTS2
+diff --git a/vim73/src/auto/config.mk b/vim73/src/auto/config.mk
+index b7e874e..00d0a6b 100644
+--- a/vim73/src/auto/config.mk
++++ b/vim73/src/auto/config.mk
+@@ -100,7 +100,7 @@ SNIFF_OBJ	=
+ 
+ AWK		= mawk
+ 
+-STRIP		= strip
++STRIP		= arm-unknown-nto-qnx8.0.0eabi-strip
+ 
+ EXEEXT		= 
+ 
+@@ -118,7 +118,7 @@ QUOTESED        = sed -e 's/[\\"]/\\&/g' -e 's/\\"/"/' -e 's/\\";$$/";/'
+ NL		= "\\012"
+ 
+ ### Top directory for everything
+-prefix		= /home/absmall/work/ports/ports/vim/build/armv7
++prefix		= /home/absmall/work/ports/ports/vim-libqterm/build/armv7
+ 
+ ### Top directory for the binary
+ exec_prefix	= ${prefix}
+diff --git a/vim73/src/main.c b/vim73/src/main.c
+index a02e3f8..32bd5d9 100644
+--- a/vim73/src/main.c
++++ b/vim73/src/main.c
+@@ -160,7 +160,7 @@ _cdecl
+ #  endif
+ VimMain
+ # else
+-main
++_main
+ # endif
+ (argc, argv)
+     int		argc;
+-- 
+1.7.10.4
+

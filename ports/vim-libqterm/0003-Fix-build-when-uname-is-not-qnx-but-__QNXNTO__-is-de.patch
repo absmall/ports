@@ -1,0 +1,61 @@
+From 372bebe1adf2093122db342fea57e1f49bffab06 Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Thu, 8 Nov 2012 21:47:30 -0500
+Subject: [PATCH 3/5] Fix build when uname is not qnx, but __QNXNTO__ is
+ defined
+
+---
+ vim73/src/auto/configure |    3 +++
+ vim73/src/configure.in   |    1 +
+ vim73/src/main.c         |    2 +-
+ 3 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/vim73/src/auto/configure b/vim73/src/auto/configure
+index e475d9a..686d69b 100755
+--- a/vim73/src/auto/configure
++++ b/vim73/src/auto/configure
+@@ -3997,6 +3997,8 @@ esac
+ $as_echo_n "checking for QNX... " >&6; }
+ case `uname` in
+     QNX)	OS_EXTRA_SRC=os_qnx.c; OS_EXTRA_OBJ=objects/os_qnx.o
++        $as_echo "#define QNX 1" >>confdefs.h
++
+ 		test -z "$with_x" && with_x=no
+ 		QNX=yes; { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+ $as_echo "yes" >&6; };;
+@@ -4004,6 +4006,7 @@ $as_echo "yes" >&6; };;
+ $as_echo "no" >&6; };;
+ esac
+ 
++
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Darwin (Mac OS X)" >&5
+ $as_echo_n "checking for Darwin (Mac OS X)... " >&6; }
+ if test "`(uname) 2>/dev/null`" = Darwin; then
+diff --git a/vim73/src/configure.in b/vim73/src/configure.in
+index 66076c7..be60067 100644
+--- a/vim73/src/configure.in
++++ b/vim73/src/configure.in
+@@ -82,6 +82,7 @@ dnl unless it was specifically asked for (--with-x)
+ AC_MSG_CHECKING(for QNX)
+ case `uname` in
+     QNX)	OS_EXTRA_SRC=os_qnx.c; OS_EXTRA_OBJ=objects/os_qnx.o
++        AC_DEFINE(QNX)
+ 		test -z "$with_x" && with_x=no
+ 		QNX=yes; AC_MSG_RESULT(yes);;
+     *)		QNX=no; AC_MSG_RESULT(no);;
+diff --git a/vim73/src/main.c b/vim73/src/main.c
+index 435e607..a02e3f8 100644
+--- a/vim73/src/main.c
++++ b/vim73/src/main.c
+@@ -225,7 +225,7 @@ main
+     eval_init();	/* init global variables */
+ #endif
+ 
+-#ifdef __QNXNTO__
++#ifdef QNX
+     qnx_init();		/* PhAttach() for clipboard, (and gui) */
+ #endif
+ 
+-- 
+1.7.10.4
+
