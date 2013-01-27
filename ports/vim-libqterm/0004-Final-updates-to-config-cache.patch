@@ -1,7 +1,7 @@
 From 48de9c1c61966c3bc43717297da5c4644c45f244 Mon Sep 17 00:00:00 2001
 From: Aaron Small <aaron.small@shadnet.shad.ca>
 Date: Thu, 8 Nov 2012 21:49:48 -0500
-Subject: [PATCH 4/5] Final updates to config cache
+Subject: [PATCH 4/6] Final updates to config cache
 
 ---
  vim73/src/auto/config.cache |    2 +-

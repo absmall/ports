@@ -9,7 +9,7 @@
         cd clucene
         mkdir -p obj
         cd obj
-        cmake -DCMAKE_INSTALL_PREFIX=${QNX_INSTALL} -DBUILD_CONTRIBS=ON -DBUILD_CONTRIBS_LIB=ON ..
+        cmake -DCMAKE_TOOLCHAIN_FILE=../../ntoarm.cmake -DCMAKE_INSTALL_PREFIX=${QNX_INSTALL} -D-DBUILD_CONTRIBS=ON -DBUILD_CONTRIBS_LIB=ON ..
         make install
     </command>
   </build>

@@ -1,0 +1,25 @@
+From 2e23c2edcf512eaa61f091a0ecbc26d2ae3cb798 Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Sat, 12 Jan 2013 22:55:27 -0500
+Subject: [PATCH 8/9] idlc now compiles
+
+---
+ libreoffice-core-3.6.3.2/idlc/source/idlccompile.cxx |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libreoffice-core-3.6.3.2/idlc/source/idlccompile.cxx b/libreoffice-core-3.6.3.2/idlc/source/idlccompile.cxx
+index f83820f..3559252 100644
+--- a/libreoffice-core-3.6.3.2/idlc/source/idlccompile.cxx
++++ b/libreoffice-core-3.6.3.2/idlc/source/idlccompile.cxx
+@@ -42,7 +42,7 @@
+ #include <errno.h>
+ #include <unistd.h>
+ #if defined(MACOSX) || defined(FREEBSD) || defined(NETBSD) || \
+-    defined(AIX) || defined(OPENBSD) || defined(DRAGONFLY)
++    defined(AIX) || defined(OPENBSD) || defined(DRAGONFLY) || defined(QNX)
+ #include <sys/wait.h>
+ #else
+ #include <wait.h>
+-- 
+1.7.10.4
+

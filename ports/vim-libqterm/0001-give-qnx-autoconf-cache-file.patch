@@ -1,7 +1,7 @@
 From b1e439a6222d31aab5d5ce7880b1340229797185 Mon Sep 17 00:00:00 2001
 From: Aaron Small <aaron.small@shadnet.shad.ca>
 Date: Thu, 8 Nov 2012 21:21:04 -0500
-Subject: [PATCH 1/5] give qnx autoconf cache file
+Subject: [PATCH 1/6] give qnx autoconf cache file
 
 ---
  vim73/src/auto/config.cache |    6 ++++++

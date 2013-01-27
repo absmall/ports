@@ -1,7 +1,7 @@
 From 0db18a71c6c292d851eeab333d3e641114a10686 Mon Sep 17 00:00:00 2001
 From: Aaron Small <aaron.small@shadnet.shad.ca>
 Date: Mon, 14 Jan 2013 22:18:14 -0500
-Subject: [PATCH 5/5] Update to work with libqterm
+Subject: [PATCH 5/6] Update to work with libqterm
 
 ---
  vim73/src/Makefile       |    1 +

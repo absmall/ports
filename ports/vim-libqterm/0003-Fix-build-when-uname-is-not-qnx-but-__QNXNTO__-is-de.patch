@@ -1,7 +1,7 @@
 From 372bebe1adf2093122db342fea57e1f49bffab06 Mon Sep 17 00:00:00 2001
 From: Aaron Small <aaron.small@shadnet.shad.ca>
 Date: Thu, 8 Nov 2012 21:47:30 -0500
-Subject: [PATCH 3/5] Fix build when uname is not qnx, but __QNXNTO__ is
+Subject: [PATCH 3/6] Fix build when uname is not qnx, but __QNXNTO__ is
  defined
 
 ---

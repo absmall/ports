@@ -9,6 +9,7 @@
     <patch>0003-Fix-build-when-uname-is-not-qnx-but-__QNXNTO__-is-de.patch</patch>
     <patch>0004-Final-updates-to-config-cache.patch</patch>
     <patch>0005-Update-to-work-with-libqterm.patch</patch>
+    <patch>0006-Add-libraries-that-libterm-needs.patch</patch>
   </download>
   <build>
     <command>
@@ -19,6 +20,8 @@
         </command>
   </build>
   <package>
-    <file>bin/vim</file>
+    <file remote="vim">bin/vim</file>
+    <file>lib/libqtermlib.so</file>
+    <file>lib/libterm.so</file>
   </package>
 </port>

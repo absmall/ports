@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <qnx xmlns="http://www.qnx.com/schemas/application/1.0">
     <id>org.demo.vim</id>
-    <filename>bin/vim</filename>
+    <filename>vim</filename>
     <name>vim</name>
     <versionNumber>1.0.0</versionNumber>
     <description>Editor</description>
@@ -17,4 +17,5 @@
     <publisher>demo.org</publisher>
     <permission system="true">run_native</permission>
     <category>core.games</category>
+    <env var="LD_LIBRARY_PATH" value="lib:/usr/lib/qt4/lib"/>
 </qnx>

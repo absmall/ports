@@ -1,0 +1,73 @@
+From 4e40bba43c804c567cd31f951a8713689aa00a71 Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Sat, 12 Jan 2013 21:11:27 -0500
+Subject: [PATCH 7/9] sal is now fully building, although it took an awful
+ hack. Apparently qnx doesn't allow including math.h
+ from extern "C" in C++ code. Need to find out if that's
+ legitimate.
+
+---
+ libreoffice-core-3.6.3.2/sal/qa/osl/file/osl_File.cxx     |    2 +-
+ libreoffice-core-3.6.3.2/sal/qa/osl/file/osl_File_Const.h |   13 ++++++++++++-
+ .../solenv/gbuild/platform/QNX_ARM_GCC.mk                 |    4 +---
+ 3 files changed, 14 insertions(+), 5 deletions(-)
+
+diff --git a/libreoffice-core-3.6.3.2/sal/qa/osl/file/osl_File.cxx b/libreoffice-core-3.6.3.2/sal/qa/osl/file/osl_File.cxx
+index 8e5fd66..b078cd8 100644
+--- a/libreoffice-core-3.6.3.2/sal/qa/osl/file/osl_File.cxx
++++ b/libreoffice-core-3.6.3.2/sal/qa/osl/file/osl_File.cxx
+@@ -6036,7 +6036,7 @@ namespace osl_Directory
+             if (tmp_x.lastIndexOf('/') != (tmp_x.getLength() - 1))
+                 tmp_x += rtl::OString('/');
+ 
+-#if !defined(WNT) && !defined(ANDROID)
++#if !defined(WNT) && !defined(ANDROID) && !defined(QNX)
+             // FIXME would be nice to create unique dir even on Windows
+             tmp_x += rtl::OString("XXXXXX");
+             char *out = mkdtemp(const_cast<char*>(tmp_x.getStr()));
+diff --git a/libreoffice-core-3.6.3.2/sal/qa/osl/file/osl_File_Const.h b/libreoffice-core-3.6.3.2/sal/qa/osl/file/osl_File_Const.h
+index 939e6df..9183a9c 100644
+--- a/libreoffice-core-3.6.3.2/sal/qa/osl/file/osl_File_Const.h
++++ b/libreoffice-core-3.6.3.2/sal/qa/osl/file/osl_File_Const.h
+@@ -85,11 +85,22 @@ const sal_Char pBuffer_Blank[]  = "";
+ #if ( defined UNX )  //Unix
+ #   include <unistd.h>
+ #   include <limits.h>
++// On QNX, math.h must not be extern C when included from C++
++#if defined (QNX)
++#ifdef __cplusplus
++}
++#endif
++#   include <math.h>
++#ifdef __cplusplus
++extern "C" {
++#endif
++#else
+ #   include <math.h>
++#endif
+ #   include <errno.h>
+ #   include <fcntl.h>
+ #   include <sys/stat.h>
+-#   if !defined(MACOSX) && !defined(IOS) && !defined(__OpenBSD__) && !defined(__FreeBSD__) && !defined(__NetBSD__) && !defined (DRAGONFLY)
++#   if !defined(MACOSX) && !defined(IOS) && !defined(__OpenBSD__) && !defined(__FreeBSD__) && !defined(__NetBSD__) && !defined (DRAGONFLY) && !defined (QNX)
+ #       include <sys/statfs.h>
+ #   else
+ #       include <sys/param.h>
+diff --git a/libreoffice-core-3.6.3.2/solenv/gbuild/platform/QNX_ARM_GCC.mk b/libreoffice-core-3.6.3.2/solenv/gbuild/platform/QNX_ARM_GCC.mk
+index 71f284b..dbea3c9 100644
+--- a/libreoffice-core-3.6.3.2/solenv/gbuild/platform/QNX_ARM_GCC.mk
++++ b/libreoffice-core-3.6.3.2/solenv/gbuild/platform/QNX_ARM_GCC.mk
+@@ -44,9 +44,7 @@ gb_CppunitTest_CPPTESTPRECOMMAND := :
+ # redundant fashion.
+ 
+ gb_LinkTarget_LDFLAGS += \
+-    -Wl,-z,defs \
+-	-Wl,--as-needed \
+-	-Wl,--no-add-needed
++    -Wl,-z,defs
+ 
+ define gb_LinkTarget__command_dynamiclink
+ $(call gb_Helper_abbreviate_dirs,\
+-- 
+1.7.10.4
+

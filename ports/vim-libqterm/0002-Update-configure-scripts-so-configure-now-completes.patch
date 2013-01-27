@@ -1,7 +1,7 @@
 From 3778fd0512e55d2f99eb2a01bd27dc3ee72ca6c9 Mon Sep 17 00:00:00 2001
 From: Aaron Small <aaron.small@shadnet.shad.ca>
 Date: Thu, 8 Nov 2012 21:38:54 -0500
-Subject: [PATCH 2/5] Update configure scripts so configure now completes
+Subject: [PATCH 2/6] Update configure scripts so configure now completes
 
 ---
  vim73/src/auto/config.cache |  186 ++++++++++++++++++-
