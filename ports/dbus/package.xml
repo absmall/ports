@@ -1,0 +1,20 @@
+<port>
+  <depends>glib</depends>
+  <download>
+    <command>wget http://dbus.freedesktop.org/releases/dbus/dbus-1.6.8.tar.gz</command>
+    <command>tar -zxf dbus-1.6.8.tar.gz</command>
+    <result>dbus-1.6.8</result>
+  </download>
+  <build>
+    <command>
+        cd dbus-1.6.8
+        ./configure --host ${QNX_VERSION} --prefix=${QNX_INSTALL}
+        make
+        make install
+        </command>
+  </build>
+  <package>
+  </package>
+  <export>
+  </export>
+</port>
