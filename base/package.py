@@ -199,6 +199,12 @@ def build_exports(package):
 
     commands.chdir("%s/%s/build/%s" % (basedir, package, platform))
     export = tree.getroot().find("export")
+
+    # Make sure we have an export node
+    if export == None:
+        tree.getroot().append(etree.Element("export"))
+        export = tree.getroot().find("export")
+
     # Remove existing exports
     for i in export:
         if i.tag == "file":
