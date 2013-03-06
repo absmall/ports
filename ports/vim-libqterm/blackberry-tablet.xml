@@ -1,21 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<?xml version='1.0' encoding='utf-8' standalone='no'?>
 <qnx xmlns="http://www.qnx.com/schemas/application/1.0">
-    <id>org.demo.vim</id>
+    <id>org.demo.vim-libqterm</id>
     <filename>vim</filename>
-    <name>vim</name>
+    <name>vim-libqterm</name>
     <versionNumber>1.0.0</versionNumber>
     <description>Editor</description>
-    <copyright>2012</copyright>
-
     <initialWindow>
         <systemChrome>none</systemChrome>
         <transparent>false</transparent>
         <autoOrients>true</autoOrients>
         <aspectRatio>landscape</aspectRatio>
     </initialWindow>
-
-    <publisher>demo.org</publisher>
-    <permission system="true">run_native</permission>
-    <category>core.games</category>
-    <env var="LD_LIBRARY_PATH" value="lib:/usr/lib/qt4/lib"/>
+    <author>Home</author>
+    <authorId>gYAAgJZ5S0RObHOlpRFR1_d5Luo</authorId>
+    <env value="app/native/imports" var="QML_IMPORT_PATH"/>
+    <env value="app/native/plugins:/usr/lib/qt4/plugins" var="QT_PLUGIN_PATH"/>
+    <env value="app/native/lib:/usr/lib/qt4/lib/" var="LD_LIBRARY_PATH"/>
+    <action system="true">run_native</action>
 </qnx>
