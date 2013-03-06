@@ -4,6 +4,7 @@
     <command>wget http://dbus.freedesktop.org/releases/dbus/dbus-1.6.8.tar.gz</command>
     <command>tar -zxf dbus-1.6.8.tar.gz</command>
     <result>dbus-1.6.8</result>
+    <patch>0001-Build-fixes-for-differences-on-qnx.patch</patch>
   </download>
   <build>
     <command>

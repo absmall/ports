@@ -1,0 +1,94 @@
+From 64a479d8dfdc29e83e5b37f72f0b5f1daba407ba Mon Sep 17 00:00:00 2001
+From: Aaron Small <aaron.small@shadnet.shad.ca>
+Date: Tue, 5 Mar 2013 21:43:20 -0500
+Subject: [PATCH] Build fixes for differences on qnx
+
+---
+ dbus-1.6.8/dbus/dbus-sysdeps-unix.c      |    4 ++--
+ dbus-1.6.8/dbus/dbus-sysdeps-util-unix.c |    7 +++++++
+ dbus-1.6.8/dbus/sd-daemon.c              |    2 +-
+ 3 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/dbus-1.6.8/dbus/dbus-sysdeps-unix.c b/dbus-1.6.8/dbus/dbus-sysdeps-unix.c
+index b4ecc96..75c7f6f 100644
+--- a/dbus-1.6.8/dbus/dbus-sysdeps-unix.c
++++ b/dbus-1.6.8/dbus/dbus-sysdeps-unix.c
+@@ -1709,7 +1709,7 @@ _dbus_read_credentials_socket  (int              client_fd,
+   msg.msg_iov = &iov;
+   msg.msg_iovlen = 1;
+ 
+-#if defined(HAVE_CMSGCRED) || defined(LOCAL_CREDS)
++#if defined(HAVE_CMSGCRED)
+   _DBUS_ZERO(cmsg);
+   msg.msg_control = (caddr_t) &cmsg;
+   msg.msg_controllen = CMSG_SPACE (sizeof (struct cmsgcred));
+@@ -1749,7 +1749,7 @@ _dbus_read_credentials_socket  (int              client_fd,
+       return FALSE;
+     }
+ 
+-#if defined(HAVE_CMSGCRED) || defined(LOCAL_CREDS)
++#if defined(HAVE_CMSGCRED)
+   if (cmsg.hdr.cmsg_len < CMSG_LEN (sizeof (struct cmsgcred))
+ 		  || cmsg.hdr.cmsg_type != SCM_CREDS)
+     {
+diff --git a/dbus-1.6.8/dbus/dbus-sysdeps-util-unix.c b/dbus-1.6.8/dbus/dbus-sysdeps-util-unix.c
+index 76423ab..43a4393 100644
+--- a/dbus-1.6.8/dbus/dbus-sysdeps-util-unix.c
++++ b/dbus-1.6.8/dbus/dbus-sysdeps-util-unix.c
+@@ -49,7 +49,9 @@
+ #include <sys/socket.h>
+ #include <dirent.h>
+ #include <sys/un.h>
++#ifdef HAVE_SYSLOG_H
+ #include <syslog.h>
++#endif
+ 
+ #ifdef HAVE_SYS_SYSLIMITS_H
+ #include <sys/syslimits.h>
+@@ -424,11 +426,13 @@ _dbus_request_file_descriptor_limit (unsigned int limit)
+ void
+ _dbus_init_system_log (void)
+ {
++#ifdef HAVE_SYSLOG_H
+ #if HAVE_DECL_LOG_PERROR
+   openlog ("dbus", LOG_PID | LOG_PERROR, LOG_DAEMON);
+ #else
+   openlog ("dbus", LOG_PID, LOG_DAEMON);
+ #endif
++#endif
+ }
+ 
+ /**
+@@ -465,6 +469,8 @@ void
+ _dbus_system_logv (DBusSystemLogSeverity severity, const char *msg, va_list args)
+ {
+   int flags;
++
++#ifdef HAVE_SYSLOG_H
+   switch (severity)
+     {
+       case DBUS_SYSTEM_LOG_INFO:
+@@ -479,6 +485,7 @@ _dbus_system_logv (DBusSystemLogSeverity severity, const char *msg, va_list args
+       default:
+         return;
+     }
++#endif
+ 
+ #ifndef HAVE_DECL_LOG_PERROR
+     {
+diff --git a/dbus-1.6.8/dbus/sd-daemon.c b/dbus-1.6.8/dbus/sd-daemon.c
+index 9c23b91..8596961 100644
+--- a/dbus-1.6.8/dbus/sd-daemon.c
++++ b/dbus-1.6.8/dbus/sd-daemon.c
+@@ -32,7 +32,7 @@
+ #include <sys/stat.h>
+ #include <sys/socket.h>
+ #include <sys/un.h>
+-#include <sys/fcntl.h>
++#include <fcntl.h>
+ #include <netinet/in.h>
+ #include <stdlib.h>
+ #include <errno.h>
+-- 
+1.7.10.4
+
