@@ -9,7 +9,8 @@
             cd libterm
             mkdir obj.playbook
             cd obj.playbook
-            cmake -DCMAKE_TOOLCHAIN_FILE=../ntoarm.cmake -DCMAKE_INSTALL_PREFIX=${QNX_INSTALL} ..
+            # TODO - Make this platform-independent
+            QTDIR=${QNX_TARGET}/armle-v7/usr/lib/qt4 cmake -DCMAKE_TOOLCHAIN_FILE=../ntoarm.cmake -DCMAKE_INSTALL_PREFIX=${QNX_INSTALL} ..
             make install
         </command>
     </build>
@@ -17,8 +18,8 @@
         <file remote="qterm">bin/qterm</file>
         <file>lib/libterm.so</file>
         <file>lib/libqtermlib.so</file>
-        <file remote="res/icon.png">../libterm/qterm/icon.png</file>
-        <file remote="res/splashscreen.png">../libterm/qterm/splashscreen.png</file>
+        <file remote="res/icon.png">../libterm/icon.png</file>
+        <file remote="res/splashscreen.png">../libterm/splashscreen.png</file>
     </package>
     <export>
         <file>lib/libterm.so</file>
